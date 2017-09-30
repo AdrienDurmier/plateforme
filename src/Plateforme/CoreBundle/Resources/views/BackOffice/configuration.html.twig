@@ -1,0 +1,17 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Espace pro - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  
+  <h1>Configuration</h1>
+  
+  <ul>
+    <li>
+      <a href="{{ path('plateforme_user_homepage') }}">Gestion des utilisateurs</a>
+    </li>
+  </ul>
+  
+{% endblock %}

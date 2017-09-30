@@ -1,0 +1,142 @@
+################################################################################
+# PAGE ACCUEIL
+################################################################################
+plateforme_core_homepage:
+    path:     /
+    defaults: { _controller: PlateformeCoreBundle:PageAccueil:index }
+    
+plateforme_core_homepage_edit:
+    path:      /admin/pages/accueil/edit
+    defaults:
+        _controller: PlateformeCoreBundle:PageAccueil:edit
+
+################################################################################
+# PAGE CONTACT
+################################################################################
+plateforme_core_page_contact_index:
+    path:      /contact
+    defaults:
+        _controller: PlateformeCoreBundle:PageContact:index
+
+################################################################################
+# PAGE FAQ
+################################################################################
+plateforme_core_page_faq_index:
+    path:     /faq
+    defaults: { _controller: PlateformeCoreBundle:PageFAQ:index }
+    
+plateforme_core_page_faq_edit:
+    path:      /admin/pages/faq/edit
+    defaults:
+        _controller: PlateformeCoreBundle:PageFAQ:edit
+        
+plateforme_core_page_faq_question_crud:
+    path:      /admin/pages/faq/questions
+    defaults:
+        _controller: PlateformeCoreBundle:FAQQuestion:crud
+
+plateforme_core_page_faq_question_add:
+    path:      /admin/pages/faq/questions/add
+    defaults:
+        _controller: PlateformeCoreBundle:FAQQuestion:add
+
+plateforme_core_page_faq_question_edit:
+    path:      /admin/pages/faq/questions/edit/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:FAQQuestion:edit
+    requirements:
+        id: \d*
+
+plateforme_core_page_faq_question_delete:
+    path:      /admin/pages/faq/questions/delete/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:FAQQuestion:delete
+    requirements:
+        id: \d*
+
+plateforme_core_page_faq_categorie_crud:
+    path:      /admin/pages/faq/categories
+    defaults:
+        _controller: PlateformeCoreBundle:FAQCategorie:crud
+
+plateforme_core_page_faq_categorie_add:
+    path:      /admin/pages/faq/categories/add
+    defaults:
+        _controller: PlateformeCoreBundle:FAQCategorie:add
+
+plateforme_core_page_faq_categorie_edit:
+    path:      /admin/pages/faq/categories/edit/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:FAQCategorie:edit
+    requirements:
+        id: \d*
+
+plateforme_core_page_faq_categorie_delete:
+    path:      /admin/pages/faq/categories/delete/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:FAQCategorie:delete
+    requirements:
+        id: \d*
+        
+################################################################################
+# PAGES ACTUALIES
+################################################################################
+plateforme_core_page_actualites_index:
+    path:      /actualites
+    defaults:
+        _controller: PlateformeCoreBundle:PageActualite:index
+        
+plateforme_core_page_actualites_crud:
+    path:      /admin/pages/actualites
+    defaults:
+        _controller: PlateformeCoreBundle:PageActualite:crud
+
+plateforme_core_page_actualites_add:
+    path:      /admin/pages/actualites/add
+    defaults:
+        _controller: PlateformeCoreBundle:PageActualite:add
+
+plateforme_core_page_actualites_edit:
+    path:      /admin/pages/actualites/edit/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:PageActualite:edit
+    requirements:
+        id: \d*
+
+plateforme_core_page_actualites_clone:
+    path:      /admin/pages/actualites/clone/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:PageActualite:clone
+    requirements:
+        id: \d*
+
+plateforme_core_page_actualites_delete:
+    path:      /admin/pages/actualites/delete/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:PageActualite:delete
+    requirements:
+        id: \d*
+
+plateforme_core_page_actualites_view:
+    path:      /actualites/{slug}
+    defaults:
+        _controller: PlateformeCoreBundle:PageActualite:view
+        
+################################################################################
+# PAGE ACCUEIL DU BACK OFFICE
+################################################################################
+plateforme_core_bo_homepage:
+    path:     /admin
+    defaults: { _controller: PlateformeCoreBundle:BackOffice:index }
+    
+plateforme_core_bo_pages:
+    path:     /admin/pages
+    defaults: { _controller: PlateformeCoreBundle:BackOffice:pages }
+    
+plateforme_core_bo_catalogue:
+    path:     /admin/catalogue
+    defaults: { _controller: PlateformeCoreBundle:BackOffice:catalogue }
+    
+plateforme_core_bo_configuration:
+    path:     /admin/configuration
+    defaults: { _controller: PlateformeCoreBundle:BackOffice:configuration }

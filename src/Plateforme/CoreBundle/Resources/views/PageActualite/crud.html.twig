@@ -1,0 +1,61 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Gestion des actualités - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  
+  <div class="row">
+    <div class="col-xs-6">
+      <h1>Gestion des actualités</h1>
+    </div>
+    <div class="col-xs-6 text-right">
+      <br>
+      <a href="{{ path('plateforme_core_page_actualites_add') }}" class="btn btn-success">
+        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer une actualité
+      </a>
+    </div>
+  </div>
+        
+  <hr>
+  
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Titre</th>
+          <th>Slug utilisé pour l'URL</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+        {% for actualite in actualites %}
+          <tr>
+            <td>{{ actualite.id }}</td>
+            <td>{{ actualite.titre }}</td>
+            <td>{{ actualite.slug }}</td>
+            <td>
+              <a href="{{ path('plateforme_core_page_actualites_view', {'slug': actualite.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </a>
+              &nbsp;|&nbsp;
+              <a href="{{ path('plateforme_core_page_actualites_edit', {'id': actualite.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </a>
+              &nbsp;|&nbsp;
+              <a href="{{ path('plateforme_core_page_actualites_clone', {'id': actualite.id}) }}" data-toggle="tooltip" data-placement="top" title="Cloner">
+                <i class="fa fa-clone" aria-hidden="true"></i>
+              </a>
+              &nbsp;|&nbsp;
+              <a href="{{ path('plateforme_core_page_actualites_delete', {'id': actualite.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+{% endblock %}

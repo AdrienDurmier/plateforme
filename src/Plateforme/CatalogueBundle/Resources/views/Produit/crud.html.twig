@@ -1,0 +1,61 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Gestion des produits - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  
+  <h1>Gestion des produits</h1>
+  
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
+    <li class="breadcrumb-item active">Produits</li>
+  </ol>
+  
+  <a href="{{ path('plateforme_catalogue_produits_add') }}" class="btn btn-success">
+    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer un produit
+  </a>
+        
+  <hr>
+  
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Titre</th>
+          <th>Slug</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+        {% for produit in produits %}
+          <tr>
+            <td>{{ produit.id }}</td>
+            <td>{{ produit.titre }}</td>
+            <td>{{ produit.slug }}</td>
+            <td>
+              <a href="{{ path('plateforme_catalogue_produits_view', {'slug': produit.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </a>
+              &nbsp;|&nbsp;
+              <a href="{{ path('plateforme_catalogue_produits_edit', {'id': produit.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </a>
+              &nbsp;|&nbsp;
+              <a href="{{ path('plateforme_catalogue_produits_clone', {'id': produit.id}) }}" data-toggle="tooltip" data-placement="top" title="Cloner">
+                <i class="fa fa-clone" aria-hidden="true"></i>
+              </a>
+              &nbsp;|&nbsp;
+              <a href="{{ path('plateforme_catalogue_produits_delete', {'id': produit.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+{% endblock %}

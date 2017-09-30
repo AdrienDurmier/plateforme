@@ -1,0 +1,19 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block body %}
+
+  <h2>Édition de la page FAQ</h2>
+  
+  <a class="btn btn-primary" href="{{ path('plateforme_core_page_faq_question_crud') }}">
+    <i class="fa fa-question" aria-hidden="true"></i>&nbsp;Gestions des questions
+  </a>
+  <a class="btn btn-primary" href="{{ path('plateforme_core_page_faq_question_crud') }}">
+    <i class="fa fa-folder-o" aria-hidden="true"></i>&nbsp;Gestions des categories
+  </a>
+  
+  <hr>
+
+  {{ include("PlateformeCoreBundle:PageFAQ:form.html.twig") }}
+  
+
+{% endblock %}

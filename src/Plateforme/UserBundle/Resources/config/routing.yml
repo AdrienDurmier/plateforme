@@ -1,0 +1,11 @@
+plateforme_user_homepage:
+    path:     /admin/users
+    defaults: { _controller: PlateformeUserBundle:User:index }
+    
+plateforme_user_inscription_employe:
+    path:     /admin/users/inscription/employe
+    defaults: { _controller: PlateformeUserBundle:Employe:inscription }
+    
+plateforme_user_inscription_client:
+    path:     /inscription-client
+    defaults: { _controller: PlateformeUserBundle:Client:inscription }

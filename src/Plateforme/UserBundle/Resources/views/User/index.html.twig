@@ -1,0 +1,19 @@
+{# src/Plateforme/UserBundle/Resources/views/User/index.html.twig #}
+
+{% extends "PlateformeUserBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil utilisateurs - {{ parent() }}
+{% endblock %}
+{% block body %}
+
+  <h1>Gestion des utilisateurs</h1>
+  
+  <ul>
+    <li><a href="{{ path('plateforme_user_inscription_employe') }}">Inscrire un employé</a></li>
+    <li><a href="{{ path('plateforme_user_inscription_client') }}">Inscrire un client</a></li>
+  </ul>.
+  
+  
+
+{% endblock %}

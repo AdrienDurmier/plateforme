@@ -1,0 +1,24 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Espace pro - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  
+  <h1>Pages</h1>
+  
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item active">Pages</li>
+  </ol>
+    
+  <hr>
+  
+  <ul>
+    <li>
+      <a href="{{ path('plateforme_api_import') }}">API d'Import CSV</a>
+    </li>
+  </ul>
+  
+{% endblock %}

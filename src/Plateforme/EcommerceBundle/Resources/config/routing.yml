@@ -1,0 +1,3 @@
+plateforme_ecommerce_homepage:
+    path:     /
+    defaults: { _controller: PlateformeEcommerceBundle:Default:index }

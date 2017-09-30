@@ -1,0 +1,24 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block body %}
+
+  <h2>Suppression d'une actualité</h2>
+
+  <p>
+    Etes-vous certain de vouloir supprimer l'actualité "<i>{{ actualite.titre }}</i>" ?
+  </p>
+
+  <form action="{{ path('plateforme_core_page_actualites_delete', {'id': actualite.id}) }}" method="post">
+    <a href="{{ path('plateforme_core_page_actualites_edit', {'id': actualite.id}) }}" class="btn btn-default">
+      <i class="fa fa-pencil" aria-hidden="true"></i>
+      Retour à l'édition
+    </a>
+    <a href="{{ path('plateforme_core_page_actualites_view', {'slug': actualite.slug}) }}" class="btn btn-default">
+      <i class="fa fa-eye" aria-hidden="true"></i>
+      Voir cette actualité
+    </a>
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    {{ form_rest(form) }}
+  </form>
+
+{% endblock %}

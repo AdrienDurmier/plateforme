@@ -1,0 +1,53 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Gestion des questions de la FAQ - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  
+  <div class="row">
+    <div class="col-xs-6">
+      <h1>Gestion des questions de la FAQ </h1>
+    </div>
+    <div class="col-xs-6 text-right">
+      <br>
+      <a href="{{ path('plateforme_core_page_faq_question_add') }}" class="btn btn-success">
+        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Ajouter une question
+      </a>
+    </div>
+  </div>
+        
+  <hr>
+  
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Question</th>
+          <th>Poid</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+        {% for question in questions %}
+          <tr>
+            <td>{{ question.id }}</td>
+            <td>{{ question.question }}</td>
+            <td>{{ question.weight }}</td>
+            <td>
+              <a href="{{ path('plateforme_core_page_faq_question_edit', {'id': question.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </a>
+              &nbsp;|&nbsp;
+              <a href="{{ path('plateforme_core_page_faq_question_delete', {'id': question.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  Bienvenue - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  
+  <h1>{{ page_accueil.titre }}</h1>
+  
+  <div>{{ page_accueil.contenu|raw }}</div>
+  
+{% endblock %}

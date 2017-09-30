@@ -1,0 +1,21 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  Produits - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  
+  <h1>Produits</h1>
+        
+  <hr>
+
+  {% for produit in produits %}
+    <div class="col-xs-12 col-sm-6 col-lg-4">
+      <a href="{{ path('plateforme_catalogue_produits_view', {'slug': produit.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+        {{ produit.titre }}
+      </a>
+    </div>
+  {% endfor %}
+  
+{% endblock %}

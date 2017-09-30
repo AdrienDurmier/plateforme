@@ -1,0 +1,41 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  Contact - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  
+  <h1>{{ page_contact.titre }}</h1>
+        
+  <hr>
+  
+  <div>
+    {{ page_contact.contenu|raw }}
+  </div>
+  
+  <form action="{{ path('plateforme_core_page_contact_index') }}" method="post">
+    
+    <div class="form-group">
+      <label for="objet">Quel est l'objet de votre demande ?</label>
+      <select class="form-control" id="objet" name="objet">
+        <option value="_none"> - Sélectionner un objet - </option>
+        <option value="commercial">Renseignement commercial (recherche pièce, délai, prix...)</option>
+        <option value="technique">Renseignement technique (diagnostic, identification de panne)</option>
+        <option value="commande">Suivi de votre commande</option>
+        <option value="comptabilite">Comptabilité, factures etc...</option>
+        <option value="technique">Question sur une vitre tactile</option>
+        <option value="autre">Autre</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="contenu">Votre message</label>
+      <textarea class="form-control" id="contenu" name="contenu" rows="5"></textarea>
+    </div>
+            
+    <input type="submit" value="Save" class="btn btn-success" />
+    
+  </form>
+  
+{% endblock %}

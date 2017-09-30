@@ -1,0 +1,15 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  
+  <h1>{{ produit.titre }}</h1>
+  
+  <div>
+    {{ produit.contenu|raw }}
+  </div>
+  
+{% endblock %}
