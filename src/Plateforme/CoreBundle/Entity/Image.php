@@ -1,12 +1,14 @@
 <?php
-namespace Plaforme\CoreBundle\Entity;
+namespace Plateforme\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Table(name="core_image")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\ImageRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Image

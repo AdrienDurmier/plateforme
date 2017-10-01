@@ -20,7 +20,7 @@ class PageType extends AbstractType
             ->add('titre')
             ->add('slug',     TextType::class, array('required' => false))
             ->add('contenu',  CKEditorType::class, array('config_name' => 'full_config',))
-            ->add('save',     SubmitType::class);
+        ;
     }
     
     /**

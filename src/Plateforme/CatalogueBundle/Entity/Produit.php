@@ -27,7 +27,12 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
    * @ORM\Column(name="prix", type="decimal", precision=10, scale=2)
    */
   private $prix;
-
+  
+  /**
+   * @ORM\OneToOne(targetEntity="Plateforme\CoreBundle\Entity\Image", cascade={"persist", "remove"})
+   */
+  private $image;
+  
   /**
    * Set prix
    *
@@ -49,5 +54,15 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
   public function getPrix() {
     return $this->prix;
   }
-
+  
+  public function setImage(\Plateforme\CoreBundle\Entity\Image $image = null)
+  {
+    $this->image = $image;
+  }
+  
+  public function getImage()
+  {
+    return $this->image;
+  }
+  
 }

@@ -2,8 +2,15 @@
 
 {% block body %}
 
-  <h2>Création d'un produit</h2>
+  <h1>Création d'un produit</h1>
+  
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_catalogue_produits_crud') }}">Produits</a></li>
+    <li class="breadcrumb-item active">Création</li>
+  </ol>
 
-  {{ include("PlateformeCoreBundle:Produit:form.html.twig") }}
+  {{ include("PlateformeCatalogueBundle:Produit:form.html.twig") }}
 
 {% endblock %}

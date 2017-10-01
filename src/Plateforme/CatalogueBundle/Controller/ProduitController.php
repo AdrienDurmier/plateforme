@@ -51,7 +51,7 @@ class ProduitController extends Controller
           $em->persist($produit);
           $em->flush();
           $request->getSession()->getFlashBag()->add('info', "Produit créé avec succès");
-          return $this->redirectToRoute('plateforme_core_page_produits_view', array('slug' => $produit->getSlug()));
+          return $this->redirectToRoute('plateforme_catalogue_produits_view', array('slug' => $produit->getSlug()));
         }
       }
       return $this->render('PlateformeCatalogueBundle:Produit:add.html.twig', array(
@@ -78,7 +78,7 @@ class ProduitController extends Controller
           $em->persist($produit);
           $em->flush();
           $request->getSession()->getFlashBag()->add('info', "Produit modifié avec succès");
-          return $this->redirectToRoute('plateforme_core_page_produits_view', array('slug' => $produit->getSlug()));
+          return $this->redirectToRoute('plateforme_catalogue_produits_view', array('slug' => $produit->getSlug()));
         }
       }
       
@@ -104,7 +104,7 @@ class ProduitController extends Controller
       $em->persist($produit_clone);
       $em->flush();
       $request->getSession()->getFlashBag()->add('info', "Produit cloné avec succès");
-      return $this->redirectToRoute('plateforme_core_page_produits_crud');
+      return $this->redirectToRoute('plateforme_catalogue_produits_crud');
     }
     
     /**
@@ -124,7 +124,7 @@ class ProduitController extends Controller
         $em->remove($produit);
         $em->flush();
         $request->getSession()->getFlashBag()->add('info', "Produit supprimé avec succès");
-        return $this->redirectToRoute('plateforme_core_page_produits_crud');
+        return $this->redirectToRoute('plateforme_catalogue_produits_crud');
       }
       
       return $this->render('PlateformeCatalogueBundle:Produit:delete.html.twig', array(

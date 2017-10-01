@@ -8,6 +8,12 @@
   
   <h1>{{ produit.titre }}</h1>
   
+  <img
+    class="img-responsive"
+    src="{{ asset(produit.image.webPath) }}"
+    alt="{{ produit.image.alt }}"
+  />
+  
   <div>
     {{ produit.contenu|raw }}
   </div>

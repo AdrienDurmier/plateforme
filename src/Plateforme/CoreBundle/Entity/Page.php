@@ -12,7 +12,15 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\PageRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"page_accueil" = "PageAccueil", "page_contact" = "PageContact", "page_faq" = "PageFAQ", "page_actualite" = "PageActualite", "produit" = "\Plateforme\CatalogueBundle\Entity\Produit"})
+ * @ORM\DiscriminatorMap({
+ *  "page_accueil" = "PageAccueil", 
+ *  "page_contact" = "PageContact", 
+ *  "page_faq" = "PageFAQ", 
+ *  "page_actualite" = "PageActualite", 
+ *  "produit" = "\Plateforme\CatalogueBundle\Entity\Produit",
+ *  "categorie" = "\Plateforme\CatalogueBundle\Entity\Categorie",
+ *  "marque" = "\Plateforme\CatalogueBundle\Entity\Marque"
+ * })
  * @ORM\HasLifecycleCallbacks()
  */
 abstract class Page

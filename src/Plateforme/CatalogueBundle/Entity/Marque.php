@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="catalogue_marque")
  * @ORM\Entity(repositoryClass="Plateforme\CatalogueBundle\Repository\MarqueRepository")
  */
-class Marque extends Page {
+class Marque extends \Plateforme\CoreBundle\Entity\Page {
 
   /**
    * @var int
