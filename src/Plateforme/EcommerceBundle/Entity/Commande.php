@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Commande
 {
-  
     public function __construct()
     {
       $this->created = new \Datetime();
@@ -31,6 +30,34 @@ class Commande
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="total_ttc", type="decimal", precision=10, scale=0, nullable=true)
+     */
+    private $totalTtc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mode_paiement", type="string", length=255, nullable=true)
+     */
+    private $modePaiement;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="envoi", type="boolean", nullable=true)
+     */
+    private $envoi;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="poids_kg", type="decimal", precision=10, scale=0, nullable=true)
+     */
+    private $poidsKg;
 
     /**
      * @var \DateTime
@@ -54,6 +81,102 @@ class Commande
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Set totalTtc
+     *
+     * @param string $totalTtc
+     *
+     * @return Commande
+     */
+    public function setTotalTtc($totalTtc)
+    {
+        $this->totalTtc = $totalTtc;
+
+        return $this;
+    }
+
+    /**
+     * Get totalTtc
+     *
+     * @return string
+     */
+    public function getTotalTtc()
+    {
+        return $this->totalTtc;
+    }
+
+    /**
+     * Set modePaiement
+     *
+     * @param string $modePaiement
+     *
+     * @return Commande
+     */
+    public function setModePaiement($modePaiement)
+    {
+        $this->modePaiement = $modePaiement;
+
+        return $this;
+    }
+
+    /**
+     * Get modePaiement
+     *
+     * @return string
+     */
+    public function getModePaiement()
+    {
+        return $this->modePaiement;
+    }
+
+    /**
+     * Set envoi
+     *
+     * @param boolean $envoi
+     *
+     * @return Commande
+     */
+    public function setEnvoi($envoi)
+    {
+        $this->envoi = $envoi;
+
+        return $this;
+    }
+
+    /**
+     * Get envoi
+     *
+     * @return bool
+     */
+    public function getEnvoi()
+    {
+        return $this->envoi;
+    }
+    
+    /**
+     * Set poidsKg
+     *
+     * @param string $poidsKg
+     *
+     * @return Commande
+     */
+    public function setPoidsKg($poidsKg)
+    {
+        $this->poidsKg = $poidsKg;
+
+        return $this;
+    }
+
+    /**
+     * Get poidsKg
+     *
+     * @return string
+     */
+    public function getPoidsKg()
+    {
+        return $this->poidsKg;
     }
 
     /**

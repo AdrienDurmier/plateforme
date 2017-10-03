@@ -1,3 +1,11 @@
-plateforme_ecommerce_homepage:
-    path:     /
-    defaults: { _controller: PlateformeEcommerceBundle:Default:index }
+plateforme_ecommerce_panier:
+    path:  /panier
+    defaults: { _controller: PlateformeEcommerceBundle:Panier:panier }
+    
+plateforme_ecommerce_commandeligne_add:
+    path:  /commandeligne-add/{id}
+    defaults: { _controller: PlateformeEcommerceBundle:Panier:add }
+
+plateforme_ecommerce_commandeligne_delete:
+    path:  /commandeligne-delete/{id}
+    defaults: { _controller: PlateformeEcommerceBundle:Panier:delete }

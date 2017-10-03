@@ -6,16 +6,35 @@
 
 {% block body %}
   
-  <h1>Produits</h1>
-        
-  <hr>
+  <div class="container">
+    <h1>Produits</h1>
 
-  {% for produit in produits %}
-    <div class="col-xs-12 col-sm-6 col-lg-4">
-      <a href="{{ path('plateforme_catalogue_produits_view', {'slug': produit.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
-        {{ produit.titre }}
-      </a>
-    </div>
-  {% endfor %}
+    <hr>
+
+    {% if produits|length != 0 %}
+      <div class="row">
+        {% for produit in produits %}
+          <div class="col-sm-3">
+            <img
+              class="img-fluid"
+              src="{{ asset(produit.image.webPath) }}"
+              alt="{{ produit.image.alt }}"
+            />
+            <br>
+            <a href="{{ path('plateforme_catalogue_produits_view', {'slug': produit.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+              {{ produit.titre }}
+            </a>
+            <br>
+            <a class="btn btn-success" href="{{ path('plateforme_ecommerce_commandeligne_add', { 'id' : produit.id }) }}">
+              Ajouter au panier
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      Aucun produit
+    {% endif %}
+    
+  </div>
   
 {% endblock %}

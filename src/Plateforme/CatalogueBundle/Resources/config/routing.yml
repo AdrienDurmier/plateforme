@@ -7,31 +7,31 @@ plateforme_catalogue_produits_index:
         _controller: PlateformeCatalogueBundle:Produit:index
         
 plateforme_catalogue_produits_crud:
-    path:      /admin/pages/produits
+    path:      /admin/produits
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:crud
 
 plateforme_catalogue_produits_add:
-    path:      /admin/pages/produits/add
+    path:      /admin/produits/add
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:add
 
 plateforme_catalogue_produits_edit:
-    path:      /admin/pages/produits/edit/{id}
+    path:      /admin/produits/edit/{id}
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:edit
     requirements:
         id: \d*
 
 plateforme_catalogue_produits_clone:
-    path:      /admin/pages/produits/clone/{id}
+    path:      /admin/produits/clone/{id}
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:clone
     requirements:
         id: \d*
 
 plateforme_catalogue_produits_delete:
-    path:      /admin/pages/produits/delete/{id}
+    path:      /admin/produits/delete/{id}
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:delete
     requirements:
