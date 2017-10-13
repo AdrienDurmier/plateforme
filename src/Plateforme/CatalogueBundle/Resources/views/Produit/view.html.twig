@@ -6,16 +6,18 @@
 
 {% block body %}
   
-  <h1>{{ produit.titre }}</h1>
-  
-  <img
-    class="img-responsive"
-    src="{{ asset(produit.image.webPath) }}"
-    alt="{{ produit.image.alt }}"
-  />
-  
-  <div>
-    {{ produit.contenu|raw }}
+  <div class="container">
+    <h1>{{ produit.titre }}</h1>
+
+    <img
+      class="img-responsive"
+      src="{{ asset(produit.image.webPath) }}"
+      alt="{{ produit.image.alt }}"
+    />
+
+    <div>
+      {{ produit.contenu|raw }}
+    </div>
   </div>
   
 {% endblock %}

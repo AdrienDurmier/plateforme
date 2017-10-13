@@ -34,6 +34,12 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
   private $image;
   
   /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\EcommerceBundle\Entity\Tva", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $tva;
+  
+  /**
    * Set prix
    *
    * @param string $prix
@@ -65,4 +71,25 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
     return $this->image;
   }
   
+  /**
+   * Set tva
+   *
+   * @param \Plateforme\EcommerceBundle\Entity\Tva $tva
+   * @return Produits
+   */
+  public function setTva(\Plateforme\EcommerceBundle\Entity\Tva $tva)
+  {
+      $this->tva = $tva;
+      return $this;
+  }
+  /**
+   * Get tva
+   *
+   * @return \Plateforme\EcommerceBundle\Entity\Tva 
+   */
+  public function getTva()
+  {
+      return $this->tva;
+  }
+
 }

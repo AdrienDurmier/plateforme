@@ -10,6 +10,9 @@ use Plateforme\EcommerceBundle\Entity\UtilisateursAdresses;
 
 class PanierController extends Controller {
 
+  /**
+   * Page Panier
+   */
   public function panierAction(Request $request) {
     $session = $request->getSession();
     if (!$session->has('panier')){
@@ -25,6 +28,9 @@ class PanierController extends Controller {
     ));
   }
 
+  /**
+   * Méthode de suppression d'une ligne du panier
+   */
   public function deleteAction($id, Request $request) {
     $session = $request->getSession();
     $panier = $session->get('panier');
@@ -38,12 +44,14 @@ class PanierController extends Controller {
     return $this->redirectToRoute('plateforme_ecommerce_panier');
   }
 
+  /**
+   * Méthode de changement de quantité d'une ligne de panier
+   */
   public function addAction($id, Request $request) {
     $session = $request->getSession();
     if (!$session->has('panier')){
       $session->set('panier', array());
     }
-    
     $panier = $session->get('panier');
     if (array_key_exists($id, $panier)) {
       if ($request->query->get('qte') != null){
