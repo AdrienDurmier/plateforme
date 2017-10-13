@@ -11,11 +11,27 @@ use Plateforme\EcommerceBundle\Entity\UtilisateursAdresses;
 class PanierController extends Controller {
 
   /**
+   * Menu du panier (permet de compter notamment le nombre de produits)
+   * @return type
+   */
+  public function menuAction(Request $request) {
+    $session = $request->getSession();
+    $articles = 0;
+    if ($session->has('panier')){
+      $articles = count($session->get('panier'));
+    }
+
+    return $this->render('PlateformeEcommerceBundle:Panier:menu.html.twig', array(
+          'articles' => $articles
+    ));
+  }
+
+  /**
    * Page Panier
    */
   public function panierAction(Request $request) {
     $session = $request->getSession();
-    if (!$session->has('panier')){
+    if (!$session->has('panier')) {
       $session->set('panier', array());
     }
 
@@ -23,8 +39,8 @@ class PanierController extends Controller {
     $produits = $em->getRepository('PlateformeCatalogueBundle:Produit')->findArray(array_keys($session->get('panier')));
 
     return $this->render('PlateformeEcommerceBundle:Panier:panier.html.twig', array(
-      'produits' => $produits,
-      'panier' => $session->get('panier')
+          'produits' => $produits,
+          'panier' => $session->get('panier')
     ));
   }
 
@@ -49,20 +65,22 @@ class PanierController extends Controller {
    */
   public function addAction($id, Request $request) {
     $session = $request->getSession();
-    if (!$session->has('panier')){
+    if (!$session->has('panier')) {
       $session->set('panier', array());
     }
     $panier = $session->get('panier');
-    
+
     if (array_key_exists($id, $panier)) {
-      if ($request->query->get('qte') != null){
+      if ($request->query->get('qte') != null) {
         $panier[$id] = $request->query->get('qte');
       }
       $this->get('session')->getFlashBag()->add('success', 'Quantité modifié avec succès');
-    } else {
-      if ($request->query->get('qte') != null){
+    }
+    else {
+      if ($request->query->get('qte') != null) {
         $panier[$id] = $request->query->get('qte');
-      }else {
+      }
+      else {
         $panier[$id] = 1;
       }
       $this->get('session')->getFlashBag()->add('success', 'Article ajouté avec succès');

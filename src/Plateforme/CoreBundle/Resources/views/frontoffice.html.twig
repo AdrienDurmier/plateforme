@@ -28,9 +28,7 @@
             </li>
           </ul>
           <span class="navbar-text">
-            <a href="{{ path('plateforme_ecommerce_panier') }}">
-              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            </a>
+            {{ render(controller("PlateformeEcommerceBundle:Panier:menu")) }}
           </span>
         </div>
       </div>
