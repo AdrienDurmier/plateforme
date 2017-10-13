@@ -25,9 +25,15 @@
               {{ produit.titre }}
             </a>
             <br>
-            <a class="btn btn-success" href="{{ path('plateforme_ecommerce_commandeligne_add', { 'id' : produit.id }) }}">
-              <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>&nbsp;Ajouter au panier
-            </a>
+            {% if panier[produit.id] is not defined %}
+              <a class="btn btn-success" href="{{ path('plateforme_ecommerce_commandeligne_add', { 'id' : produit.id }) }}">
+                <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>&nbsp;Ajouter au panier
+              </a>
+            {% else %}
+              <button type="button" class="btn btn-primary" disabled>
+                <i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;Déjà ajouté au panier
+              </button>
+            {% endif %}
           </div>
         {% endfor %}
       </div>

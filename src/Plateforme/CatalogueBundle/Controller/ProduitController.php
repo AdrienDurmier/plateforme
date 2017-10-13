@@ -14,12 +14,23 @@ class ProduitController extends Controller
     /**
      * Produits
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+      
       $em = $this->getDoctrine()->getManager();
       $produits = $em->getRepository('PlateformeCatalogueBundle:Produit')->findAll();
+      
+      // permettra de retirer le bouton d'ajout si le produit est déjà ajouter
+      $session = $request->getSession();
+      if ($session->has('panier')){
+        $panier = $session->get('panier');
+      }else{
+        $panier = false;
+      }
+      
       return $this->render('PlateformeCatalogueBundle:Produit:index.html.twig', array(
         'produits'   => $produits,
+        'panier'   => $panier,
       ));
     }
     
@@ -30,6 +41,7 @@ class ProduitController extends Controller
     {
       $em = $this->getDoctrine()->getManager();
       $produits = $em->getRepository('PlateformeCatalogueBundle:Produit')->findAll();
+      
       return $this->render('PlateformeCatalogueBundle:Produit:crud.html.twig', array(
         'produits'   => $produits,
       ));
@@ -143,8 +155,18 @@ class ProduitController extends Controller
       if (null === $produit) {
         throw new NotFoundHttpException("Le produit ayant l'url ".$slug." n'existe pas.");
       }
+      
+      // permettra de retirer le bouton d'ajout si le produit est déjà ajouter
+      $session = $request->getSession();
+      if ($session->has('panier')){
+        $panier = $session->get('panier');
+      }else{
+        $panier = false;
+      }
+      
       return $this->render('PlateformeCatalogueBundle:Produit:view.html.twig', array(
         'produit'   => $produit,
+        'panier'   => $panier,
       ));
     }
     

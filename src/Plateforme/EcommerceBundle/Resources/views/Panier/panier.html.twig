@@ -31,17 +31,13 @@
         <form action="{{ path('plateforme_ecommerce_commandeligne_add', { 'id' : produit.id }) }}" method="get">
           <td>
             <a href="{{ path('plateforme_core_homepage') }}produits/{{ produit.slug }}">
-              <div class="row">
-                <div class="col col-2">
-                  <img
-                    class="img-fluid"
-                    src="{{ asset(produit.image.webPath) }}"
-                    alt="{{ produit.image.alt }}"
-                  />
-                </div>
-                <div class="col">
-                    {{ produit.titre }}
-                </div>
+                <img
+                  style="width:75px;"
+                  class="img-fluid"
+                  src="{{ asset(produit.image.webPath) }}"
+                  alt="{{ produit.image.alt }}"
+                />
+                {{ produit.titre }}
               </div>
             </a>
           </td>
@@ -93,7 +89,7 @@
         <i class="fa fa-reply" aria-hidden="true"></i>
         Continuer mes achats
       </a>
-      <a href="{# path('livraison') #}" class="btn btn-success text-right">
+      <a href="{# path('livraison') #}" class="btn btn-success pull-right">
         <i class="fa fa-check" aria-hidden="true"></i>
         Valider mon panier
       </a>
