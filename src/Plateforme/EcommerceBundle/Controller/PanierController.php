@@ -53,6 +53,7 @@ class PanierController extends Controller {
       $session->set('panier', array());
     }
     $panier = $session->get('panier');
+    
     if (array_key_exists($id, $panier)) {
       if ($request->query->get('qte') != null){
         $panier[$id] = $request->query->get('qte');

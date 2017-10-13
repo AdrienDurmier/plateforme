@@ -29,18 +29,39 @@
       {% for produit in produits %}
         <tr>
         <form action="{{ path('plateforme_ecommerce_commandeligne_add', { 'id' : produit.id }) }}" method="get">
-          <td>{{ produit.titre }}</td>
           <td>
-            <input
-              name="qte" class="form-control" 
-              class="form-control"
-              value="{{ panier[produit.id] }}" 
-              type="number"
-              onChange="this.form.submit()"
-              >
-            <a href="{{ path('plateforme_ecommerce_commandeligne_delete', { 'id' : produit.id }) }}">
-              <i class="fa fa-trash-o" aria-hidden="true"></i>
+            <a href="{{ path('plateforme_core_homepage') }}produits/{{ produit.slug }}">
+              <div class="row">
+                <div class="col col-2">
+                  <img
+                    class="img-fluid"
+                    src="{{ asset(produit.image.webPath) }}"
+                    alt="{{ produit.image.alt }}"
+                  />
+                </div>
+                <div class="col">
+                    {{ produit.titre }}
+                </div>
+              </div>
             </a>
+          </td>
+          <td>
+            <div class="row">
+              <div class="col">
+                <input
+                  name="qte" class="form-control" 
+                  class="form-control"
+                  value="{{ panier[produit.id] }}" 
+                  type="number"
+                  onChange="this.form.submit()"
+                  >
+              </div>
+              <div class="col col-1">
+                <a href="{{ path('plateforme_ecommerce_commandeligne_delete', { 'id' : produit.id }) }}">
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
           </td>
           <td>{{ produit.prix }} €</td>
           <td>{{ produit.prix * panier[produit.id] }} €</td>
@@ -54,6 +75,7 @@
     </table>
 
     {% if produits|length != 0 %}
+      <hr>
       <dl class="row">
         <dt class="col-sm-10 text-right">Total HT :</dt>
         <dd class="col-sm-2">{{ totalHT }} €</dd>
@@ -64,8 +86,17 @@
         <dt class="col-sm-10 text-right">Total TTC :</dt>
         <dd class="col-sm-2">{{ totalTTC }} €</dd>
       </dl>
+      
       <div class="clearfix"></div>
-      <a href="{# path('livraison') #}" class="btn btn-success pull-right">Valider mon panier</a>
+
+      <a href="{{ path('plateforme_catalogue_produits_index') }}" class="btn btn-primary text-right">
+        <i class="fa fa-reply" aria-hidden="true"></i>
+        Continuer mes achats
+      </a>
+      <a href="{# path('livraison') #}" class="btn btn-success text-right">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Valider mon panier
+      </a>
     {% endif %}
 
   </div>
