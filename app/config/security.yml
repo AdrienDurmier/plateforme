@@ -23,13 +23,13 @@ security:
             anonymous:      true
             provider:       main
             form_login:
-                login_path: fos_user_security_login
+                login_path: plateforme_user_login
                 check_path: fos_user_security_check
             logout:
                 path:       fos_user_security_logout
-                target:     fos_user_security_login
+                target:     plateforme_user_login
             remember_me:
                 secret:     %secret%
 
     access_control:
-        #- { path: ^/admin, roles: ROLE_SUPER_ADMIN ROLE_ADMIN}
+        - { path: ^/admin, roles: ROLE_EMPLOYE}

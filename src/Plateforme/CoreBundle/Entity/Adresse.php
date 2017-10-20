@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Adresse
  *
- * @ORM\Table(name="adresse")
+ * @ORM\Table(name="core_adresse")
  * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\AdresseRepository")
  */
 class Adresse
@@ -20,17 +20,11 @@ class Adresse
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Commune")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $commune;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="addr_street", type="string", length=255, nullable=true)
+     * @ORM\Column(name="addr_street", type="string", length=255)
      */
     private $addrStreet;
 
@@ -41,6 +35,47 @@ class Adresse
      */
     private $addrAdditional;
 
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="addr_cp", type="string", length=255)
+     */
+    private $code_postal;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="addr_commune", type="string", length=255)
+     */
+    private $commune;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="addr_pays", type="string", length=255)
+     */
+    private $pays;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destinataire_nom", type="string", length=255)
+     */
+    private $destinataire_nom;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destinataire_prenom", type="string", length=255)
+     */
+    private $destinataire_prenom;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Plateforme\UserBundle\Entity\Client")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $client;
 
     /**
      * Get id
@@ -52,26 +87,6 @@ class Adresse
         return $this->id;
     }
     
-    /**
-     * Set commune
-     * @param \Plateforme\CoreBundle\Entity\Commune $commune
-     * @return Adresse
-     */
-    public function setCommune(\Plateforme\CoreBundle\Entity\Commune $commune)
-    {
-      $this->commune = $commune;
-      return $this;
-    }
-
-    /**
-     * Get commune
-     * @return string
-     */
-    public function getCommune()
-    {
-      return $this->commune;
-    }
-
     /**
      * Set addrStreet
      *
@@ -120,6 +135,134 @@ class Adresse
         return $this->addrAdditional;
     }
     
+    /**
+     * Set code_postal
+     *
+     * @param string $code_postal
+     *
+     * @return Adresse
+     */
+    public function setCodePostal($code_postal)
+    {
+        $this->code_postal = $code_postal;
     
-}
+        return $this;
+    }
 
+    /**
+     * Get $code_postal
+     *
+     * @return string
+     */
+    public function getCodePostal()
+    {
+        return $this->code_postal;
+    }
+    
+    /**
+     * Set commune
+     *
+     * @param string $commune
+     *
+     * @return Adresse
+     */
+    public function setCommune($commune)
+    {
+        $this->commune = $commune;
+    
+        return $this;
+    }
+
+    /**
+     * Get commune
+     *
+     * @return string
+     */
+    public function getCommune()
+    {
+        return $this->commune;
+    }
+    
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     *
+     * @return Adresse
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+    
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return string
+     */
+    public function getPays()
+    {
+        return $this->pays;
+    }
+    
+    public function setClient(\Plateforme\UserBundle\Entity\Client $client)
+    {
+      $this->client = $client;
+      return $this;
+    }
+
+    public function getClient()
+    {
+      return $this->client;
+    }
+    
+    /**
+     * Set destinataire_nom
+     *
+     * @param string $destinataire_nom
+     *
+     * @return Adresse
+     */
+    public function setDestinataireNom($destinataire_nom)
+    {
+        $this->destinataire_nom = $destinataire_nom;
+    
+        return $this;
+    }
+
+    /**
+     * Get destinataire_nom
+     *
+     * @return string
+     */
+    public function getDestinataireNom()
+    {
+        return $this->destinataire_nom;
+    }
+    
+    /**
+     * Set destinataire_prenom
+     *
+     * @param string $destinataire_prenom
+     *
+     * @return Adresse
+     */
+    public function setDestinatairePrenom($destinataire_prenom)
+    {
+        $this->destinataire_prenom = $destinataire_prenom;
+    
+        return $this;
+    }
+
+    /**
+     * Get destinataire_prenom
+     *
+     * @return string
+     */
+    public function getDestinatairePrenom()
+    {
+        return $this->destinataire_prenom;
+    }
+}

@@ -28,6 +28,29 @@
             </li>
           </ul>
           <span class="navbar-text">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+              <a href="#" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user" aria-hidden="true"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownUser">
+                <a class="dropdown-item" href="{{ path('fos_user_profile_show') }}">
+                  <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Mon Compte
+                </a>
+                {% if is_granted('ROLE_EMPLOYE') %}
+                  <a class="dropdown-item" href="{{ path('plateforme_core_bo_homepage') }}">
+                    <i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Espace Pro
+                  </a>
+                {% endif %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">
+                  <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Déconnexion
+                </a>
+              </div>
+            {% else %}
+              <a href="{{ path('plateforme_user_login') }}">
+                <i class="fa fa-user" aria-hidden="true"></i>
+              </a>
+            {% endif %}
             {{ render(controller("PlateformeEcommerceBundle:Panier:menu")) }}
           </span>
         </div>
@@ -75,10 +98,10 @@
         </div>
       </div>
     {% endfor %} 
-    
+
     {% block body %}
     {% endblock %}
-    
+
     <footer>
       <nav class="navbar fixed-bottom navbar-light bg-faded container">
         <span class="navbar-text">

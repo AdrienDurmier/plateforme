@@ -9,3 +9,11 @@ plateforme_ecommerce_commandeligne_add:
 plateforme_ecommerce_commandeligne_delete:
     path:  /commandeligne-delete/{id}
     defaults: { _controller: PlateformeEcommerceBundle:Panier:delete }
+
+plateforme_ecommerce_livraison:
+    path:  /livraison
+    defaults: { _controller: PlateformeEcommerceBundle:Livraison:livraison }
+
+plateforme_ecommerce_livraison_suppression:
+    path:  /livraison/adresse/suppression/{id}
+    defaults: { _controller: PlateformeEcommerceBundle:Livraison:adresseSuppression }

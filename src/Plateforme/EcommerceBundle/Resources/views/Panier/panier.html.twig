@@ -7,6 +7,10 @@
   {% set refTva = refTva|merge({ ('%' ~ produit.tva.valeur) : 0 }) %}
 {% endfor %}
 
+{% block title %}
+  Panier - {{ parent() }}
+{% endblock %}
+
 {% block body %}
   <div class="container">
     <h1>Votre panier</h1>
@@ -14,9 +18,10 @@
       <thead>
         <tr>
           <th>Références</th>
-          <th>Quantité</th>
           <th>Prix unitaire</th>
+          <th>Quantité</th>
           <th>Total HT</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -41,26 +46,22 @@
               </div>
             </a>
           </td>
-          <td>
-            <div class="row">
-              <div class="col">
-                <input
-                  name="qte" class="form-control" 
-                  class="form-control"
-                  value="{{ panier[produit.id] }}" 
-                  type="number"
-                  onChange="this.form.submit()"
-                  >
-              </div>
-              <div class="col col-1">
-                <a href="{{ path('plateforme_ecommerce_commandeligne_delete', { 'id' : produit.id }) }}">
-                  <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-          </td>
           <td>{{ produit.prix }} €</td>
+          <td>
+            <input
+              name="qte" class="form-control" 
+              class="form-control"
+              value="{{ panier[produit.id] }}" 
+              type="number"
+              onChange="this.form.submit()"
+              >
+          </td>
           <td>{{ produit.prix * panier[produit.id] }} €</td>
+          <td>
+            <a href="{{ path('plateforme_ecommerce_commandeligne_delete', { 'id' : produit.id }) }}">
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </a>
+          </td>
         </form>
         </tr>
         {% set totalHT = totalHT + (produit.prix * panier[produit.id]) %}
@@ -91,7 +92,7 @@
       </a>
     {% endif %}
     
-    <a href="{# path('livraison') #}" class="btn btn-success pull-right">
+    <a href="{{ path('plateforme_ecommerce_livraison') }}" class="btn btn-success pull-right">
       <i class="fa fa-check" aria-hidden="true"></i>
       Valider mon panier
     </a>

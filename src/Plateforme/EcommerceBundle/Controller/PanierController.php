@@ -16,13 +16,14 @@ class PanierController extends Controller {
    */
   public function menuAction(Request $request) {
     $session = $request->getSession();
-    $articles = 0;
-    if ($session->has('panier')){
-      $articles = count($session->get('panier'));
+    $nb_articles = 0;
+    if ($session->has('panier')) {
+      foreach ($session->get('panier') as $article_ajoute) {
+        $nb_articles += $article_ajoute;
+      }
     }
-
-    return $this->render('PlateformeEcommerceBundle:Panier:menu.html.twig', array(
-          'articles' => $articles
+    return $this->render('PlateformeEcommerceBundle:Panier:compteur.html.twig', array(
+          'nb_articles' => $nb_articles
     ));
   }
 

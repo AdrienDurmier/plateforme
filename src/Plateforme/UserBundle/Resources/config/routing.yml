@@ -2,10 +2,65 @@ plateforme_user_homepage:
     path:     /admin/users
     defaults: { _controller: PlateformeUserBundle:User:index }
     
-plateforme_user_inscription_employe:
-    path:     /admin/users/inscription/employe
-    defaults: { _controller: PlateformeUserBundle:Employe:inscription }
-    
+plateforme_user_login:
+    path:     /connexion
+    defaults: { _controller: PlateformeUserBundle:User:login }
+
+
+################################################################################
+# CLIENTS
+################################################################################
 plateforme_user_inscription_client:
     path:     /inscription-client
     defaults: { _controller: PlateformeUserBundle:Client:inscription }
+
+plateforme_user_clients_crud:
+    path:      /admin/users/clients
+    defaults:
+        _controller: PlateformeUserBundle:Client:crud
+
+plateforme_user_clients_add:
+    path:      /admin/users/clients/add
+    defaults:
+        _controller: PlateformeUserBundle:Client:add
+
+plateforme_user_clients_edit:
+    path:      /admin/users/clients/edit/{id}
+    defaults:
+        _controller: PlateformeUserBundle:Client:edit
+    requirements:
+        id: \d*
+
+plateforme_user_clients_delete:
+    path:      /admin/users/clients/delete/{id}
+    defaults:
+        _controller: PlateformeUserBundle:Client:delete
+    requirements:
+        id: \d*
+
+################################################################################
+# EMPLOYES
+################################################################################
+plateforme_user_employes_crud:
+    path:      /admin/users/employes
+    defaults:
+        _controller: PlateformeUserBundle:Employe:crud
+
+plateforme_user_employes_add:
+    path:      /admin/users/employes/add
+    defaults:
+        _controller: PlateformeUserBundle:Employe:add
+
+plateforme_user_employes_edit:
+    path:      /admin/users/employes/edit/{id}
+    defaults:
+        _controller: PlateformeUserBundle:Employe:edit
+    requirements:
+        id: \d*
+
+plateforme_user_employes_delete:
+    path:      /admin/users/employes/delete/{id}
+    defaults:
+        _controller: PlateformeUserBundle:Employe:delete
+    requirements:
+        id: \d*

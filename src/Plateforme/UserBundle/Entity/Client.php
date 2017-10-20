@@ -15,6 +15,11 @@ use PUGX\MultiUserBundle\Validator\Constraints\UniqueEntity;
  */
 class Client extends Personne
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -30,11 +35,6 @@ class Client extends Personne
     public function getId()
     {
         return $this->id;
-    }
-    
-    public function __construct()
-    {
-        parent::__construct();
     }
     
 }
