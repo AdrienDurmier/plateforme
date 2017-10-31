@@ -23,12 +23,6 @@ class Personne extends User
     protected $id;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Sexe")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $sexe;
-    
-    /**
      * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Civilite")
      * @ORM\JoinColumn(nullable=false)
      */

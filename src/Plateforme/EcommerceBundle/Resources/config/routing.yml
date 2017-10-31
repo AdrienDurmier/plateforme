@@ -17,3 +17,11 @@ plateforme_ecommerce_livraison:
 plateforme_ecommerce_livraison_suppression:
     path:  /livraison/adresse/suppression/{id}
     defaults: { _controller: PlateformeEcommerceBundle:Livraison:adresseSuppression }
+
+plateforme_ecommerce_validation:
+    path:  /validation
+    defaults: { _controller: PlateformeEcommerceBundle:Validation:validation }
+
+plateforme_ecommerce_paiement:
+    path:  /paiement
+    defaults: { _controller: PlateformeEcommerceBundle:Paiement:paiement }

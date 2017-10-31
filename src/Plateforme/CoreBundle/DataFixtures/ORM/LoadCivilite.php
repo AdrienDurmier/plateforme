@@ -27,22 +27,11 @@ class LoadCivilite extends AbstractFixture implements OrderedFixtureInterface
     $civilite3->setPrefixFullname('Mademoiselle');
     $manager->persist($civilite3);
     
-    $civilite4 = new Civilite();
-    $civilite4->setPrefixName('Dr');
-    $civilite4->setPrefixFullname('Docteur');
-    $manager->persist($civilite4);
-    
-    $civilite5 = new Civilite();
-    $civilite5->setPrefixName('Me');
-    $civilite5->setPrefixFullname('Maître');
-    $manager->persist($civilite5);
-    
-    $civilite6 = new Civilite();
-    $civilite6->setPrefixName('Prs');
-    $civilite6->setPrefixFullname('Professeur');
-    $manager->persist($civilite6);
-    
     $manager->flush();
+    
+    $this->addReference('monsieur', $civilite1);
+    $this->addReference('madame', $civilite2);
+    $this->addReference('mademoiselle', $civilite3);
   }
   
   public function getOrder() {

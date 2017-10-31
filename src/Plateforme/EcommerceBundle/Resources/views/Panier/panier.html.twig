@@ -13,6 +13,13 @@
 
 {% block body %}
   <div class="container">
+
+    <small>Étape de validation de votre panier</small>
+    <div class="progress" style="height: 1px;">
+      <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+
+    <br>
     <h1>Votre panier</h1>
     <table class="table table-striped">
       <thead>
@@ -25,24 +32,24 @@
         </tr>
       </thead>
       <tbody>
-      {% if produits|length == 0 %}
-        <tr>
-          <td colspan="4"><center>Aucun articles dans votre panier</center></td>
-        </tr>
-      {% endif %}
+        {% if produits|length == 0 %}
+          <tr>
+            <td colspan="5"><center>Aucun articles dans votre panier</center></td>
+          </tr>
+        {% endif %}
 
       {% for produit in produits %}
         <tr>
         <form action="{{ path('plateforme_ecommerce_commandeligne_add', { 'id' : produit.id }) }}" method="get">
           <td>
             <a href="{{ path('plateforme_core_homepage') }}produits/{{ produit.slug }}">
-                <img
-                  style="width:75px;"
-                  class="img-fluid"
-                  src="{{ asset(produit.image.webPath) }}"
-                  alt="{{ produit.image.alt }}"
+              <img
+                style="width:75px;"
+                class="img-fluid"
+                src="{{ asset(produit.image.webPath) }}"
+                alt="{{ produit.image.alt }}"
                 />
-                {{ produit.titre }}
+              {{ produit.titre }}
               </div>
             </a>
           </td>
@@ -83,7 +90,7 @@
         <dt class="col-sm-10 text-right">Total TTC :</dt>
         <dd class="col-sm-2">{{ totalTTC }} €</dd>
       </dl>
-      
+
       <div class="clearfix"></div>
 
       <a href="{{ path('plateforme_catalogue_produits_index') }}" class="btn btn-primary text-right">
@@ -91,7 +98,7 @@
         Continuer mes achats
       </a>
     {% endif %}
-    
+
     <a href="{{ path('plateforme_ecommerce_livraison') }}" class="btn btn-success pull-right">
       <i class="fa fa-check" aria-hidden="true"></i>
       Valider mon panier

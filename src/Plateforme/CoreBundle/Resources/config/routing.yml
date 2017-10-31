@@ -121,6 +121,34 @@ plateforme_core_page_actualites_view:
     path:      /actualites/{slug}
     defaults:
         _controller: PlateformeCoreBundle:PageActualite:view
+
+################################################################################
+# PAGES ADRESSES
+################################################################################
+plateforme_core_page_adresses:
+    path:      /profile/adresses
+    defaults:
+        _controller: PlateformeCoreBundle:Adresse:crud
+        
+plateforme_core_page_adresses_add:
+    path:      /profile/adresses/add
+    defaults:
+        _controller: PlateformeCoreBundle:Adresse:add
+
+plateforme_core_page_adresses_edit:
+    path:      /profile/adresses/edit/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:Adresse:edit
+    requirements:
+        id: \d*
+
+plateforme_core_page_adresses_delete:
+    path:      /profile/adresses/delete/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:Adresse:delete
+    requirements:
+        id: \d*
+
         
 ################################################################################
 # PAGE ACCUEIL DU BACK OFFICE

@@ -24,52 +24,60 @@ class Adresse
     /**
      * @var string
      *
-     * @ORM\Column(name="addr_street", type="string", length=255)
+     * @ORM\Column(name="titre", type="string", length=255)
      */
-    private $addrStreet;
+    private $titre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="addr_additional", type="string", length=255, nullable=true)
+     * @ORM\Column(name="adresse", type="string", length=255)
      */
-    private $addrAdditional;
+    private $adresse;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="complement", type="string", length=255, nullable=true)
+     */
+    private $complement;
 
     
     /**
      * @var string
      *
-     * @ORM\Column(name="addr_cp", type="string", length=255)
+     * @ORM\Column(name="code_postal", type="string", length=255)
      */
     private $code_postal;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="addr_commune", type="string", length=255)
+     * @ORM\Column(name="commune", type="string", length=255)
      */
     private $commune;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="addr_pays", type="string", length=255)
+     * @ORM\Column(name="pays", type="string", length=2)
      */
     private $pays;
     
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="destinataire_nom", type="string", length=255)
+     * @ORM\Column(name="livraison", type="boolean", nullable=true)
      */
-    private $destinataire_nom;
+    private $livraison;
+    
     
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="destinataire_prenom", type="string", length=255)
+     * @ORM\Column(name="facturation", type="boolean", nullable=true)
      */
-    private $destinataire_prenom;
+    private $facturation;
     
     /**
      * @ORM\ManyToOne(targetEntity="Plateforme\UserBundle\Entity\Client")
@@ -88,51 +96,75 @@ class Adresse
     }
     
     /**
-     * Set addrStreet
+     * Set titre
      *
-     * @param string $addrStreet
+     * @param string $titre
      *
      * @return Adresse
      */
-    public function setAddrStreet($addrStreet)
+    public function setTitre($titre)
     {
-        $this->addrStreet = $addrStreet;
+        $this->titre = $titre;
     
         return $this;
     }
 
     /**
-     * Get addrStreet
+     * Get titre
      *
      * @return string
      */
-    public function getAddrStreet()
+    public function getTitre()
     {
-        return $this->addrStreet;
+        return $this->titre;
     }
-
+    
     /**
-     * Set addrAdditional
+     * Set adresse
      *
-     * @param string $addrAdditional
+     * @param string $adresse
      *
      * @return Adresse
      */
-    public function setAddrAdditional($addrAdditional)
+    public function setAdresse($adresse)
     {
-        $this->addrAdditional = $addrAdditional;
+        $this->adresse = $adresse;
     
         return $this;
     }
 
     /**
-     * Get addrAdditional
+     * Get adresse
      *
      * @return string
      */
-    public function getAddrAdditional()
+    public function getAdresse()
     {
-        return $this->addrAdditional;
+        return $this->adresse;
+    }
+
+    /**
+     * Set complement
+     *
+     * @param string $complement
+     *
+     * @return Adresse
+     */
+    public function setComplement($complement)
+    {
+        $this->complement = $complement;
+    
+        return $this;
+    }
+
+    /**
+     * Get complement
+     *
+     * @return string
+     */
+    public function getComplement()
+    {
+        return $this->complement;
     }
     
     /**
@@ -207,6 +239,49 @@ class Adresse
         return $this->pays;
     }
     
+    /**
+     * Set livraison
+     *
+     * @param boolean $livraison
+     *
+     * @return Adresse
+     */
+    public function setLivraison($livraison)
+    {
+        $this->livraison = $livraison;
+        return $this;
+    }
+    /**
+     * Get livraison
+     *
+     * @return boolean
+     */
+    public function getLivraison()
+    {
+        return $this->livraison;
+    }
+    /**
+     * Set facturation
+     *
+     * @param boolean $facturation
+     *
+     * @return Adresse
+     */
+    public function setFacturation($facturation)
+    {
+        $this->facturation = $facturation;
+        return $this;
+    }
+    /**
+     * Get facturation
+     *
+     * @return boolean
+     */
+    public function getFacturation()
+    {
+        return $this->facturation;
+    }
+    
     public function setClient(\Plateforme\UserBundle\Entity\Client $client)
     {
       $this->client = $client;
@@ -216,53 +291,5 @@ class Adresse
     public function getClient()
     {
       return $this->client;
-    }
-    
-    /**
-     * Set destinataire_nom
-     *
-     * @param string $destinataire_nom
-     *
-     * @return Adresse
-     */
-    public function setDestinataireNom($destinataire_nom)
-    {
-        $this->destinataire_nom = $destinataire_nom;
-    
-        return $this;
-    }
-
-    /**
-     * Get destinataire_nom
-     *
-     * @return string
-     */
-    public function getDestinataireNom()
-    {
-        return $this->destinataire_nom;
-    }
-    
-    /**
-     * Set destinataire_prenom
-     *
-     * @param string $destinataire_prenom
-     *
-     * @return Adresse
-     */
-    public function setDestinatairePrenom($destinataire_prenom)
-    {
-        $this->destinataire_prenom = $destinataire_prenom;
-    
-        return $this;
-    }
-
-    /**
-     * Get destinataire_prenom
-     *
-     * @return string
-     */
-    public function getDestinatairePrenom()
-    {
-        return $this->destinataire_prenom;
     }
 }

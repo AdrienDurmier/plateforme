@@ -5,6 +5,8 @@ namespace Plateforme\CoreBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class AdresseType extends AbstractType
 {
@@ -14,13 +16,25 @@ class AdresseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('addrStreet')
-            ->add('addrAdditional')
+            ->add('adresse')
+            ->add('complement')
             ->add('code_postal')
             ->add('commune')
             ->add('pays')
-            ->add('destinataire_nom')
-            ->add('destinataire_prenom')
+            ->add('pays', CountryType::class,
+                array(
+                  'data' => 'FR'
+                ))
+            ->add('livraison', CheckboxType::class, 
+                array(
+                  'required' => false,
+                  'label' => 'Adresse de livraison'
+                ))
+            ->add('facturation', CheckboxType::class, 
+                array(
+                  'required' => false,
+                  'label' => 'Adresse de facturation'
+                ))
         ;
     }
     

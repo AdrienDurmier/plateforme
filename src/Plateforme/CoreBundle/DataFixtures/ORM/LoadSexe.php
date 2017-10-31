@@ -21,6 +21,9 @@ class LoadSexe extends AbstractFixture implements OrderedFixtureInterface
     $manager->persist($sexe2);
     
     $manager->flush();
+    
+    $this->addReference('homme', $sexe1);
+    $this->addReference('femme', $sexe2);
   }
   
   public function getOrder() {

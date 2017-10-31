@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-6">
         {% if adresses|length != 0 %}
-          <form action="todo_validation" method="POST">
+          <form action="{{ path('plateforme_ecommerce_validation') }}" method="POST">
 
             <h4>Adresse de livraison</h4>
             {% for adresse in adresses %}

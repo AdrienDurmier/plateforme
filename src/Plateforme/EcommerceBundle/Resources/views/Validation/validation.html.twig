@@ -1,0 +1,68 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  Validation - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+
+    <small>Étape de validation de votre commande</small>
+    <div class="progress" style="height: 1px;">
+      <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+
+    <br>
+
+    <h1>Récapitulatif de votre commande</h1>
+
+    <h2>Votre commande</h2>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Références</th>
+          <th>Prix unitaire</th>
+          <th>Quantité</th>
+          <th>Total HT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <img
+              style="width:75px;"
+              class="img-fluid"
+              src="todo"
+              alt="todo"
+              />
+            todo
+            </div>
+          </td>
+          <td>todo €</td>
+          <td>
+            todo
+          </td>
+          <td>todo €</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Livraison</h2>
+
+
+    <h2>Mode de paiement</h2>
+
+    <form action="{{ path('plateforme_ecommerce_paiement') }}" method="POST">
+      <input type="radio" name="mode_paiement" value="paiement_cheque_virement"> Paiement par chèque ou virement
+      <br>
+      <input type="radio" name="mode_paiement" value="paiement_paypal"> Paiement par Paypal
+
+      <button class="btn btn-success pull-right" type="submit">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Valider votre commande
+      </button>
+    </form>
+
+  </div>
+{% endblock %}

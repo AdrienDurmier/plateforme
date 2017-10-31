@@ -71,5 +71,7 @@ class LivraisonController extends Controller {
     $session->set('adresse', $adresse);
     return $this->redirect($this->generateUrl('validation'));
   }
+  
+  
 
 }
