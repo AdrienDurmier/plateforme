@@ -1,8 +1,8 @@
 /*
  * CSS du backoffice
  */
-body {padding-top:3.5rem;}
-h1 {margin-bottom:20px;padding-bottom:9px;border-bottom:1px solid #eee;}
+body {padding-top:3.5rem;font-size:0.8rem;}
+h1 {font-size:2em}
 .sidebar {position:fixed;top: 51px;bottom:0;left:0;z-index:1000;padding:20px;overflow-x:hidden;overflow-y:auto;border-right:1px solid #eee;}
 .sidebar {padding-left:0;padding-right:0;}
 .sidebar .nav {margin-bottom:20px;}
@@ -11,3 +11,4 @@ h1 {margin-bottom:20px;padding-bottom:9px;border-bottom:1px solid #eee;}
 .sidebar .nav-link {border-radius:0;}
 .placeholders {padding-bottom:3rem;}
 .placeholder img {padding-top:1.5rem;padding-bottom:1.5rem;}
+.breadcrumb {padding:0;background-color: transparent;}
