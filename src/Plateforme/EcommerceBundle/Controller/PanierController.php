@@ -58,7 +58,7 @@ class PanierController extends Controller {
       $this->get('session')->getFlashBag()->add('success', 'Article supprimé avec succès');
     }
 
-    return $this->redirectToRoute('plateforme_ecommerce_panier');
+    return $this->redirectToRoute('plateforme_ecommerce_tunnel_panier');
   }
 
   /**
@@ -87,7 +87,7 @@ class PanierController extends Controller {
       $this->get('session')->getFlashBag()->add('success', 'Article ajouté avec succès');
     }
     $session->set('panier', $panier);
-    return $this->redirect($this->generateUrl('plateforme_ecommerce_panier'));
+    return $this->redirect($this->generateUrl('plateforme_ecommerce_tunnel_panier'));
   }
 
 }

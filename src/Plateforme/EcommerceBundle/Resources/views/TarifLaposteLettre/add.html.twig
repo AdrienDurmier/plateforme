@@ -1,0 +1,20 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Ajout d'un tarif de La Poste - envoi par lettre - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h1>Ajout d'un tarif de La Poste - envoi par lettre</h1>
+  
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_configuration') }}">Configuration</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_ecommerce_tariflapostelettre_crud') }}">Tarifs de La Poste par lettre</a></li>
+    <li class="breadcrumb-item active">Ajouter</li>
+  </ol>
+
+  {{ include("PlateformeEcommerceBundle:TarifLaposteLettre:form.html.twig") }}
+  
+{% endblock %}

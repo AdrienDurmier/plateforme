@@ -1,4 +1,31 @@
 ################################################################################
+# VARIABLES
+################################################################################
+plateforme_core_variables_crud:
+    path:      /admin/variables
+    defaults:
+        _controller: PlateformeCoreBundle:Variable:crud
+
+plateforme_core_variables_add:
+    path:      /admin/variables/add
+    defaults:
+        _controller: PlateformeCoreBundle:Variable:add
+
+plateforme_core_variables_edit:
+    path:      /admin/variables/edit/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:Variable:edit
+    requirements:
+        id: \d*
+
+plateforme_core_variables_delete:
+    path:      /admin/variables/delete/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:Variable:delete
+    requirements:
+        id: \d*
+
+################################################################################
 # PAGE ACCUEIL
 ################################################################################
 plateforme_core_homepage:

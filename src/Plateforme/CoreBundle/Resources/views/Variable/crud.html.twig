@@ -1,0 +1,51 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Gestion des variables - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  
+  <h1>Gestion des variables</h1>
+  
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item active">Variables</li>
+  </ol>
+  
+  <a href="{{ path('plateforme_core_variables_add') }}" class="btn btn-success">
+    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer une variable
+  </a>
+  
+  <hr>
+    
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Label</th>
+          <th>Code</th>
+          <th>Valeur</th>
+        </tr>
+      </thead>
+        {% for variable in variables %}
+          <tr>
+            <td>{{ variable.label }}</td>
+            <td>{{ variable.code }}</td>
+            <td>{{ variable.value }}</td>
+            <td>
+              <a href="{{ path('plateforme_core_variables_edit', {'id': variable.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </a>
+              &nbsp;|&nbsp;
+              <a href="{{ path('plateforme_core_variables_delete', {'id': variable.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+{% endblock %}

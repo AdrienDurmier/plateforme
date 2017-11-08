@@ -1,0 +1,62 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  Authentification - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+
+    <div class="hidden-small">
+      <div class="row">
+        <div class="col-2 text-center text-success">
+          <small>Votre panier</small>
+          <br><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        </div>
+        <div class="col-2 text-center text-primary">
+          <small>Authentification</small>
+          <br><i class="fa fa-sign-in" aria-hidden="true"></i>
+        </div>
+        <div class="col-2 text-center text-muted">
+          <small>Livraison</small>
+          <br><i class="fa fa-truck" aria-hidden="true"></i>
+        </div>
+        <div class="col-2 text-center text-muted">
+          <small>Validation</small>
+          <br><i class="fa fa-check-square" aria-hidden="true"></i>
+        </div>
+        <div class="col-2 text-center text-muted">
+          <small>Paiement</small>
+          <br><i class="fa fa-money" aria-hidden="true"></i>
+        </div>
+        <div class="col-2 text-center text-muted">
+          <small>Récapitulatif</small>
+          <br><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="progress" style="height: 1px;">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 17%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar" role="progressbar" style="width: 16%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <br>
+    </div>
+
+    <h1>Authentification</h1>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <h3>Se connecter</h3>
+        <p>J'ai déjà commandé.</p>
+        {{ render(controller('FOSUserBundle:Security:login')) }}
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <h3>S'inscrire</h3>
+        <p>Je suis un nouveau client.</p>
+        <a href="{{ path('plateforme_user_inscription_client') }}" class="btn btn-success">
+          S'inscrire
+        </a>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

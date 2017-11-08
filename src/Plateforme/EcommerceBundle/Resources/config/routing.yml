@@ -1,27 +1,74 @@
-plateforme_ecommerce_panier:
-    path:  /panier
+################################################################################
+# TUNNEL D'ACHAT
+################################################################################
+plateforme_ecommerce_tunnel_panier:
+    path:  /tunnel-achat
     defaults: { _controller: PlateformeEcommerceBundle:Panier:panier }
-    
+plateforme_ecommerce_tunnel_authentification:
+    path:  /tunnel-achat/authentification
+    defaults: { _controller: PlateformeEcommerceBundle:Tunnel:authentification }
+plateforme_ecommerce_tunnel_livraison:
+    path:  /tunnel-achat/livraison
+    defaults: { _controller: PlateformeEcommerceBundle:Livraison:livraison }
+plateforme_ecommerce_tunnel_livraison_choix:
+    path:  /tunnel-achat/livraison-choix
+    defaults: { _controller: PlateformeEcommerceBundle:Livraison:choix }
+    methods: [post]
+plateforme_ecommerce_tunnel_validation:
+    path:  /tunnel-achat/validation
+    defaults: { _controller: PlateformeEcommerceBundle:Tunnel:validation }
+plateforme_ecommerce_tunnel_paiement:
+    path:  /tunnel-achat/paiement
+    defaults: { _controller: PlateformeEcommerceBundle:Paiement:paiement }
 plateforme_ecommerce_commandeligne_add:
     path:  /commandeligne-add/{id}
     defaults: { _controller: PlateformeEcommerceBundle:Panier:add }
-
 plateforme_ecommerce_commandeligne_delete:
     path:  /commandeligne-delete/{id}
     defaults: { _controller: PlateformeEcommerceBundle:Panier:delete }
-
-plateforme_ecommerce_livraison:
-    path:  /livraison
-    defaults: { _controller: PlateformeEcommerceBundle:Livraison:livraison }
-
 plateforme_ecommerce_livraison_suppression:
     path:  /livraison/adresse/suppression/{id}
     defaults: { _controller: PlateformeEcommerceBundle:Livraison:adresseSuppression }
-
-plateforme_ecommerce_validation:
-    path:  /validation
-    defaults: { _controller: PlateformeEcommerceBundle:Validation:validation }
-
-plateforme_ecommerce_paiement:
-    path:  /paiement
-    defaults: { _controller: PlateformeEcommerceBundle:Paiement:paiement }
+################################################################################
+# TARIF LAPOSTE
+################################################################################
+plateforme_ecommerce_tariflapostelettre_crud:
+    path:      /admin/tarifs-la-poste-lettre
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteLettre:crud }
+plateforme_ecommerce_tariflapostelettre_add:
+    path:      /admin/tarifs-la-poste-lettre/add
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteLettre:add }
+plateforme_ecommerce_tariflapostelettre_tarif:
+    path:  /livraison/tarifs-la-poste-lettre
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteLettre:tarif }
+    methods: [post]
+plateforme_ecommerce_tariflapostelettre_edit:
+    path:      /admin/tarifs-la-poste-lettre/edit/{id}
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteLettre:edit }
+    requirements:
+        id: \d*
+plateforme_ecommerce_tariflapostelettre_delete:
+    path:      /admin/tarifs-la-poste-lettre/delete/{id}
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteLettre:delete }
+    requirements:
+        id: \d*
+plateforme_ecommerce_tariflaposterecommande_crud:
+    path:      /admin/tarifs-la-poste-recommande
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteRecommande:crud }
+plateforme_ecommerce_tariflaposterecommande_add:
+    path:      /admin/tarifs-la-poste-recommande/add
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteRecommande:add }
+plateforme_ecommerce_tariflaposterecommande_tarif:
+    path:  /livraison/tarifs-la-poste-recommande
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteRecommande:tarif }
+    methods: [post]
+plateforme_ecommerce_tariflaposterecommande_edit:
+    path:      /admin/tarifs-la-poste-recommande/edit/{id}
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteRecommande:edit }
+    requirements:
+        id: \d*
+plateforme_ecommerce_tariflaposterecommande_delete:
+    path:      /admin/tarifs-la-poste-recommande/delete/{id}
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteRecommande:delete }
+    requirements:
+        id: \d*

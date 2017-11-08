@@ -1,0 +1,30 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Suppression d'une variable - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h2>Suppression d'une variable</h2>
+  
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_variables_crud') }}">Variables</a></li>
+    <li class="breadcrumb-item active">Suppression</li>
+  </ol>
+
+  <p>
+    Etes-vous certain de vouloir supprimer la variable "<i>{{ variable.label }} <small>({{ variable.code }})</small></i>" ?
+  </p>
+
+  <form action="{{ path('plateforme_core_variables_delete', {'id': variable.id}) }}" method="post">
+    <a href="{{ path('plateforme_core_variables_edit', {'id': variable.id}) }}" class="btn btn-default">
+      <i class="fa fa-pencil" aria-hidden="true"></i>
+      Retour à l'édition
+    </a>
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    {{ form_rest(form) }}
+  </form>
+
+{% endblock %}

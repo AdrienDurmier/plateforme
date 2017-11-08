@@ -1,26 +1,20 @@
 <?php
 
-namespace Plateforme\UserBundle\Form;
+namespace Plateforme\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PersonneType extends AbstractType
+class VariableType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('civilite')->add('nom')->add('prenom');
+        $builder->add('code')->add('label')->add('value');
     }
-    
-    public function getParent()
-    {
-        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
-    }
-    
     
     /**
      * {@inheritdoc}
@@ -28,7 +22,7 @@ class PersonneType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Plateforme\UserBundle\Entity\Personne'
+            'data_class' => 'Plateforme\CoreBundle\Entity\Variable'
         ));
     }
 
@@ -37,7 +31,7 @@ class PersonneType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'plateforme_userbundle_personne';
+        return 'plateforme_corebundle_variable';
     }
 
 

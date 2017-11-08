@@ -5,13 +5,33 @@
 {% endblock %}
 
 {% block body %}
-  
+
   <h1>Configuration</h1>
-  
+
   <ul>
     <li>
       <a href="{{ path('plateforme_user_homepage') }}">Gestion des utilisateurs</a>
     </li>
+    <li>
+      <a href="{{ path('plateforme_core_variables_crud') }}">
+        Gestion des variables
+      </a>
+    </li>
+    <li>
+      Gestion des tarifs de livraison
+      <ul>
+        <li>
+          <a href="{{ path('plateforme_ecommerce_tariflapostelettre_crud') }}">
+            La Poste par lettre
+          </a>
+        </li>
+        <li>
+          <a href="{{ path('plateforme_ecommerce_tariflaposterecommande_crud') }}">
+            La Poste par recommandé
+          </a>
+        </li>
+      </ul>
+    </li>
   </ul>
-  
+
 {% endblock %}

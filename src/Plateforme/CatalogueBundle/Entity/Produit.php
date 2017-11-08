@@ -27,6 +27,13 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
    * @ORM\Column(name="prix", type="decimal", precision=10, scale=2)
    */
   private $prix;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="poids", type="decimal", precision=10, scale=2)
+   */
+  private $poids;
   
   /**
    * @ORM\OneToOne(targetEntity="Plateforme\CoreBundle\Entity\Image", cascade={"persist", "remove"})
@@ -59,6 +66,28 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
    */
   public function getPrix() {
     return $this->prix;
+  }
+  
+  /**
+   * Set poids
+   *
+   * @param string $poids
+   *
+   * @return Produit
+   */
+  public function setPoids($poids) {
+    $this->poids = $poids;
+
+    return $this;
+  }
+
+  /**
+   * Get poids
+   *
+   * @return string
+   */
+  public function getPoids() {
+    return $this->poids;
   }
   
   public function setImage(\Plateforme\CoreBundle\Entity\Image $image = null)
