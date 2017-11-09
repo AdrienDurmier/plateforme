@@ -1,9 +1,9 @@
 services:
-    tva:
-        class: Plateforme\EcommerceBundle\Twig\Extension\TvaExtension
+    ttc:
+        class: Plateforme\EcommerceBundle\Twig\Extension\TTCExtension
         tags:
             - { name: twig.extension }
-    montantTva:
-        class: Plateforme\EcommerceBundle\Twig\Extension\MontantTvaExtension
+    tva:
+        class: Plateforme\EcommerceBundle\Twig\Extension\TVAExtension
         tags:
             - { name: twig.extension }

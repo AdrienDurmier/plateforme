@@ -2,9 +2,9 @@
 
 {% set totalHT = 0 %}
 {% set totalTTC = 0%}
-{% set refTva = {} %}
+{% set totalTVAs = {} %}
 {% for produit in produits %}
-  {% set refTva = refTva|merge({ ('%' ~ produit.tva.valeur) : 0 }) %}
+  {% set totalTVAs = totalTVAs|merge({ (produit.tva.valeur ~ '%') : 0 }) %}
 {% endfor %}
 
 {% block title %}
@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block body %}
+  {{ dump(totalTVAs) }}
   <div class="container">
 
     {% if produits|length > 0 %}
@@ -53,10 +54,10 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Références</th>
+          <th>Référence</th>
           <th>Prix unitaire</th>
           <th>Quantité</th>
-          <th>Total HT</th>
+          <th>Total</th>
           <th></th>
         </tr>
       </thead>
@@ -64,8 +65,8 @@
         {% if produits|length == 0 %}
           <tr>
             <td colspan="5"><center>Aucun articles dans votre panier</center></td>
-          </tr>
-        {% endif %}
+        </tr>
+      {% endif %}
 
       {% for produit in produits %}
         <tr>
@@ -82,7 +83,15 @@
               </div>
             </a>
           </td>
-          <td>{{ produit.prix }} €</td>
+          <td>
+            {% if(produit.tva.valeur == 0) %}
+              {{ produit.prix }} €
+            {% else %}
+              {{ produit.prix|ttc(produit.tva) }} € TTC
+              <br>
+              <small>{{ produit.prix }} € HT</small>
+            {% endif %}
+          </td>
           <td>
             <input
               name="qte" class="form-control" 
@@ -92,7 +101,15 @@
               onChange="this.form.submit()"
               >
           </td>
-          <td>{{ produit.prix * panier[produit.id] }} €</td>
+          <td>
+            {% if(produit.tva.valeur == 0) %}
+              {{ produit.prix|ttc(produit.tva) * panier[produit.id] }} €
+            {% else %}
+              {{ produit.prix|ttc(produit.tva) * panier[produit.id] }} € TTC
+              <br>
+              <small>{{ produit.prix * panier[produit.id] }} € HT</small>
+            {% endif %}
+          </td>
           <td>
             <a href="{{ path('plateforme_ecommerce_commandeligne_delete', { 'id' : produit.id }) }}">
               <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -100,30 +117,49 @@
           </td>
         </form>
         </tr>
+        {% set totalTTC = totalTTC + (produit.prix|ttc(produit.tva) * panier[produit.id]) %}
         {% set totalHT = totalHT + (produit.prix * panier[produit.id]) %}
-        {% set totalTTC = totalTTC + (produit.prix * panier[produit.id])|tva(produit.tva.multiplicate) %}
-        {% set refTva = refTva|merge({ ('%' ~ produit.tva.valeur) : refTva['%' ~ produit.tva.valeur] + ( produit.prix * panier[produit.id])|montantTva(produit.tva.multiplicate) }) %}
+        {% set totalTVAs = totalTVAs|merge({ ( produit.tva.valeur ~ '%') : totalTVAs[produit.tva.valeur ~ '%'] + ( produit.prix * panier[produit.id])|tva(produit.tva) }) %}
       {% endfor %}
       </tbody>
+      <tfoot>
+        {% for key, tva in totalTVAs %}
+          {% if tva > 0 %}
+            <tr>
+              <td colspan="3" class="text-right"><b>TVA {{ key }}</b></td>
+              <td>{{ tva }} €</td>
+              <td></td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+        <tr>
+          <td colspan="3" class="text-right">
+      <big><b>Total</b></big>
+      </td>
+      <td>
+      <big>{{ totalTTC }} € TTC</big>
+      <br>
+      <small>{{ totalHT }} € HT</small>
+      </td>
+      <td></td>
+      </tr>
+      </tfoot>
     </table>
 
-    {% if produits|length != 0 %}
-      <hr>
+    {#  <hr>
       <dl class="row">
         <dt class="col-sm-10 text-right">Total HT :</dt>
         <dd class="col-sm-2">{{ totalHT }} €</dd>
-        {% for key, tva in refTva %}
+        {% for key, tva in totalTVAs %}
           <dt class="col-sm-10 text-right">TVA {{ key }} :</dt>
           <dd class="col-sm-2">{{ tva }} €</dd>
         {% endfor %}
         <dt class="col-sm-10 text-right">Total TTC :</dt>
         <dd class="col-sm-2">{{ totalTTC }} €</dd>
-      </dl>
+      </dl>#}
 
-      <div class="clearfix"></div>
-      
+    {% if produits|length != 0 %}
       <hr>
-
       <a href="{{ path('plateforme_catalogue_produits_index') }}" class="btn btn-primary text-right">
         <i class="fa fa-reply" aria-hidden="true"></i>
         Continuer mes achats

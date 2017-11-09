@@ -55,28 +55,35 @@
         </tr>
       </thead>
       <tbody>
+        {% for produit in produits %}
         <tr>
-          <td>
-            <img
-              style="width:75px;"
-              class="img-fluid"
-              src="todo"
-              alt="todo"
-              />
-            todo
-            </div>
-          </td>
-          <td>todo €</td>
-          <td>
-            todo
-          </td>
-          <td>todo €</td>
+          <td>{{ produit.titre }}</td>
+          <td>{{ produit.prix }}</td>
+          <td>{{ panier[produit.id] }}</td>
+          <td>{{ produit.prix * panier[produit.id] }} €</td>
         </tr>
+        {% endfor %}
       </tbody>
     </table>
 
     <h2>Livraison</h2>
-
+    <div class="row">
+      <div class="col-6">
+        <i class="fa fa-truck fa-3x" aria-hidden="true"></i>
+        <br>
+        <b>Adresse de livraison:</b>
+        <br>{{ adresse_livraison['livraison_adresse'] }} {{ adresse_livraison['livraison_complement'] }}
+        <br>{{ adresse_livraison['livraison_cp'] }} {{ adresse_livraison['livraison_commune'] }} ({{ adresse_livraison['livraison_pays'] }})
+      </div>
+      <div class="col-6">
+        <i class="fa fa-file-text-o fa-3x" aria-hidden="true"></i>
+        <br>
+        <b>Adresse de facturation:</b>
+        <br>{{ adresse_facturation['facturation_adresse'] }} {{ adresse_facturation['facturation_complement'] }}
+        <br>{{ adresse_facturation['facturation_cp'] }} {{ adresse_facturation['facturation_commune'] }} ({{ adresse_facturation['facturation_pays'] }})
+      </div>
+    </div>
+    <br>
 
     <h2>Mode de paiement</h2>
 

@@ -31,31 +31,28 @@ class TunnelController extends Controller {
       return $this->redirectToRoute('plateforme_ecommerce_tunnel_panier');
     }
     
-    if (!$session->has('mode_livraison')) {
-      $session->set('mode_livraison', $valeurs_recu['mode_livraison']);
-    }
-    if (!$session->has('adresse_livraison')) {
-      $session->set('adresse_livraison', array(
-        'livraison_titre'       => $valeurs_recu['livraison_titre'],
-        'livraison_adresse'     => $valeurs_recu['livraison_adresse'],
-        'livraison_complement'  => $valeurs_recu['livraison_complement'],
-        'livraison_cp'          => $valeurs_recu['livraison_cp'],
-        'livraison_commune'     => $valeurs_recu['livraison_commune'],
-        'livraison_pays'        => $valeurs_recu['livraison_pays'],
-      ));
-    }
-    if (!$session->has('adresse_facturation')) {
-      $session->set('adresse_facturation', array(
-        'facturation_titre'       => $valeurs_recu['facturation_titre'],
-        'facturation_adresse'     => $valeurs_recu['facturation_adresse'],
-        'facturation_complement'  => $valeurs_recu['facturation_complement'],
-        'facturation_cp'          => $valeurs_recu['facturation_cp'],
-        'facturation_commune'     => $valeurs_recu['facturation_commune'],
-        'facturation_pays'        => $valeurs_recu['facturation_pays'],
-      ));
-    }
+    $session->set('mode_livraison', $valeurs_recu['mode_livraison']);
+    $session->set('adresse_livraison', array(
+      'livraison_titre'       => $valeurs_recu['livraison_titre'],
+      'livraison_adresse'     => $valeurs_recu['livraison_adresse'],
+      'livraison_complement'  => $valeurs_recu['livraison_complement'],
+      'livraison_cp'          => $valeurs_recu['livraison_cp'],
+      'livraison_commune'     => $valeurs_recu['livraison_commune'],
+      'livraison_pays'        => $valeurs_recu['livraison_pays'],
+    ));
+    $session->set('adresse_facturation', array(
+      'facturation_titre'       => $valeurs_recu['facturation_titre'],
+      'facturation_adresse'     => $valeurs_recu['facturation_adresse'],
+      'facturation_complement'  => $valeurs_recu['facturation_complement'],
+      'facturation_cp'          => $valeurs_recu['facturation_cp'],
+      'facturation_commune'     => $valeurs_recu['facturation_commune'],
+      'facturation_pays'        => $valeurs_recu['facturation_pays'],
+    ));
+    
+    $produits = $em->getRepository('PlateformeCatalogueBundle:Produit')->findArray(array_keys($session->get('panier')));
     
     return $this->render('PlateformeEcommerceBundle:Tunnel:validation.html.twig', array(
+      'produits'                =>  $produits,
       'panier'                =>  $session->get('panier'),
       'mode_livraison'        =>  $session->get('mode_livraison'),
       'adresse_livraison'     =>  $session->get('adresse_livraison'),

@@ -10,16 +10,16 @@ class LoadTva extends AbstractFixture implements OrderedFixtureInterface
 {
   public function load(ObjectManager $manager)
   {
-    // TVA à 1.75%
+    // Aucune TVA
     $tva1 = new Tva();
-    $tva1->setMultiplicate('0.982');
-    $tva1->setNom('TVA 1.75%');
-    $tva1->setValeur('1.75');
+    $tva1->setMultiplicate('1');
+    $tva1->setNom('Aucune TVA');
+    $tva1->setValeur('0');
     $manager->persist($tva1);
 
     // TVA à 20%
     $tva2 = new Tva();
-    $tva2->setMultiplicate('0.833');
+    $tva2->setMultiplicate('1.20');
     $tva2->setNom('TVA 20%');
     $tva2->setValeur('20');
     $manager->persist($tva2);
