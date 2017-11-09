@@ -2,12 +2,12 @@
 namespace Plateforme\EcommerceBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 /**
- * TarifLaposteRecommande
+ * TarifLaposteColissimo
  *
- * @ORM\Table(name="tarif_laposte_recommande")
- * @ORM\Entity(repositoryClass="Plateforme\EcommerceBundle\Repository\TarifLaposteRecommandeRepository")
+ * @ORM\Table(name="tarif_laposte_colissimo")
+ * @ORM\Entity(repositoryClass="Plateforme\EcommerceBundle\Repository\TarifLaposteColissimoRepository")
  */
-class TarifLaposteRecommande
+class TarifLaposteColissimo
 {
     /**
      * @var int
@@ -43,7 +43,7 @@ class TarifLaposteRecommande
      *
      * @param string $pays
      *
-     * @return TarifLaposteRecommande
+     * @return TarifLaposteColissimo
      */
     public function setPays($pays)
     {
@@ -64,7 +64,7 @@ class TarifLaposteRecommande
      *
      * @param string $tarif
      *
-     * @return TarifLaposteRecommande
+     * @return TarifLaposteColissimo
      */
     public function setTarif($tarif)
     {

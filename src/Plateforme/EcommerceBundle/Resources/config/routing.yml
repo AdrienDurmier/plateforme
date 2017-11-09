@@ -52,23 +52,23 @@ plateforme_ecommerce_tariflapostelettre_delete:
     defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteLettre:delete }
     requirements:
         id: \d*
-plateforme_ecommerce_tariflaposterecommande_crud:
-    path:      /admin/tarifs-la-poste-recommande
-    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteRecommande:crud }
-plateforme_ecommerce_tariflaposterecommande_add:
-    path:      /admin/tarifs-la-poste-recommande/add
-    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteRecommande:add }
-plateforme_ecommerce_tariflaposterecommande_tarif:
-    path:  /livraison/tarifs-la-poste-recommande
-    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteRecommande:tarif }
+plateforme_ecommerce_tariflapostecolissimo_crud:
+    path:      /admin/tarifs-la-poste-colissimo
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteColissimo:crud }
+plateforme_ecommerce_tariflapostecolissimo_add:
+    path:      /admin/tarifs-la-poste-colissimo/add
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteColissimo:add }
+plateforme_ecommerce_tariflapostecolissimo_tarif:
+    path:  /livraison/tarifs-la-poste-colissimo
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteColissimo:tarif }
     methods: [post]
-plateforme_ecommerce_tariflaposterecommande_edit:
-    path:      /admin/tarifs-la-poste-recommande/edit/{id}
-    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteRecommande:edit }
+plateforme_ecommerce_tariflapostecolissimo_edit:
+    path:      /admin/tarifs-la-poste-colissimo/edit/{id}
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteColissimo:edit }
     requirements:
         id: \d*
-plateforme_ecommerce_tariflaposterecommande_delete:
-    path:      /admin/tarifs-la-poste-recommande/delete/{id}
-    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteRecommande:delete }
+plateforme_ecommerce_tariflapostecolissimo_delete:
+    path:      /admin/tarifs-la-poste-colissimo/delete/{id}
+    defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteColissimo:delete }
     requirements:
         id: \d*

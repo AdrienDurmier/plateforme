@@ -1,17 +1,17 @@
 {% extends "PlateformeCoreBundle::backoffice.html.twig" %}
 
 {% block title %}
-  Suppression d'un tarif de La Poste - lettre recommandée - {{ parent() }}
+  Suppression d'un tarif de La Poste - lettre colissimo - {{ parent() }}
 {% endblock %}
 
 {% block body %}
 
-  <h1>Suppression d'un tarif de La Poste - lettre recommandée</h1>
+  <h1>Suppression d'un tarif de La Poste - colissimo</h1>
   
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_configuration') }}">Configuration</a></li>
-    <li class="breadcrumb-item"><a href="{{ path('plateforme_ecommerce_tariflaposterecommande_crud') }}">Tarifs de La Poste - lettre recommandée</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_ecommerce_tariflapostecolissimo_crud') }}">Tarifs de La Poste - colissimo</a></li>
     <li class="breadcrumb-item active">Suppression</li>
   </ol>
 
@@ -19,8 +19,8 @@
     Etes-vous certain de vouloir supprimer le tarif pour le pays "<i>{{ tarif.pays }}</i>" ?
   </p>
 
-  <form action="{{ path('plateforme_ecommerce_tariflaposterecommande_delete', {'id': tarif.id}) }}" method="post">
-    <a href="{{ path('plateforme_ecommerce_tariflaposterecommande_edit', {'id': tarif.id}) }}" class="btn btn-default">
+  <form action="{{ path('plateforme_ecommerce_tariflapostecolissimo_delete', {'id': tarif.id}) }}" method="post">
+    <a href="{{ path('plateforme_ecommerce_tariflapostecolissimo_edit', {'id': tarif.id}) }}" class="btn btn-default">
       <i class="fa fa-pencil" aria-hidden="true"></i>
       Retour à l'édition
     </a>

@@ -13,20 +13,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class LivraisonController extends Controller {
 
   public function livraisonAction(Request $request) {
-    $em = $this->getDoctrine()->getManager();
-    $adresse = new Adresse();
-
     $user = $this->get('security.token_storage')->getToken()->getUser();
-    $adresses = $em->getRepository('PlateformeCoreBundle:Adresse')->findByClient($user);
-
-    $adresse_magasin_titre_obj = $em->getRepository('PlateformeCoreBundle:Adresse')->findByClient($user);
-    $adresse_magasin = array(
-      'adresse_magasin_titre' => '',
-    );
-
     return $this->render('PlateformeEcommerceBundle:Tunnel:livraison.html.twig', array(
           'user' => $user,
-          'adresses' => $adresses,
           'countries' => Intl::getRegionBundle()->getCountryNames(),
     ));
   }
@@ -77,7 +66,7 @@ class LivraisonController extends Controller {
       // Livraison par La Poste
       case "livraison_laposte":
         // Récupération du tarif et des adresses possibles
-        $result = $this->modeLaPoste();
+        $result = $this->modeLaPoste($valeurs_recu['pays_destination']);
         $response = array(
           'data' => array(
             'adresses_livraison_possibles' => $result['adresses_livraison_possibles'],

@@ -24,23 +24,42 @@ class TunnelController extends Controller {
   
   public function validationAction(Request $request) {
     $em = $this->getDoctrine()->getManager();
+    $valeurs_recu = $request->request->all();
     $session = $request->getSession();
     // Si le panier n'existe pas alors on redirige vers la page panier
     if (!$session->has('panier')) {
       return $this->redirectToRoute('plateforme_ecommerce_tunnel_panier');
     }
     
-    // Création de la variable pour la livraison
-    if (!$session->has('choix_livraison')) {
-      $session->set('choix_livraison', array());
+    if (!$session->has('mode_livraison')) {
+      $session->set('mode_livraison', $valeurs_recu['mode_livraison']);
     }
-    $choix_livraison = $session->get('choix_livraison');
+    if (!$session->has('adresse_livraison')) {
+      $session->set('adresse_livraison', array(
+        'livraison_titre'       => $valeurs_recu['livraison_titre'],
+        'livraison_adresse'     => $valeurs_recu['livraison_adresse'],
+        'livraison_complement'  => $valeurs_recu['livraison_complement'],
+        'livraison_cp'          => $valeurs_recu['livraison_cp'],
+        'livraison_commune'     => $valeurs_recu['livraison_commune'],
+        'livraison_pays'        => $valeurs_recu['livraison_pays'],
+      ));
+    }
+    if (!$session->has('adresse_facturation')) {
+      $session->set('adresse_facturation', array(
+        'facturation_titre'       => $valeurs_recu['facturation_titre'],
+        'facturation_adresse'     => $valeurs_recu['facturation_adresse'],
+        'facturation_complement'  => $valeurs_recu['facturation_complement'],
+        'facturation_cp'          => $valeurs_recu['facturation_cp'],
+        'facturation_commune'     => $valeurs_recu['facturation_commune'],
+        'facturation_pays'        => $valeurs_recu['facturation_pays'],
+      ));
+    }
     
-    
-    $panier = $session->get('panier');
-    die('test');
     return $this->render('PlateformeEcommerceBundle:Tunnel:validation.html.twig', array(
-      'panier'  =>  $panier,
+      'panier'                =>  $session->get('panier'),
+      'mode_livraison'        =>  $session->get('mode_livraison'),
+      'adresse_livraison'     =>  $session->get('adresse_livraison'),
+      'adresse_facturation'   =>  $session->get('adresse_facturation'),
     ));
   }
 

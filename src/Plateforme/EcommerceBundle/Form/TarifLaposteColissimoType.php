@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TarifLaposteRecommandeType extends AbstractType
+class TarifLaposteColissimoType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -22,7 +22,7 @@ class TarifLaposteRecommandeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Plateforme\EcommerceBundle\Entity\TarifLaposteRecommande'
+            'data_class' => 'Plateforme\EcommerceBundle\Entity\TarifLaposteColissimo'
         ));
     }
 
@@ -31,7 +31,7 @@ class TarifLaposteRecommandeType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'plateforme_ecommercebundle_tariflaposterecommande';
+        return 'plateforme_ecommercebundle_tariflapostecolissimo';
     }
 
 

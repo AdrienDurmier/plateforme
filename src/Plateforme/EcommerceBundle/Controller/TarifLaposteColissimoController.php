@@ -1,8 +1,8 @@
 <?php
 namespace Plateforme\EcommerceBundle\Controller;
 
-use Plateforme\EcommerceBundle\Entity\TarifLaposteRecommande;
-use Plateforme\EcommerceBundle\Form\TarifLaposteRecommandeType;
+use Plateforme\EcommerceBundle\Entity\TarifLaposteColissimo;
+use Plateforme\EcommerceBundle\Form\TarifLaposteColissimoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -10,30 +10,30 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class TarifLaposteRecommandeController extends Controller
+class TarifLaposteColissimoController extends Controller
 {
     /**
-     * Gestion des tarifs de La Poste par recommandé
+     * Gestion des tarifs de La Poste par colissimo
      * @Security("has_role('ROLE_WEBMASTER')")
      */
     public function crudAction()
     {
       $em = $this->getDoctrine()->getManager();
-      $tarifs = $em->getRepository('PlateformeEcommerceBundle:TarifLaposteRecommande')->findAll();
-      return $this->render('PlateformeEcommerceBundle:TarifLaposteRecommande:crud.html.twig', array(
+      $tarifs = $em->getRepository('PlateformeEcommerceBundle:TarifLaposteColissimo')->findAll();
+      return $this->render('PlateformeEcommerceBundle:TarifLaposteColissimo:crud.html.twig', array(
         'tarifs'   => $tarifs,
       ));
     }
   
     /**
-     * Formulaire de tarif de La Poste par recommandé
+     * Formulaire de tarif de La Poste par colissimo
      * @Security("has_role('ROLE_WEBMASTER')")
      */
     public function addAction(Request $request)
     {
       $em = $this->getDoctrine()->getManager();
-      $tarif = new TarifLaposteRecommande();
-      $form = $this->get('form.factory')->create(TarifLaposteRecommandeType::class, $tarif);
+      $tarif = new TarifLaposteColissimo();
+      $form = $this->get('form.factory')->create(TarifLaposteColissimoType::class, $tarif);
       
       if ($request->isMethod('POST')) {
         $form->handleRequest($request);
@@ -42,26 +42,26 @@ class TarifLaposteRecommandeController extends Controller
           $em->persist($tarif);
           $em->flush();
           $request->getSession()->getFlashBag()->add('info', "Tarif créé avec succès");
-          return $this->redirectToRoute('plateforme_ecommerce_tariflaposterecommande_crud');
+          return $this->redirectToRoute('plateforme_ecommerce_tariflapostecolissimo_crud');
         }
       }
-      return $this->render('PlateformeEcommerceBundle:TarifLaposteRecommande:add.html.twig', array(
+      return $this->render('PlateformeEcommerceBundle:TarifLaposteColissimo:add.html.twig', array(
         'form' => $form->createView(),
       ));
     }
     
     /**
-     * Formulaire d'édition d'un tarif de La Poste par recommandé
+     * Formulaire d'édition d'un tarif de La Poste par colissimo
      * @Security("has_role('ROLE_WEBMASTER')")
      */
     public function editAction($id, Request $request)
     {
       $em = $this->getDoctrine()->getManager();
-      $tarif = $em->getRepository('PlateformeEcommerceBundle:TarifLaposteRecommande')->find($id);
+      $tarif = $em->getRepository('PlateformeEcommerceBundle:TarifLaposteColissimo')->find($id);
       if (null === $tarif) {
         throw new NotFoundHttpException("La tarif ayant l'identifiant ".$id." n'existe pas.");
       }
-      $form = $this->get('form.factory')->create(TarifLaposteRecommandeType::class, $tarif);
+      $form = $this->get('form.factory')->create(TarifLaposteColissimoType::class, $tarif);
       
       if ($request->isMethod('POST')) {
         $form->handleRequest($request);
@@ -70,24 +70,24 @@ class TarifLaposteRecommandeController extends Controller
           $em->persist($tarif);
           $em->flush();
           $request->getSession()->getFlashBag()->add('info', "Tarif modifié avec succès");
-          return $this->redirectToRoute('plateforme_ecommerce_tariflaposterecommande_crud');
+          return $this->redirectToRoute('plateforme_ecommerce_tariflapostecolissimo_crud');
         }
       }
       
-      return $this->render('PlateformeEcommerceBundle:TarifLaposteRecommande:edit.html.twig', array(
+      return $this->render('PlateformeEcommerceBundle:TarifLaposteColissimo:edit.html.twig', array(
         'tarif' => $tarif,
         'form' => $form->createView(),
       ));
     }
     
     /**
-     * Formulaire de suppression d'un tarif de La Poste par recommandé
+     * Formulaire de suppression d'un tarif de La Poste par colissimo
      * @Security("has_role('ROLE_WEBMASTER')")
      */
     public function deleteAction($id, Request $request)
     {
       $em = $this->getDoctrine()->getManager();
-      $tarif = $em->getRepository('PlateformeEcommerceBundle:TarifLaposteRecommande')->find($id);
+      $tarif = $em->getRepository('PlateformeEcommerceBundle:TarifLaposteColissimo')->find($id);
       if (null === $tarif) {
         throw new NotFoundHttpException("Le tarif ayant l'identifiant ".$id." n'existe pas.");
       }
@@ -98,10 +98,10 @@ class TarifLaposteRecommandeController extends Controller
         $em->remove($tarif);
         $em->flush();
         $request->getSession()->getFlashBag()->add('info', "Tarif supprimé avec succès");
-        return $this->redirectToRoute('plateforme_ecommerce_tariflaposterecommande_crud');
+        return $this->redirectToRoute('plateforme_ecommerce_tariflapostecolissimo_crud');
       }
       
-      return $this->render('PlateformeEcommerceBundle:TarifLaposteRecommande:delete.html.twig', array(
+      return $this->render('PlateformeEcommerceBundle:TarifLaposteColissimo:delete.html.twig', array(
         'tarif' => $tarif,
         'form' => $form->createView(),
       ));
@@ -114,7 +114,7 @@ class TarifLaposteRecommandeController extends Controller
   public function tarifAction(Request $request) {
     $em = $this->getDoctrine()->getManager();
     $valeurs_recu = $request->request->all();
-    $tarif_livraison_obj = $em->getRepository('PlateformeEcommerceBundle:TarifLaposteRecommande')->findOneByPays($valeurs_recu['pays_destination']);
+    $tarif_livraison_obj = $em->getRepository('PlateformeEcommerceBundle:TarifLaposteColissimo')->findOneByPays($valeurs_recu['pays_destination']);
     $tarif_livraison = null;
     
     // Envoie vers tout pays ayant un tarif

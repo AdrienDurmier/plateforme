@@ -1,20 +1,20 @@
 {% extends "PlateformeCoreBundle::backoffice.html.twig" %}
 
 {% block title %}
-  Gestion des tarifs de La Poste - lettre recommandée - {{ parent() }}
+  Gestion des tarifs de La Poste - lettre colissimo - {{ parent() }}
 {% endblock %}
 
 {% block body %}
   
-  <h1>Gestion des tarifs de La Poste - lettre recommandée</h1>
+  <h1>Gestion des tarifs de La Poste - lettre colissimo</h1>
   
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_configuration') }}">Configuration</a></li>
-    <li class="breadcrumb-item active">Tarifs de La Poste - lettre recommandée</li>
+    <li class="breadcrumb-item active">Tarifs de La Poste - lettre colissimo</li>
   </ol>
   
-  <a href="{{ path('plateforme_ecommerce_tariflaposterecommande_add') }}" class="btn btn-success btn-sm">
+  <a href="{{ path('plateforme_ecommerce_tariflapostecolissimo_add') }}" class="btn btn-success btn-sm">
     <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Ajouter un tarif
   </a>
     
@@ -35,11 +35,11 @@
             <td>{{ tarif.pays }}</td>
             <td>{{ tarif.tarif }}</td>
             <td>
-              <a href="{{ path('plateforme_ecommerce_tariflaposterecommande_edit', {'id': tarif.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+              <a href="{{ path('plateforme_ecommerce_tariflapostecolissimo_edit', {'id': tarif.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
                 <i class="fa fa-pencil" aria-hidden="true"></i>
               </a>
               &nbsp;|&nbsp;
-              <a href="{{ path('plateforme_ecommerce_tariflaposterecommande_delete', {'id': tarif.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer">
+              <a href="{{ path('plateforme_ecommerce_tariflapostecolissimo_delete', {'id': tarif.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer">
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </a>
             </td>

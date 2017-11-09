@@ -43,121 +43,126 @@
 
     <h1>Livraison</h1>
 
+    <hr>
+
     <form action="{{ path('plateforme_ecommerce_tunnel_validation') }}" method="POST">
 
       <div class="row">
-        <div class="col-xs-12 col-sm-4">
+        <div class="col-xs-12 col-lg-3">
           <h4>Mode de livraison</h4>
+        </div>
+        <div class="col-xs-12 col-lg-9">
           <div>
             <input type="radio" name="mode_livraison" value="livraison_retrait"> 
-            <b>Retrait dans nos locaux</b> - GRATUIT
+            <b>Retrait dans nos locaux</b> <span class="text-muted"> - Gratuit</span>
           </div>
           <div>
-            <input type="radio" name="mode_livraison" value="livraison_laposte"> 
-            <b>Envoie par <i>La Poste</i></b> - à partir de TODO
+            <input type="radio" name="mode_livraison" value="livraison_laposte_lettre"> 
+            <b>Envoie par lettre <i>La Poste</i></b> <span class="text-muted"> - à partir de TODO</span>
+          </div>
+          <div>
+            <input type="radio" name="mode_livraison" value="livraison_laposte_colissimo"> 
+            <b>Envoie par colissimo <i>La Poste</i></b> <span class="text-muted"> - à partir de TODO</span>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-4">
-          {% if adresses|length != 0 %}
-
-            <h4>Adresse de livraison</h4>
-            <div id="adresses_livraison_area_loader" style="display:none;">
-              <i class="fa fa-spinner fa-pulse fa-fw"></i> Chargement en cours...
-            </div>
-            <div id="choix_adresse_livraison_area"></div>
-            <div id="secret_form_livraison">
-              <div class="form-group">
-                <label id="livraison_titre_label" for="livraison_titre">Nom</label>
-                <input type="text" class="form-control form-control-sm" id="livraison_titre" name="livraison_titre">
-              </div>
-              <div class="form-group">
-                <label id="livraison_adresse_label" for="livraison_adresse">Adresse</label>
-                <input type="text" class="form-control form-control-sm" id="livraison_adresse" name="livraison_adresse">
-              </div>
-              <div class="form-group">
-                <label id="livraison_complement_label" for="livraison_complement">Complément d'adresse</label>
-                <input type="text" class="form-control form-control-sm" id="livraison_complement" name="livraison_complement">
-              </div>
-              <div class="form-group">
-                <label id="livraison_cp_label" for="livraison_cp">Code postal</label>
-                <input type="text" class="form-control form-control-sm" id="livraison_cp" name="livraison_cp">
-              </div>
-              <div class="form-group">
-                <label id="livraison_commune_label" for="livraison_commune">Commune</label>
-                <input type="text" class="form-control form-control-sm" id="livraison_commune" name="livraison_commune">
-              </div>
-              <div class="form-group">
-                <label id="livraison_pays_label" for="livraison_pays">Pays</label>
-                <select class="form-control form-control-sm" id="livraison_pays" name="livraison_pays">
-                  {% for code, countrie in countries %}
-                    <option value="{{ code }}" {% if(code == 'FR') %}selected{% endif %}>{{ countrie }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-          {% endif %}
-        </div>
-
-        <div class="col-xs-12 col-sm-4">
-          {% if adresses|length != 0 %}
-            <h4>Adresse de facturation</h4>
-            <div id="adresses_facturation_area_loader" style="display:none;">
-              <i class="fa fa-spinner fa-pulse fa-fw"></i> Chargement en cours...
-            </div>
-            {% for adresse in adresses %}
-              <div>
-                <label class="radio">
-                  <input type="radio" name="facturation" value="{{ adresse.id }}" {% if loop.index0 == 0 %}checked="checked"{% endif %}>
-                  {{ adresse.titre }}
-                  <br>
-                  <small>
-                    {{ adresse.adresse }} {% if adresse.complement is defined and adresse.complement != ''%}({{ adresse.complement }}){% endif %}
-                    <br>{{ adresse.codePostal }} - {{ adresse.commune }} ({{ adresse.pays }}) <a href="{{ path('plateforme_ecommerce_livraison_suppression', { 'id' : adresse.id }) }}"><i class="icon-trash"></i></a>
-                  </small> 
-                </label>
-                <div class="facturation_titre" style="display:none;">{{ adresse.titre }}</div>
-                <div class="facturation_adresse" style="display:none;">{{ adresse.adresse }}</div>
-                <div class="facturation_complement" style="display:none;">{{ adresse.complement }}</div>
-                <div class="facturation_cp" style="display:none;">{{ adresse.codePostal }}</div>
-                <div class="facturation_commune" style="display:none;">{{ adresse.commune }}</div>
-                <div class="facturation_pays" style="display:none;">{{ adresse.pays }}</div>
-              </div>
-            {% endfor %}
-            <div id="secret_form_facturation">
-              <div class="form-group">
-                <label id="facturation_titre_label" for="facturation_titre">Nom</label>
-                <input type="text" class="form-control form-control-sm" id="facturation_titre" name="facturation_titre">
-              </div>
-              <div class="form-group">
-                <label id="facturation_adresse_label" for="facturation_adresse">Adresse</label>
-                <input type="text" class="form-control form-control-sm" id="facturation_adresse" name="facturation_adresse">
-              </div>
-              <div class="form-group">
-                <label id="facturation_complement_label" for="facturation_complement">Complément d'adresse</label>
-                <input type="text" class="form-control form-control-sm" id="facturation_complement" name="facturation_complement">
-              </div>
-              <div class="form-group">
-                <label id="facturation_cp_label" for="facturation_cp">Code postal</label>
-                <input type="text" class="form-control form-control-sm" id="facturation_cp" name="facturation_cp">
-              </div>
-              <div class="form-group">
-                <label id="facturation_commune_label" for="facturation_commune">Commune</label>
-                <input type="text" class="form-control form-control-sm" id="facturation_commune" name="facturation_commune">
-              </div>
-              <div class="form-group">
-                <label id="facturation_pays_label" for="facturation_pays">Pays</label>
-                <select class="form-control form-control-sm" id="facturation_pays" name="facturation_pays">
-                  {% for code, countrie in countries %}
-                    <option value="{{ code }}" {% if(code == 'FR') %}selected{% endif %}>{{ countrie }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-          {% endif %}
-        </div>
-
       </div>
+
       <hr>
+
+      <div class="row">
+        <div class="col-xs-12 col-lg-3">
+          <h4>Adresse de livraison</h4>
+        </div>
+        <div class="col-xs-12 col-lg-9">
+          <div id="adresses_livraison_area_loader" style="display:none;">
+            <i class="fa fa-spinner fa-pulse fa-fw"></i> Chargement en cours...
+          </div>
+          <div id="adresses_livraison_area"></div>
+          <div id="secret_form_livraison" style="display:none;">
+            <div class="form-group">
+              <label id="livraison_titre_label" for="livraison_titre">Nom</label>
+              <input type="text" class="form-control form-control-sm" id="livraison_titre" name="livraison_titre">
+            </div>
+            <div class="form-group">
+              <label id="livraison_adresse_label" for="livraison_adresse">Adresse</label>
+              <input type="text" class="form-control form-control-sm" id="livraison_adresse" name="livraison_adresse">
+            </div>
+            <div class="form-group">
+              <label id="livraison_complement_label" for="livraison_complement">Complément d'adresse</label>
+              <input type="text" class="form-control form-control-sm" id="livraison_complement" name="livraison_complement">
+            </div>
+            <div class="form-group">
+              <label id="livraison_cp_label" for="livraison_cp">Code postal</label>
+              <input type="text" class="form-control form-control-sm" id="livraison_cp" name="livraison_cp">
+            </div>
+            <div class="form-group">
+              <label id="livraison_commune_label" for="livraison_commune">Commune</label>
+              <input type="text" class="form-control form-control-sm" id="livraison_commune" name="livraison_commune">
+            </div>
+            <div class="form-group">
+              <label id="livraison_pays_label" for="livraison_pays">Pays</label>
+              <select class="form-control form-control-sm" id="livraison_pays" name="livraison_pays">
+                {% for code, countrie in countries %}
+                  <option value="{{ code }}" {% if(code == 'FR') %}selected{% endif %}>{{ countrie }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-xs-12 col-lg-3">
+          <h4>Adresse de facturation</h4>
+        </div>
+        <div class="col-xs-12 col-lg-9">
+          <div id="adresses_facturation_area_loader" style="display:none;">
+            <i class="fa fa-spinner fa-pulse fa-fw"></i> Chargement en cours...
+          </div>
+          <div id="livraison_facturation_identique" class="form-check" style="display:none;">
+            <label class="form-check-label">
+              <input class="form-check-input" id="livraison_facturation_identique_field" type="checkbox" value="1" checked>
+              Mon adresse de facturation est identique à l'adresse de livraison
+            </label>
+          </div>
+          <div id="adresses_facturation_area" style="display:none;"></div>
+          <div id="secret_form_facturation" style="display:none;">
+            <div class="form-group">
+              <label id="facturation_titre_label" for="facturation_titre">Nom</label>
+              <input type="text" class="form-control form-control-sm" id="facturation_titre" name="facturation_titre">
+            </div>
+            <div class="form-group">
+              <label id="facturation_adresse_label" for="facturation_adresse">Adresse</label>
+              <input type="text" class="form-control form-control-sm" id="facturation_adresse" name="facturation_adresse">
+            </div>
+            <div class="form-group">
+              <label id="facturation_complement_label" for="facturation_complement">Complément d'adresse</label>
+              <input type="text" class="form-control form-control-sm" id="facturation_complement" name="facturation_complement">
+            </div>
+            <div class="form-group">
+              <label id="facturation_cp_label" for="facturation_cp">Code postal</label>
+              <input type="text" class="form-control form-control-sm" id="facturation_cp" name="facturation_cp">
+            </div>
+            <div class="form-group">
+              <label id="facturation_commune_label" for="facturation_commune">Commune</label>
+              <input type="text" class="form-control form-control-sm" id="facturation_commune" name="facturation_commune">
+            </div>
+            <div class="form-group">
+              <label id="facturation_pays_label" for="facturation_pays">Pays</label>
+              <select class="form-control form-control-sm" id="facturation_pays" name="facturation_pays">
+                {% for code, countrie in countries %}
+                  <option value="{{ code }}" {% if(code == 'FR') %}selected{% endif %}>{{ countrie }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
       <button class="btn btn-success pull-right">
         <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Étape suivante
       </button>
@@ -192,40 +197,132 @@
               $('#livraison_cp').val(data.data.adresses_livraison_possibles.code_postal);
               $('#livraison_commune').val(data.data.adresses_livraison_possibles.commune);
               $('#livraison_pays').val(data.data.adresses_livraison_possibles.pays);
+              var adresses_livraison_area_html =
+                      "<div>"
+                      + "<b>" + data.data.adresses_livraison_possibles.titre + "</b>"
+                      + "<br>"
+                      + data.data.adresses_livraison_possibles.adresse
+                      + "<br>"
+                      + data.data.adresses_livraison_possibles.code_postal + ' ' + data.data.adresses_livraison_possibles.commune + ' (' + data.data.adresses_livraison_possibles.pays + ')'
+                      + "</div>";
+              $('#adresses_livraison_area').html(adresses_livraison_area_html);
             },
             error: function (result) {
-              alert("Erreur dans la recherche de vos adresses.");
+              alert("Erreur dans la recherche de l'adresse de retrait.");
             },
             data: parametres
           });
         }
-        if (this.value == 'livraison_laposte') {
-          
+        if (this.value == 'livraison_laposte_lettre' || this.value == 'livraison_laposte_colissimo') {
+          $('#livraison_facturation_identique').fadeIn();
+          var pays_destination_value = $('#livraison_pays').val();
+          var parametres = {
+            mode_livraison: "livraison_laposte",
+            pays_destination: pays_destination_value
+          };
+          $.ajax({
+            url: "{{ path('plateforme_ecommerce_tunnel_livraison_choix') }}",
+            type: 'post',
+            dataType: 'json',
+            beforeSend: function () {
+              $('#adresses_livraison_area_loader').fadeIn();
+              $('#adresses_facturation_area_loader').fadeIn();
+            },
+            success: function (data) {
+              $('#adresses_livraison_area_loader').fadeOut();
+              $('#adresses_facturation_area_loader').fadeOut();
+              $('#adresses_livraison_area').html('');
+              $('#adresses_facturation_area').html('');
+              $.each(data.data.adresses_livraison_possibles, function (index, element) {
+                $("#adresses_livraison_area").append(
+                        '<div class="form-check">'
+                        + '<label class="form-check-label">'
+                        + '<input class="form-check-input" type="radio" name="livraison" value="' + index + '">'
+                        + element.titre
+                        + '<br>'
+                        + '<small>' + element.adresse + '</small>'
+                        + '<br>'
+                        + '<small>' + element.code_postal + ' ' + element.commune + ' (' + element.pays + ')' + '</small>'
+                        + '<span class="livraison_titre" style="display:none;">' + element.titre + '</span>'
+                        + '<span class="livraison_adresse" style="display:none;">' + element.adresse + '</span>'
+                        + '<span class="livraison_complement" style="display:none;">' + element.complement + '</span>'
+                        + '<span class="livraison_cp" style="display:none;">' + element.code_postal + '</span>'
+                        + '<span class="livraison_commune" style="display:none;">' + element.commune + '</span>'
+                        + '<span class="livraison_pays" style="display:none;">' + element.pays + '</span>'
+                        + '</label>'
+                        + '</div>'
+                        );
+              });
+              $.each(data.data.adresses_facturation_possibles, function (index, element) {
+                $("#adresses_facturation_area").append(
+                        '<div class="form-check">'
+                        + '<label class="form-check-label">'
+                        + '<input class="form-check-input" type="radio" name="facturation" value="' + index + '">'
+                        + element.titre
+                        + '<br>'
+                        + '<small>' + element.adresse + '</small>'
+                        + '<br>'
+                        + '<small>' + element.code_postal + ' ' + element.commune + ' (' + element.pays + ')' + '</small>'
+                        + '<span class="facturation_titre" style="display:none;">' + element.titre + '</span>'
+                        + '<span class="facturation_adresse" style="display:none;">' + element.adresse + '</span>'
+                        + '<span class="facturation_complement" style="display:none;">' + element.complement + '</span>'
+                        + '<span class="facturation_cp" style="display:none;">' + element.code_postal + '</span>'
+                        + '<span class="facturation_commune" style="display:none;">' + element.commune + '</span>'
+                        + '<span class="facturation_pays" style="display:none;">' + element.pays + '</span>'
+                        + '</label>'
+                        + '</div>'
+                        );
+              });
+            },
+            error: function (result) {
+              alert("Erreur.");
+            },
+            data: parametres
+          });
+        } else {
+          $('#livraison_facturation_identique').fadeOut();
         }
       });
-      
+
       // Lors du choix sur le mode de livraison
       jQuery(document).on('change', 'input[type=radio][name=livraison]', function (event) {
         var mode_livraison_actif = $('input[name="mode_livraison"]:checked').val();
-        if (mode_livraison_actif == 'livraison_laposte') {
-          $('#livraison_titre').val($(this).parent().parent().children('.livraison_titre').text());
-          $('#livraison_adresse').val($(this).parent().parent().children('.livraison_adresse').text());
-          $('#livraison_complement').val($(this).parent().parent().children('.livraison_complement').text());
-          $('#livraison_cp').val($(this).parent().parent().children('.livraison_cp').text());
-          $('#livraison_commune').val($(this).parent().parent().children('.livraison_commune').text());
-          $('#livraison_pays').val($(this).parent().parent().children('.livraison_pays').text());
+        if (mode_livraison_actif == 'livraison_laposte_lettre') {
+          $('#livraison_titre').val($(this).parent().children('.livraison_titre').text());
+          $('#livraison_adresse').val($(this).parent().children('.livraison_adresse').text());
+          $('#livraison_complement').val($(this).parent().children('.livraison_complement').text());
+          $('#livraison_cp').val($(this).parent().children('.livraison_cp').text());
+          $('#livraison_commune').val($(this).parent().children('.livraison_commune').text());
+          $('#livraison_pays').val($(this).parent().children('.livraison_pays').text());
         }
       });
-      
+
       // Lors du choix sur le formulaire de facturation
-      jQuery(document).on('change', 'input[type=radio][name=livraison]', function (event) {
+      jQuery(document).on('change', 'input[type=radio][name=facturation]', function (event) {
         var mode_livraison_actif = $('input[name="mode_livraison"]:checked').val();
-        $('#facturation_titre').val($(this).parent().parent().children('.facturation_titre').text());
-        $('#facturation_adresse').val($(this).parent().parent().children('.facturation_adresse').text());
-        $('#facturation_complement').val($(this).parent().parent().children('.facturation_complement').text());
-        $('#facturation_cp').val($(this).parent().parent().children('.facturation_cp').text());
-        $('#facturation_commune').val($(this).parent().parent().children('.facturation_commune').text());
-        $('#facturation_pays').val($(this).parent().parent().children('.facturation_pays').text());
+        $('#facturation_titre').val($(this).parent().children('.facturation_titre').text());
+        $('#facturation_adresse').val($(this).parent().children('.facturation_adresse').text());
+        $('#facturation_complement').val($(this).parent().children('.facturation_complement').text());
+        $('#facturation_cp').val($(this).parent().children('.facturation_cp').text());
+        $('#facturation_commune').val($(this).parent().children('.facturation_commune').text());
+        $('#facturation_pays').val($(this).parent().children('.facturation_pays').text());
+      });
+
+      // GESTION DE L'ADRESSE DE FACTURATION SI ELLE EST IDENTIQUE A L'ADRESSE DE LIVRAISON
+      jQuery(document).on('change', '#livraison_facturation_identique_field', function (event) {
+        if (this.checked) {
+          $('#adresses_facturation_area').fadeOut();
+          $('#adresses_facturation_area_form').fadeOut();
+          $('#facturation_titre').val($('#livraison_titre').val());
+          $('#facturation_adresse').val($('#livraison_adresse').val());
+          $('#facturation_complement').val($('#livraison_complement').val());
+          $('#facturation_cp').val($('#livraison_cp').val());
+          $('#facturation_commune').val($('#livraison_commune').val());
+          $('#facturation_pays').val($('#livraison_pays').val());
+        } else {
+          $('#adresses_facturation_area').fadeIn();
+          $('#adresses_facturation_area_form').fadeIn();
+        }
       });
     </script>
   {% endblock %}

@@ -1,20 +1,20 @@
 {% extends "PlateformeCoreBundle::backoffice.html.twig" %}
 
 {% block title %}
-  Édition d'un tarif de La Poste - lettre recommandée- {{ parent() }}
+  Édition d'un tarif de La Poste - lettre colissimo- {{ parent() }}
 {% endblock %}
 
 {% block body %}
 
-  <h1>Édition d'un tarif de La Poste - lettre recommandée</h1>
+  <h1>Édition d'un tarif de La Poste - colissimo</h1>
   
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_configuration') }}">Configuration</a></li>
-    <li class="breadcrumb-item"><a href="{{ path('plateforme_ecommerce_tariflaposterecommande_crud') }}">Tarifs de La Poste - lettre recommandée</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_ecommerce_tariflapostecolissimo_crud') }}">Tarifs de La Poste - colissimo</a></li>
     <li class="breadcrumb-item active">Édition</li>
   </ol>
 
-  {{ include("PlateformeEcommerceBundle:TarifLaposteRecommande:form.html.twig") }}
+  {{ include("PlateformeEcommerceBundle:TarifLaposteColissimo:form.html.twig") }}
 
 {% endblock %}
