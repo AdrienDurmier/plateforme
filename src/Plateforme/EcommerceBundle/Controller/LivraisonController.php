@@ -90,7 +90,7 @@ class LivraisonController extends Controller {
   public function modeRetrait() {
     $em = $this->getDoctrine()->getManager();
     $user = $this->get('security.token_storage')->getToken()->getUser();
-    // L'adresse de livraison sera automatiquement l'adresse de Micropuces
+    // L'adresse de livraison sera automatiquement l'adresse de la plaforme
     $titre = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('site_name');
     $voie = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('adresse_voie');
     $complement = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('adresse_complement');

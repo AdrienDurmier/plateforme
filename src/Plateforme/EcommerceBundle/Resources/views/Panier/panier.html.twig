@@ -12,7 +12,6 @@
 {% endblock %}
 
 {% block body %}
-  {{ dump(totalTVAs) }}
   <div class="container">
 
     {% if produits|length > 0 %}
@@ -150,18 +149,6 @@
         </tr>
       </tfoot>
     </table>
-
-    {#  <hr>
-      <dl class="row">
-        <dt class="col-sm-10 text-right">Total HT :</dt>
-        <dd class="col-sm-2">{{ totalHT }} €</dd>
-        {% for key, tva in totalTVAs %}
-          <dt class="col-sm-10 text-right">TVA {{ key }} :</dt>
-          <dd class="col-sm-2">{{ tva }} €</dd>
-        {% endfor %}
-        <dt class="col-sm-10 text-right">Total TTC :</dt>
-        <dd class="col-sm-2">{{ totalTTC }} €</dd>
-      </dl>#}
 
     {% if produits|length != 0 %}
       <hr>
