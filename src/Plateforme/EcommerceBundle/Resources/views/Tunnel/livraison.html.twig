@@ -9,9 +9,11 @@
 
     <div class="hidden-small">
       <div class="row">
-        <div class="col-2 text-center text-success">
-          <small>Votre panier</small>
-          <br><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        <div class="col-2 text-center">
+          <a href="{{ path('plateforme_ecommerce_tunnel_panier') }}" class="text-success">
+            <small>Votre panier</small>
+            <br><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          </a>
         </div>
         <div class="col-2 text-center text-success">
           <small>Authentification</small>
@@ -57,7 +59,7 @@
           </div>
           <div>
             <input type="radio" name="mode_livraison" value="livraison_laposte_lettre"> 
-            <b>Envoie par lettre <i>La Poste</i></b> <span class="text-muted"> - à partir de TODO</span>
+            <b>Envoie par lettre <i>La Poste</i></b> <span class="text-muted"> - à partir de {{ tarif_lettre_minimum }} €</span>
           </div>
           <div>
             <input type="radio" name="mode_livraison" value="livraison_laposte_colissimo"> 
@@ -239,6 +241,7 @@
   {% block javascripts %}
     {# Récupération des scripts des parents #}
     {{ parent() }}
+    
     <script>
       // Lors du choix sur le mode de livraison
       jQuery(document).on('change', 'input[type=radio][name=mode_livraison]', function (event) {

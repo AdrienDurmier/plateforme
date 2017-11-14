@@ -62,9 +62,8 @@ class LivraisonController extends Controller {
     }
     
     // Récupération du tarif le moins cher pour la livraison lettre La Poste
-    
+    $tarif_lettre_minimum = $em->getRepository('PlateformeEcommerceBundle:TarifLaposteLettre')->findTarifMinimum();
     // Récupération du tarif le moins cher pour la livraison colissimo La Poste
-    
     
     return $this->render('PlateformeEcommerceBundle:Tunnel:livraison.html.twig', array(
           'user'                            => $user,
@@ -72,6 +71,7 @@ class LivraisonController extends Controller {
           'adresses_livraison_possibles'    => $adresses_livraison_possibles,
           'adresses_facturation_possibles'  => $adresses_facturation_possibles,
           'countries'                       => Intl::getRegionBundle()->getCountryNames(),
+          'tarif_lettre_minimum'            => $tarif_lettre_minimum['tarif'],
     ));
   }
 

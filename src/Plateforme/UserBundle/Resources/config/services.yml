@@ -1,5 +1,1 @@
 services:
-    # Login redirection
-    login_redirection:
-        class: Plateforme\UserBundle\Service\LoginRedirection
-        public: true
