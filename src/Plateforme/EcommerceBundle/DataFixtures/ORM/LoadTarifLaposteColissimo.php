@@ -22,6 +22,10 @@ class LoadTarifLaposteColissimo extends AbstractFixture implements OrderedFixtur
     $tarif3->setPays('AD');
     $tarif3->setTarif(7.99);
     $manager->persist($tarif3);
+    $tarif4 = new TarifLaposteColissimo();
+    $tarif4->setPays('DE');
+    $tarif4->setTarif(14.90);
+    $manager->persist($tarif4);
 
     $manager->flush();
   }

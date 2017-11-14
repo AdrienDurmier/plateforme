@@ -14,6 +14,13 @@ class LoadTarifLaposteLettre extends AbstractFixture implements OrderedFixtureIn
     $tarif1->setTarif(2.00);
     $manager->persist($tarif1);
     $manager->flush();
+    
+    // Tarif en Allemagne
+    $tarif2 = new TarifLaposteLettre();
+    $tarif2->setPays('DE');
+    $tarif2->setTarif(8.50);
+    $manager->persist($tarif2);
+    $manager->flush();
   }
   public function getOrder() {
     return 1;  // Order in which this fixture will be executed

@@ -1,13 +1,126 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "FOSUserBundle::fos_user_layout.html.twig" %}
+
+{% block title %}
+  S'inscrire - {{ parent() }}
+{% endblock %}
 
 {% block fos_user_content %}
-    {% trans_default_domain 'FOSUserBundle' %}
+  {% trans_default_domain 'FOSUserBundle' %}
 
-    <form method="POST">
-        {{ form_widget(form) }}
-        <div>
-            <input type="submit" value="{{ 'registration.submit'|trans }}" />
+  <div class="container">
+    <h1>Inscription</h1>
+
+    <form method="POST" action="{{ path('plateforme_user_inscription_client') }}">
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <h2>Mon profil</h2>
+          {# Civilité #}
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Civilité </span>
+              <select class="form-control" id="livraison_pays" name="client_civilite">
+                {% for civilite in civilites %}
+                  <option value="{{ civilite.prefixName }}">
+                    {{ civilite.prefixFullname }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          {# Nom #}
+          <div class="form-group">
+            <input type="text" class="form-control" name="client_nom" id="client_nom" placeholder="Votre nom" required>
+          </div>
+          {# Prénom #}
+          <div class="form-group">
+            <input type="text" class="form-control" name="client_prenom" id="client_prenom" placeholder="Votre prénom" required>
+          </div>  
+          {# Mail #}
+          <div class="form-group">
+            <input type="email" class="form-control" name="client_mail" id="client_mail" placeholder="Votre adresse email" required>
+          </div>
+          {# Mot de passe #}
+          <div class="form-group">
+            <div class="input-group">
+              <input type="password" class="form-control" name="client_pass" id="client_pass" placeholder="Mot de passe"required>
+              <span class="input-group-addon"><i class="fa fa-eye"></i></span>
+            </div>
+          </div>
+          {# Confirmation #}
+          <div class="form-group">
+            <div class="input-group">
+              <input type="password" class="form-control" name="client_confirm" id="client_confirm" placeholder="Confirmer votre mot de passe" required>
+              <span class="input-group-addon"><i id="check_password" class="fa fa-times"></i></span>
+            </div>
+          </div>
+          {# Téléphone #}
+          <div class="form-group">
+            <input type="text" class="form-control" name="client_tel" id="client_tel" placeholder="Téléphone" required>
+          </div>
+          {# Fax #}
+          <div class="form-group">
+            <input type="text" class="form-control" name="client_fax" id="client_fax" placeholder="Fax" required>
+          </div>
         </div>
+
+        <div class="col-xs-12 col-sm-6">
+          <div id="adresse_form_area">
+            <h2>Coordonnées</h2>
+            {# Adresse #}
+            <div class="form-group">
+              <input type="text" class="form-control" name="adresse" id="adresse" placeholder="Votre adresse" required>
+            </div>
+            {# Complément #}
+            <div class="form-group">
+              <input type="text" class="form-control" name="complement" id="complement" placeholder="Complément d'adresse" required>
+            </div>
+            {# Code postal #}
+            <div class="form-group">
+              <input type="text" class="form-control" name="cp" id="cp" placeholder="Code postal" required>
+            </div>
+            {# Commune #}
+            <div class="form-group">
+              <input type="text" class="form-control" name="commune" id="commune" placeholder="Commune" required>
+            </div>
+            {# Pays #}
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Pays </span>
+                <select class="form-control" id="pays" name="pays">
+                  {% for code, countrie in countries %}
+                    <option value="{{ code }}" {% if(code == 'FR') %}selected{% endif %}>{{ countrie }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <button class="btn btn-success" type="submit">
+        S'inscrire
+      </button>
+
     </form>
-            
+  </div>
+
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script>
+    // Vérification du mot de passe
+    $('#client_pass, #client_confirm').on('keyup', function () {
+      if ($('#client_pass').val() == $('#client_confirm').val()) {
+        $('#check_password').removeClass('fa-times');
+        $('#check_password').addClass('fa-check');
+      } else {
+        $('#check_password').addClass('fa-times');
+        $('#check_password').removeClass('fa-check');
+      }
+    });
+
+  </script>
+
 {% endblock fos_user_content %}

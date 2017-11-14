@@ -4,7 +4,7 @@
   <h1>Mon compte</h1>
 
   <div class="row">
-    
+
     <aside class="col-3">
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
         <a class="nav-link active" id="v-pills-infos-tab" data-toggle="pill" href="#v-pills-infos" role="tab" aria-controls="v-pills-infos" aria-expanded="true">
@@ -33,22 +33,24 @@
         </a>
       </div>
     </aside>
-    
+
     <section class="col-9">
       <div class="tab-content" id="v-pills-tabContent">
         <div class="tab-pane fade active show" id="v-pills-infos" role="tabpanel" aria-labelledby="v-pills-infos-tab" aria-expanded="true">
-          <p>{{ 'profile.show.email'|trans }} : {{ user.email }}</p>
-          <p>{{ 'profile.show.username'|trans }} : {{ user.username }}</p>
-        </div>
-        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" aria-expanded="false">
-          TODO
-        </div>
-        <div class="tab-pane fade" id="v-pills-commandes" role="tabpanel" aria-labelledby="v-pills-commandes-tab" aria-expanded="false">
-          TODO
+          <blockquote>
+            Bienvenue dans votre espace personnel {{ user.prenom }} {{ user.nom }}
+          </blockquote>
+          <p><b>Denière connexion le </b> : {{ user.lastLogin|date("d/m/Y h:i:s") }}</p>
+          <p>
+            <b>{{ 'profile.show.email'|trans }}</b> : {{ user.email }}
+            <br>
+            <b>Téléphone</b> : {{ user.telephone }}
+            <br>
+            <b>Fax</b> : {{ user.fax }}
         </div>
       </div>
     </section>
-    
+
   </div>
 
 </div>

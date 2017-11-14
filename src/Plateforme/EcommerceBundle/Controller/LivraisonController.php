@@ -61,6 +61,11 @@ class LivraisonController extends Controller {
       }
     }
     
+    // Récupération du tarif le moins cher pour la livraison lettre La Poste
+    
+    // Récupération du tarif le moins cher pour la livraison colissimo La Poste
+    
+    
     return $this->render('PlateformeEcommerceBundle:Tunnel:livraison.html.twig', array(
           'user'                            => $user,
           'adresse_plateforme'              => $adresse_plateforme,

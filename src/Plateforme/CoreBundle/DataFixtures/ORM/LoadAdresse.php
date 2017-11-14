@@ -25,7 +25,7 @@ class LoadAdresse extends AbstractFixture implements OrderedFixtureInterface
     $adresse2 = new Adresse();
     $adresse2->setTitre('Chez maman');
     $adresse2->setAdresse('171 rue deschamps');
-    $adresse2->setComplement('maison blanche');
+    $adresse2->setComplement('');
     $adresse2->setCodePostal('19600');
     $adresse2->setCommune('Saint Pantaléon de Larche');
     $adresse2->setPays('FR');
@@ -33,6 +33,18 @@ class LoadAdresse extends AbstractFixture implements OrderedFixtureInterface
     $adresse2->setLivraison(false);
     $adresse2->setFacturation(true);
     $manager->persist($adresse2);
+    
+    $adresse3 = new Adresse();
+    $adresse3->setTitre('En allemagne');
+    $adresse3->setAdresse('Pariser Platz 5');
+    $adresse3->setComplement('Ambassade allemande');
+    $adresse3->setCodePostal('10117');
+    $adresse3->setCommune('Berlin');
+    $adresse3->setPays('DE');
+    $adresse3->setClient($this->getReference('client_1'));
+    $adresse3->setLivraison(true);
+    $adresse3->setFacturation(true);
+    $manager->persist($adresse3);
     
     $manager->flush();
     

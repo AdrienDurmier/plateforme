@@ -1,0 +1,60 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Gestion des clients - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h1>Gestion des clients</h1>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_user_homepage') }}">Utilisateurs</a></li>
+    <li class="breadcrumb-item active">Clients</li>
+  </ol>
+
+  <a href="{{ path('plateforme_user_clients_add') }}" class="btn btn-success">
+    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer un client
+  </a>
+
+  <hr>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Activé</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+        {% for client in clients %}
+          <tr>
+            <td>{{ client.id }}</td>
+            <td>{{ client.nom }}</td>
+            <td>{{ client.prenom }}</td>
+            <td>
+              {% if client.enabled == 1 %}
+                <i class="fa fa-check" aria-hidden="true"></i>
+              {% else %}
+                <i class="fa fa-times" aria-hidden="true"></i>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{{ path('plateforme_user_clients_edit', {'id': client.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </a>
+              &nbsp;|&nbsp;
+              <a href="{{ path('plateforme_user_clients_delete', {'id': client.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+    </table>
+  </div>
+      
+{% endblock %}

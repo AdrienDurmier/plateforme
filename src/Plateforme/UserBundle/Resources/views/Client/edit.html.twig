@@ -1,0 +1,19 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Édition d'un client - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h1>Édition d'un client</h1>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_user_homepage') }}">Utilisateurs</a></li>
+    <li class="breadcrumb-item active">Édition</li>
+  </ol>
+    
+    {{ include("PlateformeUserBundle:Client:form.html.twig") }}
+
+{% endblock %}

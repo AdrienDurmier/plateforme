@@ -70,26 +70,6 @@ class Personne extends User
     }
     
     /**
-     * Set sexe
-     * @param \Plateforme\CoreBundle\Entity\Sexe $sexe
-     * @return Personne
-     */
-    public function setSexe(\Plateforme\CoreBundle\Entity\Sexe $sexe)
-    {
-      $this->sexe = $sexe;
-      return $this;
-    }
-
-    /**
-     * Get sexe
-     * @return string
-     */
-    public function getSexe()
-    {
-      return $this->sexe;
-    }
-
-    /**
      * Set nom
      * @param string $nom
      * @return Personne

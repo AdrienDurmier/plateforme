@@ -9,17 +9,21 @@
        
     <div class="hidden-small">
       <div class="row">
-        <div class="col-2 text-center text-success">
-          <small>Votre panier</small>
-          <br><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        <div class="col-2 text-center">
+          <a href="{{ path('plateforme_ecommerce_tunnel_panier') }}" class="text-success">
+            <small>Votre panier</small>
+            <br><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          </a>
         </div>
         <div class="col-2 text-center text-success">
           <small>Authentification</small>
           <br><i class="fa fa-sign-in" aria-hidden="true"></i>
         </div>
-        <div class="col-2 text-center text-success">
-          <small>Livraison</small>
-          <br><i class="fa fa-truck" aria-hidden="true"></i>
+        <div class="col-2 text-center">
+          <a href="{{ path('plateforme_ecommerce_tunnel_livraison') }}" class="text-success">
+            <small>Livraison</small>
+            <br><i class="fa fa-truck" aria-hidden="true"></i>
+          </a>
         </div>
         <div class="col-2 text-center text-primary">
           <small>Validation</small>
@@ -72,6 +76,7 @@
         <i class="fa fa-truck fa-3x" aria-hidden="true"></i>
         <br>
         <b>Adresse de livraison:</b>
+        <br>{{ adresse_livraison['livraison_prenom'] }} {{ adresse_livraison['livraison_nom'] }}
         <br>{{ adresse_livraison['livraison_adresse'] }} {{ adresse_livraison['livraison_complement'] }}
         <br>{{ adresse_livraison['livraison_cp'] }} {{ adresse_livraison['livraison_commune'] }} ({{ adresse_livraison['livraison_pays'] }})
       </div>
@@ -79,6 +84,7 @@
         <i class="fa fa-file-text-o fa-3x" aria-hidden="true"></i>
         <br>
         <b>Adresse de facturation:</b>
+        <br>{{ adresse_facturation['facturation_prenom'] }} {{ adresse_facturation['facturation_nom'] }}
         <br>{{ adresse_facturation['facturation_adresse'] }} {{ adresse_facturation['facturation_complement'] }}
         <br>{{ adresse_facturation['facturation_cp'] }} {{ adresse_facturation['facturation_commune'] }} ({{ adresse_facturation['facturation_pays'] }})
       </div>
@@ -91,6 +97,8 @@
       <input type="radio" name="mode_paiement" value="paiement_cheque_virement"> Paiement par chèque ou virement
       <br>
       <input type="radio" name="mode_paiement" value="paiement_paypal"> Paiement par Paypal
+      
+      <hr>
 
       <button class="btn btn-success pull-right" type="submit">
         <i class="fa fa-check" aria-hidden="true"></i>

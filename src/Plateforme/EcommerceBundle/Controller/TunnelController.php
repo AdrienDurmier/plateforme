@@ -33,7 +33,8 @@ class TunnelController extends Controller {
     
     $session->set('mode_livraison', $valeurs_recu['mode_livraison']);
     $session->set('adresse_livraison', array(
-      'livraison_titre'       => $valeurs_recu['livraison_titre'],
+      'livraison_nom'         => $valeurs_recu['livraison_nom'],
+      'livraison_prenom'      => $valeurs_recu['livraison_prenom'],
       'livraison_adresse'     => $valeurs_recu['livraison_adresse'],
       'livraison_complement'  => $valeurs_recu['livraison_complement'],
       'livraison_cp'          => $valeurs_recu['livraison_cp'],
@@ -41,7 +42,8 @@ class TunnelController extends Controller {
       'livraison_pays'        => $valeurs_recu['livraison_pays'],
     ));
     $session->set('adresse_facturation', array(
-      'facturation_titre'       => $valeurs_recu['facturation_titre'],
+      'facturation_nom'         => $valeurs_recu['facturation_nom'],
+      'facturation_prenom'      => $valeurs_recu['facturation_prenom'],
       'facturation_adresse'     => $valeurs_recu['facturation_adresse'],
       'facturation_complement'  => $valeurs_recu['facturation_complement'],
       'facturation_cp'          => $valeurs_recu['facturation_cp'],

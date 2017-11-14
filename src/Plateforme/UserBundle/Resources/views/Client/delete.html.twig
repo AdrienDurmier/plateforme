@@ -1,0 +1,31 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Suppression d'un client - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h1>Suppression d'un client</h1>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_user_homepage') }}">Utilisateurs</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_user_clients_crud') }}">Clients</a></li>
+    <li class="breadcrumb-item active">Suppression</li>
+  </ol>
+
+  <p>
+    Etes-vous certain de vouloir supprimer le client "<i>{{ client.prenom }} {{ client.nom }}</i>" ?
+  </p>
+
+  <form action="{{ path('plateforme_user_clients_delete', {'id': client.id}) }}" method="post">
+    <a href="{{ path('plateforme_user_clients_edit', {'id': client.id}) }}" class="btn btn-default">
+      <i class="fa fa-pencil" aria-hidden="true"></i>
+      Retour à l'édition
+    </a>
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    {{ form_rest(form) }}
+  </form>
+
+{% endblock %}
