@@ -10,4 +10,17 @@ namespace Plateforme\EcommerceBundle\Repository;
  */
 class TarifLaposteColissimoRepository extends \Doctrine\ORM\EntityRepository
 {
+  public function findTarifMinimum()
+  {
+    $qb = $this->createQueryBuilder('t');
+    $qb
+      ->select('t.tarif')
+      ->orderBy('t.tarif', 'ASC')
+    ;
+    return $qb
+      ->setMaxResults(1)
+      ->getQuery()
+      ->getSingleResult()
+    ;
+  }
 }

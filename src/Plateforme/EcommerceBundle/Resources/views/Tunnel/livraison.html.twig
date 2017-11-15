@@ -47,12 +47,11 @@
 
     <hr>
 
-    <form action="{{ path('plateforme_ecommerce_tunnel_validation') }}" method="POST">
-
+    <form id="form_livraison" name="form_livraison" action="{{ path('plateforme_ecommerce_tunnel_validation') }}" method="POST">
       <div class="row">
         {# CHOIX MODE DE LIVRAISON #}
         <div class="col-xs-12 col-lg-4">
-          <h2>Mode de livraison</h2>
+          <h4>Mode de livraison</h4>
           <div>
             <input type="radio" name="mode_livraison" value="livraison_retrait"> 
             <b>Retrait dans nos locaux</b> <span class="text-muted"> - Gratuit</span>
@@ -63,13 +62,21 @@
           </div>
           <div>
             <input type="radio" name="mode_livraison" value="livraison_laposte_colissimo"> 
-            <b>Envoie par colissimo <i>La Poste</i></b> <span class="text-muted"> - à partir de TODO</span>
+            <b>Envoie par colissimo <i>La Poste</i></b> <span class="text-muted"> - à partir de {{ tarif_colissimo_minimum }} €</span>
           </div>
+          <hr>
+          Calcul des frais de port: 
+          <span id="tarif_livraison_area" style="display:none;">
+            <span id="tarif_livraison"></span> €
+          </span>
+          <span id="tarif_livraison_definir"> Choisir une adresse valide.</span> 
+          <input id="tarif_livraison_input" name="tarif_livraison_input" type="hidden">
+          <hr>
         </div>
         {# CHOIX ADRESSE DE LIVRAISON #}
         <div class="col-xs-12 col-lg-4">
           <div class="display_on_modelivraison" style="display:none;">
-            <h2>Adresse de livraison</h2>
+            <h4>Adresse de livraison</h4>
             <div id="adresse_livraison_proposition_area">
               <div id="adresses_livraison_area_loader" style="display:none;">
                 <i class="fa fa-spinner fa-pulse fa-fw"></i>&nbsp;Chargement en cours...
@@ -80,6 +87,7 @@
                 <br><span id="adresse_plateforme_cp">{{ adresse_plateforme.code_postal }}</span> <span id="adresse_plateforme_commune">{{ adresse_plateforme.commune }}</span> (<span id="adresse_plateforme_pays">{{ adresse_plateforme.pays }}</span>)
               </div>
               <div id="adresses_livraison_user_area">
+                <p>Choisissez une de vos adresses:</p>
                 <div class="form-group">
                   <div class="input-group">
                     <select class="form-control" id="livraison_select" name="livraison_select">
@@ -90,6 +98,11 @@
                       {% endfor %}
                     </select>
                   </div>
+                  <small id="livraison_select_help" class="form-text text-muted text-right">
+                    <a href="{{ path('plateforme_core_page_adresses') }}">
+                      <i class="fa fa-pencil" aria-hidden="true"></i> Modifier mes adresses
+                    </a>
+                  </small>
                 </div>
                 {% for adresse in adresses_livraison_possibles %}
                   <div class="adresses_livraison_possibles_{{ adresse.id }}" style="display:none;">
@@ -103,6 +116,7 @@
               </div>
             </div>
             <div id="adresse_livraison_form_area">
+              <p>Puis vérifiez ou saisissez une nouvelle adresse:</p>
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">Nom</span>
@@ -155,7 +169,8 @@
         {# CHOIX ADRESSE DE FACTURATION #}
         <div class="col-xs-12 col-lg-4">
           <div class="display_on_modelivraison" style="display:none;">
-            <h2>Adresse de facturation</h2>
+            <h4>Adresse de facturation</h4>
+            <p>Choisissez une de vos adresses:</p>
             <div id="adresses_facturation_area">
               <div class="form-group">
                 <div class="input-group">
@@ -165,6 +180,11 @@
                     {% endfor %}
                   </select>
                 </div>
+                <small id="facturation_select_help" class="form-text text-muted text-right">
+                  <a href="{{ path('plateforme_core_page_adresses') }}">
+                    <i class="fa fa-pencil" aria-hidden="true"></i> Modifier mes adresses
+                  </a>
+                </small>
               </div>
               {% for adresse in adresses_facturation_possibles %}
                 <div class="adresses_facturation_possibles_{{ adresse.id }}" style="display:none;">
@@ -177,6 +197,7 @@
               {% endfor %}
             </div>
             <div id="adresses_facturation_area_form">
+              <p>Puis vérifiez ou saisissez une nouvelle adresse:</p>
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">Nom</span>
@@ -241,11 +262,26 @@
   {% block javascripts %}
     {# Récupération des scripts des parents #}
     {{ parent() }}
-    
+
     <script>
+      jQuery(document).ready(function (event) {
+        // Gestion des erreurs lors de la validation du formulaire
+        $('#form_livraison').submit(function (event) {
+          // Si aucun tarif n'est validé alors 
+          var tarif = $('#tarif_livraison_input').val();
+          if(tarif == '' || tarif == null || tarif == 'NaN'){
+            alert('Vous devez choisir un mode de livraison et saisir vos adresses.');
+            return false;
+          }else{
+            return true;
+          }
+        });
+      });
+
       // Lors du choix sur le mode de livraison
       jQuery(document).on('change', 'input[type=radio][name=mode_livraison]', function (event) {
         $('.display_on_modelivraison').fadeIn();
+        getTarif();
         if (this.value == 'livraison_retrait') {
           $('#adresses_livraison_plateforme_area').show();
           $('#adresses_livraison_user_area').hide();
@@ -255,7 +291,6 @@
           $('#adresses_livraison_plateforme_area').hide();
           $('#adresses_livraison_user_area').show();
           $('#adresse_livraison_form_area').show();
-        } else {
         }
       });
 
@@ -269,6 +304,11 @@
         $('#livraison_pays').val($('.adresses_livraison_possibles_' + selection_id).children('.adresse_livraison_possible_pays').text());
       });
 
+      // Lors du choix du pays l'adresse de livraison
+      jQuery(document).on('change', '#livraison_pays', function (event) {
+        getTarif();
+      });
+
       // Lors du choix de l'adresse de facturation
       jQuery(document).on('change', '#facturation_select', function (event) {
         var selection_id = $("option:selected", this).val();
@@ -278,6 +318,108 @@
         $('#facturation_commune').val($('.adresses_facturation_possibles_' + selection_id).children('.adresse_facturation_possible_commune').text());
         $('#facturation_pays').val($('.adresses_facturation_possibles_' + selection_id).children('.adresse_facturation_possible_pays').text());
       });
+
+
+      // Lors du changement du montant de livraison
+      $("body").on('DOMSubtreeModified', "#tarif_livraison", function () {
+        var tarif_livraison = parseFloat($('#tarif_livraison').text());
+        $('#tarif_livraison_input').val(tarif_livraison);
+      });
+
+      // Mise à jour du total TTC
+      function updateTTC() {
+        // Mise à jour tarif
+        var tarif_livraison = parseFloat($('#tarif_livraison').text());
+        var tarif_assurance = parseFloat($('#tarif_assurance_input').val());
+        var old_total_ttc = parseFloat($('#tarif_ttc_value').text());
+        $('#tarif_ttc').html((old_total_ttc + tarif_livraison + tarif_assurance).toFixed(2));
+      }
+
+      // Récupération du tarif de livraison de La Poste 
+      function getTarif() {
+        $('#tarif_livraison_area').show();
+        $('#tarif_livraison_definir').hide();
+        var mode_livraison_actif = $('input[name="mode_livraison"]:checked').val();
+        // Retrait au magasin
+        if (mode_livraison_actif == 'livraison_retrait') {
+          var parametres = {
+            pays_destination: pays_destination_value
+          };
+          $.ajax({
+            url: "{{ path('plateforme_ecommerce_retrait_tarif') }}",
+            type: 'post',
+            dataType: 'json',
+            beforeSend: function () {
+              $('#tarif_livraison').html('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
+            },
+            success: function (data) {
+              $('#tarif_livraison').html(data.tarif_livraison);
+              $("#tarif_livraison_area").show();
+              $("#tarif_livraison_definir").hide();
+              updateTTC(); // Mise à jour du total TTC
+            },
+            data: parametres
+          });
+        }
+        // LAPOSTE - lettre
+        if (mode_livraison_actif == 'livraison_laposte_lettre') {
+          // Mise à jour du tarif
+          var pays_destination_value = $('#livraison_pays').val();
+          var parametres = {
+            pays_destination: pays_destination_value
+          };
+          $.ajax({
+            url: "{{ path('plateforme_ecommerce_tariflapostelettre_tarif') }}",
+            type: 'post',
+            dataType: 'json',
+            beforeSend: function () {
+              $('#tarif_livraison').html('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
+            },
+            success: function (data) {
+              $('#tarif_livraison').html(data.tarif_livraison);
+              $("#tarif_livraison_area").show();
+              $("#tarif_livraison_definir").hide();
+              if (data.tarif_livraison === null) {
+                $("#tarif_livraison_area").hide();
+                $("#tarif_livraison_definir").show();
+                alert("Nous ne livrons pas vers ce pays.\nVeuillez, s'il vous plaît, choisir une autre destination.");
+              } else {
+                updateTTC(); // Mise à jour du total TTC
+              }
+            },
+            data: parametres
+          });
+        }
+        // LAPOSTE - recommandé
+        if (mode_livraison_actif == 'livraison_laposte_colissimo') {
+          // Mise à jour du tarif
+          var pays_destination_value = $('#livraison_pays').val();
+          var parametres = {
+            pays_destination: pays_destination_value
+          };
+          $.ajax({
+            url: "{{ path('plateforme_ecommerce_tariflapostecolissimo_tarif') }}",
+            type: 'post',
+            dataType: 'json',
+            beforeSend: function () {
+              $('#tarif_livraison').html('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
+            },
+            success: function (data) {
+              $('#tarif_livraison').html(data.tarif_livraison);
+              $("#tarif_livraison_area").show();
+              $("#tarif_livraison_definir").hide();
+              if (data.tarif_livraison === null) {
+                $("#tarif_livraison_area").hide();
+                $("#tarif_livraison_definir").show();
+                alert("Nous ne livrons pas vers ce pays.\nVeuillez, s'il vous plaît, choisir une autre destination.");
+              } else {
+                updateTTC(); // Mise à jour du total TTC
+              }
+            },
+            data: parametres
+          });
+        }
+      }
 
     </script>
   {% endblock %}

@@ -72,3 +72,7 @@ plateforme_ecommerce_tariflapostecolissimo_delete:
     defaults: { _controller: PlateformeEcommerceBundle:TarifLaposteColissimo:delete }
     requirements:
         id: \d*
+plateforme_ecommerce_retrait_tarif:
+    path:  /livraison/tarifs-retrait
+    defaults: { _controller: PlateformeEcommerceBundle:LivraisonRetrait:tarif }
+    methods: [post]

@@ -116,12 +116,10 @@ class TarifLaposteColissimoController extends Controller
     $valeurs_recu = $request->request->all();
     $tarif_livraison_obj = $em->getRepository('PlateformeEcommerceBundle:TarifLaposteColissimo')->findOneByPays($valeurs_recu['pays_destination']);
     $tarif_livraison = null;
-    
     // Envoie vers tout pays ayant un tarif
     if (isset($tarif_livraison_obj)) {
       $tarif_livraison = $tarif_livraison_obj->getTarif();
     }
-    
     $response = array(
       'tarif_livraison' => $tarif_livraison,
     );

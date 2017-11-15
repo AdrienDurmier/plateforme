@@ -106,17 +106,11 @@ class TarifLaposteLettreController extends Controller {
   public function tarifAction(Request $request) {
     $em = $this->getDoctrine()->getManager();
     $valeurs_recu = $request->request->all();
-    // Récupération du tarif en fonction du Pays
     $tarif_livraison_obj = $em->getRepository('PlateformeEcommerceBundle:TarifLaposteLettre')->findOneByPays($valeurs_recu['pays_destination']);
     $tarif_livraison = null;
-    // Envoie en France (tout pays ayant un tarif)
+    // Envoie vers tout pays ayant un tarif
     if (isset($tarif_livraison_obj)) {
       $tarif_livraison = $tarif_livraison_obj->getTarif();
-    }
-    // Envoie à l'international (tout pays n'ayant pas de tarif)
-    else{
-      $tarif_livraison_obj = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('laposte_lettre_tarif_international');
-      $tarif_livraison = $tarif_livraison_obj->getValue();
     }
     $response = array(
       'tarif_livraison' => $tarif_livraison,
