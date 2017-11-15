@@ -4,9 +4,16 @@
   Validation - {{ parent() }}
 {% endblock %}
 
+{% set totalHT = 0 %}
+{% set totalTTC = 0%}
+{% set totalTVAs = {} %}
+{% for produit in produits %}
+  {% set totalTVAs = totalTVAs|merge({ (produit.tva.valeur ~ '%') : 0 }) %}
+{% endfor %}
+
 {% block body %}
   <div class="container">
-       
+
     <div class="hidden-small">
       <div class="row">
         <div class="col-2 text-center">
@@ -52,22 +59,98 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Références</th>
+          <th>Référence</th>
           <th>Prix unitaire</th>
           <th>Quantité</th>
-          <th>Total HT</th>
+          <th>Total</th>
         </tr>
       </thead>
       <tbody>
         {% for produit in produits %}
-        <tr>
-          <td>{{ produit.titre }}</td>
-          <td>{{ produit.prix }}</td>
-          <td>{{ panier[produit.id] }}</td>
-          <td>{{ produit.prix * panier[produit.id] }} €</td>
-        </tr>
+          <tr>
+            <td>
+              <img
+                style="width:75px;"
+                class="img-fluid"
+                src="{{ asset(produit.image.webPath) }}"
+                alt="{{ produit.image.alt }}"
+                />
+              {{ produit.titre }}
+            </td>
+            <td>
+              {% if(produit.tva.valeur == 0) %}
+                {{ produit.prix }} €
+              {% else %}
+                {{ produit.prix|ttc(produit.tva) }} € TTC
+                <br>
+                <small>{{ produit.prix }} € HT</small>
+              {% endif %}
+            </td>
+            <td>{{ panier[produit.id] }}</td>
+            <td>
+              {% if(produit.tva.valeur == 0) %}
+                {{ produit.prix|ttc(produit.tva) * panier[produit.id] }} €
+              {% else %}
+                {{ produit.prix|ttc(produit.tva) * panier[produit.id] }} € TTC
+                <br>
+                <small>{{ produit.prix * panier[produit.id] }} € HT</small>
+              {% endif %}
+            </td>
+          </tr>
+        {% set totalTTC = totalTTC + (produit.prix|ttc(produit.tva) * panier[produit.id]) %}
+        {% set totalHT = totalHT + (produit.prix * panier[produit.id]) %}
+        {% set totalTVAs = totalTVAs|merge({ ( produit.tva.valeur ~ '%') : totalTVAs[produit.tva.valeur ~ '%'] + ( produit.prix * panier[produit.id])|tva(produit.tva) }) %}
         {% endfor %}
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3" class="text-right">
+            <b>Total HT</b>
+          </td>
+          <td>{{ totalHT }} € HT</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="3" class="text-right">
+            <b>Frais de port</b>
+            <br>
+            <small>
+              {% if mode_livraison == 'livraison_retrait' %}
+                Retrait dans nos locaux
+              {% endif %}
+              {% if mode_livraison == 'livraison_laposte_lettre' %}
+                Envoie par lettre <i>La Poste</i>
+              {% endif %}
+              {% if mode_livraison == 'livraison_laposte_colissimo' %}
+                Envoie par colissimo <i>La Poste</i>
+              {% endif %}
+            </small>
+          </td>
+          <td>
+            {{ tarif_livraison|number_format(2) }} € TTC
+            {{ tarif_livraison|ht(tva_livraison) }} €
+          </td>
+          <td></td>
+        </tr>
+        {% for key, tva in totalTVAs %}
+          {% if tva > 0 %}
+            <tr>
+              <td colspan="3" class="text-right"><b>TVA {{ key }}</b></td>
+              <td>{{ tva }} €</td>
+              <td></td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+        <tr>
+          <td colspan="3" class="text-right">
+            <big><b>Total TTC</b></big>
+          </td>
+          <td>
+            <big>{{ totalTTC }} € TTC</big>
+          </td>
+          <td></td>
+        </tr>
+      </tfoot>
     </table>
 
     <h2>Livraison</h2>
@@ -97,7 +180,7 @@
       <input type="radio" name="mode_paiement" value="paiement_cheque_virement"> Paiement par chèque ou virement
       <br>
       <input type="radio" name="mode_paiement" value="paiement_paypal"> Paiement par Paypal
-      
+
       <hr>
 
       <button class="btn btn-success pull-right" type="submit">

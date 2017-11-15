@@ -1,15 +1,15 @@
 {% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
 
+{% block title %}
+  Panier - {{ parent() }}
+{% endblock %}
+
 {% set totalHT = 0 %}
 {% set totalTTC = 0%}
 {% set totalTVAs = {} %}
 {% for produit in produits %}
   {% set totalTVAs = totalTVAs|merge({ (produit.tva.valeur ~ '%') : 0 }) %}
 {% endfor %}
-
-{% block title %}
-  Panier - {{ parent() }}
-{% endblock %}
 
 {% block body %}
   <div class="container">

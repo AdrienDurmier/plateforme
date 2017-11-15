@@ -30,8 +30,16 @@ class TunnelController extends Controller {
     if (!$session->has('panier')) {
       return $this->redirectToRoute('plateforme_ecommerce_tunnel_panier');
     }
+    // print '<pre>';print_r($valeurs_recu);print '</pre>';die();
     
     $session->set('mode_livraison', $valeurs_recu['mode_livraison']);
+    $session->set('tarif_livraison', $valeurs_recu['tarif_livraison_input']);
+    // Par défaut il n'y a aucune taxe sur les frais de port sauf si c'est un collisimo
+    $tva = $em->getRepository('PlateformeEcommerceBundle:Tva')->findOneByMultiplicate(1);  // Aucune taxe
+    if($valeurs_recu['mode_livraison'] == 'livraison_laposte_colissimo'){
+      $tva = $em->getRepository('PlateformeEcommerceBundle:Tva')->findOneByMultiplicate(1.2);// TVA 20%
+    }
+    $session->set('tva_livraison', $tva);
     $session->set('adresse_livraison', array(
       'livraison_nom'         => $valeurs_recu['livraison_nom'],
       'livraison_prenom'      => $valeurs_recu['livraison_prenom'],
@@ -54,9 +62,11 @@ class TunnelController extends Controller {
     $produits = $em->getRepository('PlateformeCatalogueBundle:Produit')->findArray(array_keys($session->get('panier')));
     
     return $this->render('PlateformeEcommerceBundle:Tunnel:validation.html.twig', array(
-      'produits'                =>  $produits,
+      'produits'              =>  $produits,
       'panier'                =>  $session->get('panier'),
       'mode_livraison'        =>  $session->get('mode_livraison'),
+      'tarif_livraison'       =>  $session->get('tarif_livraison'),
+      'tva_livraison'         =>  $session->get('tva_livraison'),
       'adresse_livraison'     =>  $session->get('adresse_livraison'),
       'adresse_facturation'   =>  $session->get('adresse_facturation'),
     ));

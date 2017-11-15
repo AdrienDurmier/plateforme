@@ -82,3 +82,6 @@ a:hover, a:focus{text-decoration:none;color:#333;}
 .margin-30h{margin:0 30px;}
 .margin-40h{margin:0 40px;}
 .margin-50h{margin:0 50px;}
+
+/* TUNNEL ACHAT - 3. LIVRAISON */
+#adresse_livraison_form_area .input-group-addon, #adresse_facturation_form_area .input-group-addon {font-size:1.0em;width:100px;}

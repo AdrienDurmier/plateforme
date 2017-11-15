@@ -1,4 +1,8 @@
 services:
+    ht:
+        class: Plateforme\EcommerceBundle\Twig\Extension\HTExtension
+        tags:
+            - { name: twig.extension }
     ttc:
         class: Plateforme\EcommerceBundle\Twig\Extension\TTCExtension
         tags:
