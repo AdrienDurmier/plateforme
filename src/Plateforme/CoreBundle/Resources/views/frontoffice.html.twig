@@ -8,38 +8,55 @@
     <meta name="author" content="Adrien Durmier - www.codeur-job.fr">
     <title>{% block title %}Plateforme{% endblock %}</title>
     {% block stylesheets %}
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/frontoffice.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/plugins/jquery.typeahead.min.css') }}" rel="stylesheet">
     {% endblock %}
   </head>
   <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
       <div class="container">
         <a class="navbar-brand" href="{{ path('plateforme_core_homepage') }}">Plateforme</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu_principale" aria-controls="menu_principale" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="menu_principale">
+
+        <div class="collapse navbar-collapse" id="navbarsExample09">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
               <a class="nav-link" href="{{ path('plateforme_catalogue_produits_index') }}">Produits</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
           </ul>
-          <span class="navbar-text">
+          <form id="form-search-engine" name="form-search-engine" class="my-2 my-md-0">
+            <div class="typeahead__container">
+              <div class="typeahead__field">
+                <span class="typeahead__query">
+                  <input id="search_engine" class="form-control" name="search[query]" placeholder="Rechercher" autocomplete="off" type="search">
+                </span>
+                <span class="typeahead__button">
+                  <button type="submit" id="search-button">
+                    <i class="typeahead__search-icon"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </form>
+          <ul class="navbar-nav">
             {{ render(controller("PlateformeEcommerceBundle:Panier:menu")) }}
-            &nbsp;|&nbsp;
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-              <div class="btn-group">
-                <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <li class="nav-item dropdown">
+                <a class="btn btn-default dropdown-toggle" href="#" id="menuUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fa fa-user" aria-hidden="true"></i>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <div class="dropdown-item">
-                    Hello {{ app.user.prenom|first }}. {{ app.user.nom }}
-                  </div>
-                  <div class="dropdown-divider"></div>
+                <div class="dropdown-menu" aria-labelledby="menuUser">
                   {% if is_granted('ROLE_CLIENT') %}
                     <a class="dropdown-item" href="{{ path('fos_user_profile_show') }}">
                       <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Mon Compte
@@ -54,13 +71,15 @@
                     <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Déconnexion
                   </a>
                 </div>
-              </div>
+              </li>
             {% else %}
-              <a href="{{ path('plateforme_user_login') }}">
-                <i class="fa fa-user" aria-hidden="true"></i>
-              </a>
+              <li class="nav-item">
+                <a href="{{ path('plateforme_user_login') }}" class="btn btn-default">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </a>
+              </li>
             {% endif %}
-          </span>
+          </ul>
         </div>
       </div>
     </nav>
@@ -121,6 +140,52 @@
       <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+      <script src="{{ asset('js/plugins/jquery.typeahead.min.js') }}"></script>
+      <script>
+        // Moteur de recherche
+        $.typeahead({
+          input: '#search_engine', // identifiant du champ d'autocomplétion
+          minLength: 3, // lance la recherche seulement si 3 caractères minimum sont saisies
+          delay: 500, // permet de laisser une 1/2 seconde entre chaque caractère tapé avant de lancer la recherche.
+          order: "asc",
+          emptyTemplate: 'Aucun résultat pour "{% verbatim %}{{query}}{% endverbatim %}"',
+          source: {
+            produit: {
+              display: "produit",
+              href: "{{ path('plateforme_core_homepage') }}produits/{% verbatim %}{{slug}}{% endverbatim %}",
+              ajax: [{
+                  type: "GET",
+                  url: "{{ path('plateforme_core_homepage') }}search/produits/json",
+                  data: {
+                    term: "{% verbatim %}{{query}}{% endverbatim %}"
+                  }
+                }, "data.produit"],
+              template:
+                      '<span>' +
+                        '<span class="produit-image">' +
+                          '<img src="{% verbatim %}{{image}}{% endverbatim %}" width="50" height="50">' +
+                        '</span>' +
+                        '<span class="produit-information">' +
+                          '<span class="produit">{% verbatim %}{{produit}}{% endverbatim %}</span>' +
+                          '<span class="text-muted"> - Code produit: {% verbatim %}{{id}}{% endverbatim %}</span>' +
+                        '</span>' +
+                      '</span>'
+            }
+          },
+          debug: true
+        });
+        $('#form-search-engine').submit(function (e) {
+          if ($('#search_engine').val() != '') {
+            e.preventDefault();
+            window.location.href = "{{ path('plateforme_core_homepage') }}resultats/" + $('#search_engine').val();
+            e.stopPropagation();
+          } else {
+            e.preventDefault();
+            window.location.href = "#";
+            e.stopPropagation();
+          }
+        });
+      </script>
     {% endblock %}
   </body>
 </html>

@@ -41,3 +41,8 @@ plateforme_catalogue_produits_view:
     path:      /produits/{slug}
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:view
+        
+plateforme_catalogue_produits_json:
+    path:      /search/produits/json
+    defaults:
+        _controller: PlateformeCatalogueBundle:Produit:json

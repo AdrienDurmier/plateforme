@@ -31,6 +31,17 @@ security:
                 target:     plateforme_user_login
             remember_me:
                 secret:     %secret%
+                
+            # FOSUser Config
+            form_login:
+                login_path: plateforme_user_login
+                check_path: fos_user_security_check
+                success_handler: login_redirection
+            logout:
+                path:       fos_user_security_logout
+                target:     plateforme_user_login
+            remember_me:
+                secret: %secret%
 
     access_control:
         - { path: ^/admin, roles: ROLE_EMPLOYE}

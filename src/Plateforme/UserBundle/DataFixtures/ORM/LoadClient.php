@@ -17,6 +17,8 @@ class LoadClient extends AbstractFixture implements OrderedFixtureInterface
     $client1->setNom('Doe');
     $client1->setPrenom('John');
     $client1->setUsername('John Doe');
+    $client1->setTelephone('0669594485');
+    $client1->setUsername('John Doe');
     $client1->setEmail('a.durmier.dev@gmail.com');
     $client1->setPlainPassword('john');
     $client1->setEnabled(true);

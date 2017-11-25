@@ -3,7 +3,6 @@
 namespace Plateforme\CatalogueBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Plateforme\CoreBundle\Form\ImageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +17,7 @@ class ProduitType extends AbstractType
         $builder
           ->add('prix')
           ->add('image',  ImageType::class)
-          ->add('save',   SubmitType::class);
+        ;
     }
     
     public function getParent()

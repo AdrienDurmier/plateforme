@@ -2,7 +2,12 @@
  * CSS du backoffice
  */
 body {padding-top:3.5rem;font-size:0.8rem;}
-h1 {font-size:2em}
+h1 {font-size:1.5em}
+h2 {font-size:1.4em;}
+h3 {font-size:1.3em;}
+h4 {font-size:1.25em;}
+h5 {font-size:1.20em;}
+h6 {font-size:1.15em;}
 .sidebar {position:fixed;top: 51px;bottom:0;left:0;z-index:1000;padding:20px;overflow-x:hidden;overflow-y:auto;border-right:1px solid #eee;}
 .sidebar {padding-left:0;padding-right:0;}
 .sidebar .nav {margin-bottom:20px;}

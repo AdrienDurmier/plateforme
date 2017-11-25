@@ -1,8 +1,12 @@
 {% extends "PlateformeCoreBundle::backoffice.html.twig" %}
 
+{% block title %}
+  Édition de "{{ produit.titre }}" - {{ parent() }}
+{% endblock %}
+
 {% block body %}
 
-  <h2>Édition d'un produit</h2>
+  <h1>Édition d'un produit</h1>
   
   <hr>
 
