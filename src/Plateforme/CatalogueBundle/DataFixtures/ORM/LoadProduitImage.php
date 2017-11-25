@@ -20,10 +20,16 @@ class LoadProduitImage extends AbstractFixture implements OrderedFixtureInterfac
     $img2->setAlt("La caserne des pompiers");
     $manager->persist($img2);
     
+    $img3 = new Image();
+    $img3->setUrl('jpeg');
+    $img3->setAlt("La caserne des pompiers Sam le pompier");
+    $manager->persist($img3);
+    
     $manager->flush();
     
     $this->addReference('image_1', $img1);
     $this->addReference('image_2', $img2);
+    $this->addReference('image_3', $img3);
   }
   
   public function getOrder() {

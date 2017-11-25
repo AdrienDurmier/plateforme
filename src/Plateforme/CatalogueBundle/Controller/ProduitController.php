@@ -169,6 +169,7 @@ class ProduitController extends Controller {
 
   /**
    * Résultats d'une recherche en json
+   *  FIXME: n'affiche pas de résultats si pas d'image
    *  exemple: http://localhost/plateforme/web/app_dev.php/produits/json?term=ecran
    * @param Request $request
    * @return JsonResponse
@@ -191,7 +192,7 @@ class ProduitController extends Controller {
         'id' => $produit['id'],
         'produit' => $produit['titre'], // doit être le même nom que dans la réponse retourner (data)
         'slug' => $produit['slug'], // doit être le même nom que dans la réponse retourner (data)
-        'image' => $baseurl.'/uploads/img/'.$produit['filename'], // doit être le même nom que dans la réponse retourner (data)
+        'image' => $baseurl . '/uploads/img/' . $produit['filename'], // doit être le même nom que dans la réponse retourner (data)
       );
     }
     // S'il n'y a eu aucun résultat

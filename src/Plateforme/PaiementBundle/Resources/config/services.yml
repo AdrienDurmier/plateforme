@@ -1,0 +1,4 @@
+services:
+#    plateforme_paiement.example:
+#        class: Plateforme\PaiementBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

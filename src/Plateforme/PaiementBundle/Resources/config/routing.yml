@@ -1,0 +1,3 @@
+plateforme_paiement_homepage:
+    path:     /
+    defaults: { _controller: PlateformePaiementBundle:Default:index }

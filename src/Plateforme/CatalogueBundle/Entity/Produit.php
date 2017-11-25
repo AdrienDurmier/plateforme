@@ -41,6 +41,12 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
   private $image;
   
   /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\CatalogueBundle\Entity\Marque", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $marque;
+  
+  /**
    * @ORM\ManyToOne(targetEntity="Plateforme\EcommerceBundle\Entity\Tva", cascade={"persist"})
    * @ORM\JoinColumn(nullable=false)
    */
@@ -98,6 +104,27 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
   public function getImage()
   {
     return $this->image;
+  }
+  
+  /**
+   * Set marque
+   *
+   * @param \Plateforme\CatalogueBundle\Entity\Marque $marque
+   * @return Produits
+   */
+  public function setMarque(\Plateforme\CatalogueBundle\Entity\Marque $marque)
+  {
+      $this->marque = $marque;
+      return $this;
+  }
+  /**
+   * Get marque
+   *
+   * @return \Plateforme\CatalogueBundle\Entity\Marque 
+   */
+  public function getMarque()
+  {
+      return $this->marque;
   }
   
   /**

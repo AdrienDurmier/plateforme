@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new PUGX\MultiUserBundle\PUGXMultiUserBundle(),                     // @see https://github.com/PUGX/PUGXMultiUserBundle/blob/master/Resources/doc/index.md
             new FOS\UserBundle\FOSUserBundle(),                                 // @see http://knpbundles.com/FriendsOfSymfony/FOSUserBundle
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),                     // http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/index.html + installation CKeditor: http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/installation.html,
+            new Plateforme\PaiementBundle\PlateformePaiementBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
