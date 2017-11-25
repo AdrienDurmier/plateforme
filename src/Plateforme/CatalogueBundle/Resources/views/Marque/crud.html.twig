@@ -1,0 +1,63 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Gestion des marques - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h1>Gestion des marques</h1>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
+    <li class="breadcrumb-item active">Marques</li>
+  </ol>
+
+  <hr>
+
+  <a href="{{ path('plateforme_catalogue_marques_add') }}" class="btn btn-success btn-sm">
+    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer un marque
+  </a>
+
+  <br><br>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Titre</th>
+          <th>Slug</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      {% for marque in marques %}
+        <tr>
+          <td>{{ marque.id }}</td>
+          <td>{{ marque.titre }}</td>
+          <td>{{ marque.slug }}</td>
+          <td>
+            <a href="{{ path('plateforme_catalogue_marques_view', {'slug': marque.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            </a>
+            &nbsp;|&nbsp;
+            <a href="{{ path('plateforme_catalogue_marques_edit', {'id': marque.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </a>
+            &nbsp;|&nbsp;
+            <a href="{{ path('plateforme_catalogue_marques_clone', {'id': marque.id}) }}" data-toggle="tooltip" data-placement="top" title="Cloner">
+              <i class="fa fa-clone" aria-hidden="true"></i>
+            </a>
+            &nbsp;|&nbsp;
+            <a href="{{ path('plateforme_catalogue_marques_delete', {'id': marque.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer" onclick="return confirm('Êtes-vous sûr ?');">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+{% endblock %}

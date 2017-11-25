@@ -1,0 +1,16 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Édition de "{{ marque.titre }}" - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h1>Édition de la marque <i>"{{ marque.titre }}"</i></h1>
+  
+  <hr>
+
+  {{ include("PlateformeCatalogueBundle:Marque:form.html.twig") }}
+  
+
+{% endblock %}

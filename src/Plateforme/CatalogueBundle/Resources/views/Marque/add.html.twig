@@ -1,0 +1,20 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Création d'une fiche marque - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h1>Création d'un marque</h1>
+  
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_catalogue_marques_crud') }}">Marques</a></li>
+    <li class="breadcrumb-item active">Création</li>
+  </ol>
+
+  {{ include("PlateformeCatalogueBundle:Marque:form.html.twig") }}
+
+{% endblock %}

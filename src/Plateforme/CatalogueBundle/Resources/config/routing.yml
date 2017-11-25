@@ -5,44 +5,75 @@ plateforme_catalogue_produits_index:
     path:      /produits
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:index
-        
 plateforme_catalogue_produits_crud:
     path:      /admin/produits
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:crud
-
 plateforme_catalogue_produits_add:
     path:      /admin/produits/add
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:add
-
 plateforme_catalogue_produits_edit:
     path:      /admin/produits/edit/{id}
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:edit
     requirements:
         id: \d*
-
 plateforme_catalogue_produits_clone:
     path:      /admin/produits/clone/{id}
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:clone
     requirements:
         id: \d*
-
 plateforme_catalogue_produits_delete:
     path:      /admin/produits/delete/{id}
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:delete
     requirements:
         id: \d*
-
 plateforme_catalogue_produits_view:
     path:      /produits/{slug}
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:view
-        
 plateforme_catalogue_produits_json:
     path:      /search/produits/json
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:json
+
+################################################################################
+# MARQUES
+################################################################################
+plateforme_catalogue_marques_index:
+    path:      /marques
+    defaults:
+        _controller: PlateformeCatalogueBundle:Marque:index
+plateforme_catalogue_marques_crud:
+    path:      /admin/marques
+    defaults:
+        _controller: PlateformeCatalogueBundle:Marque:crud
+plateforme_catalogue_marques_add:
+    path:      /admin/marques/add
+    defaults:
+        _controller: PlateformeCatalogueBundle:Marque:add
+plateforme_catalogue_marques_edit:
+    path:      /admin/marques/edit/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Marque:edit
+    requirements:
+        id: \d*
+plateforme_catalogue_marques_clone:
+    path:      /admin/marques/clone/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Marque:clone
+    requirements:
+        id: \d*
+plateforme_catalogue_marques_delete:
+    path:      /admin/marques/delete/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Marque:delete
+    requirements:
+        id: \d*
+plateforme_catalogue_marques_view:
+    path:      /marques/{slug}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Marque:view

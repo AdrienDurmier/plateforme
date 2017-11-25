@@ -1,0 +1,46 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  {{ marque.titre }} - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <div itemscope itemtype="http://schema.org/Brand">
+
+    <div class="container">
+      <h1 itemprop="name">{{ marque.titre }}</h1>
+
+      <div itemprop="description">
+        {{ marque.contenu|raw }}
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th>Prix</th>
+            </tr>
+          </thead>
+          {% for produit in produits %}
+            <tr>
+              <td>
+                <a href="{{ path('plateforme_catalogue_produits_view', {'slug': produit.slug}) }}">
+                  {{ produit.titre }}
+                </a>
+              </td>
+              <td>
+                  {{ produit.prix }}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+{% endblock %}
