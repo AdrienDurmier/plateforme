@@ -1,0 +1,38 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  Validation de votre commande - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+
+    {{ render(controller("PlateformeEcommerceBundle:Commande:recapitulatif", { 'commande': commande, 'lignes_commande': lignes_commande, 'tva_sur_livraison': tva_sur_livraison } )) }}
+
+    <form
+      action="{{ path('plateforme_ecommerce_cheque_return') }}"
+      method="post"
+      onsubmit="if (!$('#cgv_checked').is(':checked')) {
+                  alert('Veuillez acceptez les Conditions Générales de Vente');
+                  return false;
+                }"
+      >
+
+      <div class="form-check">
+        <label class="form-check-label">
+          <input id="cgv_checked" type="checkbox" class="form-check-input">
+          J'ai lu et j'accepte les <a href="{{ path('plateforme_core_homepage') }}pages/conditions-generales-de-vente" target="_blank">conditions générales de vente.</a>
+        </label>
+      </div>
+
+      <input name="commande_id" id="commande_id" value="{{ commande.id }}" type="hidden">
+      <input name="client_mail" id="client_mail" value="{{ app.user.email }}" type="hidden">
+
+      <button id="bouton_panier_validation" class="btn btn-success pull-right" type="submit">
+        Valider votre commande
+      </button>
+    </form>
+
+  </div>
+
+{% endblock %}

@@ -17,9 +17,6 @@ plateforme_ecommerce_tunnel_livraison_choix:
 plateforme_ecommerce_tunnel_validation:
     path:  /tunnel-achat/validation
     defaults: { _controller: PlateformeEcommerceBundle:Tunnel:validation }
-plateforme_ecommerce_tunnel_paiement:
-    path:  /tunnel-achat/paiement
-    defaults: { _controller: PlateformeEcommerceBundle:Paiement:paiement }
 plateforme_ecommerce_commandeligne_add:
     path:  /commandeligne-add/{id}
     defaults: { _controller: PlateformeEcommerceBundle:Panier:add }
@@ -76,3 +73,26 @@ plateforme_ecommerce_retrait_tarif:
     path:  /livraison/tarifs-retrait
     defaults: { _controller: PlateformeEcommerceBundle:LivraisonRetrait:tarif }
     methods: [post]
+################################################################################
+# COMMANDES
+################################################################################
+plateforme_ecommerce_commandes_crud:
+    path:      /admin/commandes
+    defaults:
+        _controller: PlateformeEcommerceBundle:Commande:crud
+plateforme_ecommerce_commandes_add:
+    path:      /admin/commandes/add
+    defaults:
+        _controller: PlateformeEcommerceBundle:Commande:add
+plateforme_ecommerce_commandes_edit:
+    path:      /admin/commandes/edit/{id}
+    defaults:
+        _controller: PlateformeEcommerceBundle:Commande:edit
+    requirements:
+        id: \d*
+plateforme_ecommerce_commandes_delete:
+    path:      /admin/commandes/delete/{id}
+    defaults:
+        _controller: PlateformeEcommerceBundle:Commande:delete
+    requirements:
+        id: \d*

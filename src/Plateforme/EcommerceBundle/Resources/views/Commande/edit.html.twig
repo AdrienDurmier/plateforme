@@ -1,0 +1,16 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Édition de la commande {{ commande.id }} - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h1>Édition de la commande {{ commande.id }}</h1>
+  
+  <hr>
+
+  {{ include("PlateformeEcommerceBundle:Commande:form.html.twig") }}
+  
+
+{% endblock %}

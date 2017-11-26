@@ -1,0 +1,70 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  Validation de votre commande - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+
+    {{ render(controller("PlateformeEcommerceBundle:Commande:recapitulatif", { 'commande': commande, 'lignes_commande': lignes_commande, 'tva_sur_livraison': tva_sur_livraison } )) }}
+
+    {#
+      Test des achats avec le compte sandbox:
+      login: test-achat@personnal.fr
+      password: test1234
+    
+      Compte réel
+      fran@comevents.fr
+      pLS5qy32
+    
+      Compte sandbox personal
+      email address: paypal-acheteur@comevents.fr
+      password: d35n3iU6Vdg7CgJLa82D
+      first name : Acheteur
+      last name : Comevents
+      Bank Verified Account: yes
+      Select Payment Card: Paypal
+      Credit Cards: Visa
+      
+      Compte sandbox business
+      email address: paypal-vendeur@comevents.fr
+      password: zK889cs8S6xvrC8A4AGe
+      first name : Vendeur
+      last name : Comevents
+      Bank Verified Account: yes
+      Select Payment Card: Paypal
+      Credit Cards: Visa
+    #}
+
+    <form
+      action="{{ paypal_url }}"
+      method="post"
+      onsubmit="
+          if (!$('#cgv_checked').is(':checked')) {
+            alert('Veuillez acceptez les Conditions Générales de Vente');
+            return false;
+          }"
+      >
+      <input id="cgv_checked" type="checkbox"> J'ai lu et j'accepte les <a href="{{ path('plateforme_core_homepage') }}pages/conditions-generales-de-vente" target="_blank">conditions générales de vente.</a>
+      <input type='hidden' value="{{ commande.totalTtc|number_format(2, '.', ',') }}" name="amount" />
+      <input name="currency_code" type="hidden" value="EUR" />
+      <input name="shipping" type="hidden" value="0.00" />
+      <input name="tax" type="hidden" value="0.00" />
+      <input name="return" type="hidden" value="{{ paypal_url_return }}" />
+      <input name="cancel_return" type="hidden" value="{{ paypal_url_cancel }}" />
+      <input name="notify_url" type="hidden" value="{{ paypal_url_notify }}" />
+      <input name="cmd" type="hidden" value="_xclick" />
+      <input name="business" type="hidden" value="{{ paypal_mail }}" />
+      <input name="item_name" type="hidden" value="Achat sur {{ site_name }}" />
+      <input name="no_note" type="hidden" value="1" />
+      <input name="lc" type="hidden" value="FR" />
+      <input name="bn" type="hidden" value="PP-BuyNowBF" />
+      <input name="custom" type="hidden" value="{{ app.user.email }}" />
+      <button id="bouton_panier_validation" class="btn btn-success pull-right" type="submit">
+        <i class="fa fa-paypal" aria-hidden="true"></i>
+        Procéder au paiement par Paypal
+      </button>
+    </form>
+  </div>
+{% endblock %}

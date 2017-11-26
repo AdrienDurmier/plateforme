@@ -52,9 +52,7 @@
       <br>
     </div>
 
-    <h1>Récapitulatif de votre commande</h1>
-
-    <h2>Votre commande</h2>
+    <h1>Votre commande</h1>
 
     <table class="table table-striped">
       <thead>
@@ -97,9 +95,9 @@
               {% endif %}
             </td>
           </tr>
-        {% set totalTTC = totalTTC + (produit.prix|ttc(produit.tva) * panier[produit.id]) %}
-        {% set totalHT = totalHT + (produit.prix * panier[produit.id]) %}
-        {% set totalTVAs = totalTVAs|merge({ ( produit.tva.valeur ~ '%') : totalTVAs[produit.tva.valeur ~ '%'] + ( produit.prix * panier[produit.id])|tva(produit.tva) }) %}
+          {% set totalTTC = totalTTC + (produit.prix|ttc(produit.tva) * panier[produit.id]) %}
+          {% set totalHT = totalHT + (produit.prix * panier[produit.id]) %}
+          {% set totalTVAs = totalTVAs|merge({ ( produit.tva.valeur ~ '%') : totalTVAs[produit.tva.valeur ~ '%'] + ( produit.prix * panier[produit.id])|tva(produit.tva) }) %}
         {% endfor %}
       </tbody>
       <tfoot>
@@ -127,8 +125,13 @@
             </small>
           </td>
           <td>
-            {{ tarif_livraison|number_format(2) }} € TTC
-            {{ tarif_livraison|ht(tva_livraison) }} €
+            {% if tarif_livraison == tarif_livraison|ht(tva_livraison) %}
+              {{ tarif_livraison|number_format(2) }} €
+            {% else %}
+              {{ tarif_livraison|number_format(2) }} € HT
+              <br>
+              <small>{{ tarif_livraison|ht(tva_livraison)|number_format(2) }} € TTC</small>
+            {% endif %}
           </td>
           <td></td>
         </tr>
@@ -143,15 +146,17 @@
         {% endfor %}
         <tr>
           <td colspan="3" class="text-right">
-            <big><b>Total TTC</b></big>
-          </td>
-          <td>
-            <big>{{ totalTTC }} € TTC</big>
-          </td>
-          <td></td>
-        </tr>
+      <big><b>Total TTC</b></big>
+      </td>
+      <td>
+      <big>{{ totalTTC }} € TTC</big>
+      </td>
+      <td></td>
+      </tr>
       </tfoot>
     </table>
+
+    <hr>
 
     <h2>Livraison</h2>
     <div class="row">
@@ -172,16 +177,21 @@
         <br>{{ adresse_facturation['facturation_cp'] }} {{ adresse_facturation['facturation_commune'] }} ({{ adresse_facturation['facturation_pays'] }})
       </div>
     </div>
-    <br>
 
-    <h2>Mode de paiement</h2>
+    <hr>
 
-    <form action="{{ path('plateforme_ecommerce_tunnel_paiement') }}" method="POST">
-      <input type="radio" name="mode_paiement" value="paiement_cheque_virement"> Paiement par chèque ou virement
+    <h2>Choisissez un mode de paiement</h2>
+
+    <form id="paiement_redirection" action="{{ path('plateforme_paiement_redirection') }}" method="POST" >
+      <input type="radio" name="mode_paiement" value="paiement_cheque"> Paiement par chèque
+      <br>
+      <input type="radio" name="mode_paiement" value="paiement_virement"> Paiement par virement bancaire
       <br>
       <input type="radio" name="mode_paiement" value="paiement_paypal"> Paiement par Paypal
 
       <hr>
+      
+      <input id="cgv_accord" type="checkbox"> J'ai lu et j'accepte les <a href="{{ path('plateforme_core_homepage') }}pages/conditions-generales-de-vente" target="_blank">conditions générales de vente.</a>
 
       <button class="btn btn-success pull-right" type="submit">
         <i class="fa fa-check" aria-hidden="true"></i>
@@ -190,4 +200,28 @@
     </form>
 
   </div>
+{% endblock %}
+
+  {% block javascripts %}
+    {# Récupération des scripts des parents #}
+    {{ parent() }}
+
+    <script>
+      jQuery(document).ready(function (event) {
+        // Gestion des erreurs lors de la validation du formulaire
+        $('#paiement_redirection').submit(function (event) {
+          // Si aucun mode de paiement n'a été choisi
+          var mode_paiement = $('input[name=mode_paiement]:checked', '#paiement_redirection').val()
+          if(mode_paiement == '' || mode_paiement == null || mode_paiement == 'NaN'){
+            alert('Vous devez choisir un mode de paiement pour continuer.');
+            return false;
+          }
+          // Si les CGV ne sont pas validé
+          if (!$('#cgv_accord').is(':checked')) {
+            alert('Veuillez accepter nos Conditions Générales de Vente.');
+            return false;
+          }
+        });
+      });
+    </script>
 {% endblock %}

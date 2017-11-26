@@ -1,3 +1,36 @@
-plateforme_paiement_homepage:
-    path:     /
-    defaults: { _controller: PlateformePaiementBundle:Default:index }
+# Redirection vers le module de paiement adequate
+plateforme_paiement_redirection:
+    path:  /redirection
+    defaults: { _controller: PlateformePaiementBundle:Paiement:redirection }
+
+################################################################################
+# CHEQUE
+################################################################################
+plateforme_paiement_cheque_return:
+    path:  /cheque
+    defaults: { _controller: PlateformePaiementBundle:Cheque:return }
+    methods: [post]
+    
+################################################################################
+# VIREMENT BANCAIRE
+################################################################################
+plateforme_paiement_virement_return:
+    path:  /virement
+    defaults: { _controller: PlateformePaiementBundle:Virement:return }
+    methods: [post]
+    
+################################################################################
+# PAYPAL
+################################################################################
+# page de retour si paiement accepté
+plateforme_paiement_paypal_return:
+    path:  /paypal/return
+    defaults: { _controller: PlateformePaiementBundle:PaiementPaypal:return }
+# page de retour si la transaction est annulée
+plateforme_paiement_paypal_cancel_return:
+    path:  /paypal/cancel
+    defaults: { _controller: PlateformePaiementBundle:PaiementPaypal:cancel }
+# page qui sera appelée par l'IPN
+plateforme_paiement_paypal_notify_url:
+    path:  /paypal/notify
+    defaults: { _controller: PlateformePaiementBundle:PaiementPaypal:notify }
