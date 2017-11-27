@@ -1,38 +1,78 @@
 {% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
 
 {% block title %}
-  Validation de votre commande - {{ parent() }}
+  Paiement par chèque - {{ parent() }}
 {% endblock %}
 
 {% block body %}
+
   <div class="container">
-
-    {{ render(controller("PlateformeEcommerceBundle:Commande:recapitulatif", { 'commande': commande, 'lignes_commande': lignes_commande, 'tva_sur_livraison': tva_sur_livraison } )) }}
-
-    <form
-      action="{{ path('plateforme_ecommerce_cheque_return') }}"
-      method="post"
-      onsubmit="if (!$('#cgv_checked').is(':checked')) {
-                  alert('Veuillez acceptez les Conditions Générales de Vente');
-                  return false;
-                }"
-      >
-
-      <div class="form-check">
-        <label class="form-check-label">
-          <input id="cgv_checked" type="checkbox" class="form-check-input">
-          J'ai lu et j'accepte les <a href="{{ path('plateforme_core_homepage') }}pages/conditions-generales-de-vente" target="_blank">conditions générales de vente.</a>
-        </label>
+    
+    <div class="hidden-small">
+      <div class="row">
+        <div class="col-2 text-center">
+          <a href="{{ path('plateforme_ecommerce_tunnel_panier') }}" class="text-success">
+            <small>Votre panier</small>
+            <br><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="col-2 text-center text-success">
+          <small>Authentification</small>
+          <br><i class="fa fa-sign-in" aria-hidden="true"></i>
+        </div>
+        <div class="col-2 text-center">
+          <a href="{{ path('plateforme_ecommerce_tunnel_livraison') }}" class="text-success">
+            <small>Livraison</small>
+            <br><i class="fa fa-truck" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="col-2 text-center">
+          <a href="{{ path('plateforme_ecommerce_tunnel_validation') }}" class="text-success">
+            <small>Validation</small>
+            <br><i class="fa fa-check-square" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="col-2 text-center text-success">
+          <small>Paiement</small>
+          <br><i class="fa fa-money" aria-hidden="true"></i>
+        </div>
+        <div class="col-2 text-center text-primary">
+          <small>Récapitulatif</small>
+          <br><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+        </div>
       </div>
+      <div class="progress" style="height: 1px;">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 83%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar" role="progressbar" style="width: 17%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <br>
+    </div>
+    
+    <h1>Votre commande vient d'être prise en compte</h1>
+    
+    <h3>Paiement par chèque</h3>
+    <p>
+      Pour réglez par chèque: l'établir à l'ordre de {{ site_name }}, en euro sur une banque française uniquement.
+    </p>
+    <p>
+      L'envoyer à :
+      <br>
+      <br>
+      {{ site_name }}
+      <br>
+      {{ adresse_voie }} {{ adresse_complement }}
+      <br>
+      {{ adresse_code_postal }} {{ adresse_commune }} ({{ adresse_pays }})
+    </p>
 
-      <input name="commande_id" id="commande_id" value="{{ commande.id }}" type="hidden">
-      <input name="client_mail" id="client_mail" value="{{ app.user.email }}" type="hidden">
+    <hr>
 
-      <button id="bouton_panier_validation" class="btn btn-success pull-right" type="submit">
-        Valider votre commande
-      </button>
-    </form>
-
-  </div>
+    <p class="text-center">
+      <strong>La validation de la commande et le délai d'approvisionnement ne seront effectifs qu'à réception et encaissement de votre paiement.</strong>
+    </p>
+    <p class="text-center">
+    <big><strong>Merci d'avoir fait vos achats en ligne avec nous !</strong></big>
+  </p>
+</div>
 
 {% endblock %}
