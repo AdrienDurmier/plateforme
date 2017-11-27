@@ -96,3 +96,49 @@ plateforme_ecommerce_commandes_delete:
         _controller: PlateformeEcommerceBundle:Commande:delete
     requirements:
         id: \d*
+################################################################################
+# ETATS DE PAIEMENT
+################################################################################
+plateforme_ecommerce_etatspaiement_crud:
+    path:      /admin/etats-paiement
+    defaults:
+        _controller: PlateformeEcommerceBundle:EtatPaiement:crud
+plateforme_ecommerce_etatspaiement_add:
+    path:      /admin/etats-paiement/add
+    defaults:
+        _controller: PlateformeEcommerceBundle:EtatPaiement:add
+plateforme_ecommerce_etatspaiement_edit:
+    path:      /admin/etats-paiement/edit/{id}
+    defaults:
+        _controller: PlateformeEcommerceBundle:EtatPaiement:edit
+    requirements:
+        id: \d*
+plateforme_ecommerce_etatspaiement_delete:
+    path:      /admin/etats-paiement/delete/{id}
+    defaults:
+        _controller: PlateformeEcommerceBundle:EtatPaiement:delete
+    requirements:
+        id: \d*
+################################################################################
+# ETATS DE LIVRAISON
+################################################################################
+plateforme_ecommerce_etatslivraison_crud:
+    path:      /admin/etats-livraison
+    defaults:
+        _controller: PlateformeEcommerceBundle:EtatLivraison:crud
+plateforme_ecommerce_etatslivraison_add:
+    path:      /admin/etats-livraison/add
+    defaults:
+        _controller: PlateformeEcommerceBundle:EtatLivraison:add
+plateforme_ecommerce_etatslivraison_edit:
+    path:      /admin/etats-livraison/edit/{id}
+    defaults:
+        _controller: PlateformeEcommerceBundle:EtatLivraison:edit
+    requirements:
+        id: \d*
+plateforme_ecommerce_etatslivraison_delete:
+    path:      /admin/etats-livraison/delete/{id}
+    defaults:
+        _controller: PlateformeEcommerceBundle:EtatLivraison:delete
+    requirements:
+        id: \d*

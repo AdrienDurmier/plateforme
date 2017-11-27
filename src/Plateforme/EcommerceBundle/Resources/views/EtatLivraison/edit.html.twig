@@ -1,0 +1,29 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Édition de l'état de livraison <i>"{{ etat.label }}"</i> - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h1>Édition de l'état de livraison <i>"{{ etat.label }}"</i></h1>
+  
+  <hr>
+
+  <form action="{{ path('plateforme_ecommerce_etatslivraison_edit', { 'id' : etat.id }) }}" method="post" class="form-inline">
+
+    <input name="color" type="color" class="form-control" value="{{ etat.color }}" style="width:40px;height:40px;padding:0;margin-right:10px;">
+
+    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+      <div class="input-group-addon">Label</div>
+      <input type="text" class="form-control" name="label" value="{{ etat.label }}">
+    </div>
+
+    <button type="submit" class="btn btn-success">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
+    </button>
+
+  </form>
+  
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Création d'un état de livraison - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h1>Création d'un état de livraison</h1>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_ecommerce_etatslivraison_crud') }}">État de livraison</a></li>
+    <li class="breadcrumb-item active">Création</li>
+  </ol>
+    
+  <hr>
+
+  <form action="{{ path('plateforme_ecommerce_etatslivraison_add') }}" method="post" class="form-inline">
+
+    <input name="color" type="color" class="form-control" style="width:40px;height:40px;padding:0;margin-right:10px;">
+
+    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+      <div class="input-group-addon">Label</div>
+      <input type="text" class="form-control" name="label">
+    </div>
+
+    <button type="submit" class="btn btn-success">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
+    </button>
+
+  </form>
+
+{% endblock %}
