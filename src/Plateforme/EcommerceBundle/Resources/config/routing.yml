@@ -26,6 +26,9 @@ plateforme_ecommerce_commandeligne_delete:
 plateforme_ecommerce_panier_vider:
     path:  /panier-vider
     defaults: { _controller: PlateformeEcommerceBundle:Panier:vider }
+plateforme_ecommerce_panier_refresh:
+    path:  /panier-refresh
+    defaults: { _controller: PlateformeEcommerceBundle:Panier:refresh }
 plateforme_ecommerce_livraison_suppression:
     path:  /livraison/adresse/suppression/{id}
     defaults: { _controller: PlateformeEcommerceBundle:Livraison:adresseSuppression }

@@ -14,7 +14,8 @@ class PaiementController extends Controller {
     $em = $this->getDoctrine()->getManager();
     $session = $request->getSession();
     $valeurs_recu = $request->request->all();
-    // print '<pre>';print_r($valeurs_recu);print '</pre>';die();
+    
+    // print '<pre>';print_r($valeurs_recu);print '</pre>';die(); // DEBUG
     
     // Création de la commande
     $commande = new Commande();

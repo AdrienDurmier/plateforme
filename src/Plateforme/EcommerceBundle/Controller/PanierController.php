@@ -57,6 +57,24 @@ class PanierController extends Controller {
   }
 
   /**
+   * Méthode pour actualiser les quantités du panier
+   */
+  public function refreshAction(Request $request) {
+    $session = $request->getSession();
+    $valeurs_recu = $request->request->all();
+    if (!$session->has('panier')) {
+      $session->set('panier', array());
+    }
+    $panier = $session->get('panier');
+    foreach($valeurs_recu['qte'] as $id => $quantite){
+      $panier[$id] = $quantite;
+    }
+    $session->set('panier', $panier);
+    $this->get('session')->getFlashBag()->add('success', 'Votre panier a bien été actualisé.');
+    return $this->redirectToRoute('plateforme_ecommerce_tunnel_panier');
+  }
+
+  /**
    * Méthode de suppression d'une ligne du panier
    */
   public function deleteAction($id, Request $request) {
