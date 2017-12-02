@@ -110,7 +110,7 @@ ivory_ck_editor:
         full_config:
             toolbar: "full"
 
-# Pensez à autorisez les IPV6 autorisées pour le mode maintenance
+# Configuration du mode maintenance (active dans que le fichier app/maintenance/active.txt existe)
 lexik_maintenance:
     authorized:
         ips: ['127.0.0.1', '::1']

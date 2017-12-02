@@ -10,20 +10,21 @@ class MaintenanceController extends Controller
     /**
      * Mode maintenance
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-      
-      $driver = $this->get('lexik_maintenance.driver.factory')->getDriver();
-      
-      $message = "";
-      if ($action === 'lock') {
-          $message = $driver->getMessageLock($driver->lock());
-      } else {
-          $message = $driver->getMessageUnlock($driver->unlock());
+      if ($request->isMethod('POST')) {
+        $driver = $this->get('lexik_maintenance.driver.factory')->getDriver();
+        $valeurs_recu = $request->request->all();
+        $message = "";
+        if ($valeurs_recu['maintenance_mode']) {
+            $message = $driver->getMessageLock($driver->lock());
+            $request->getSession()->getFlashBag()->add('warning', "Mode maintenance activé");
+        } else {
+            $message = $driver->getMessageUnlock($driver->unlock());
+            $request->getSession()->getFlashBag()->add('success', "Mode maintenance désactivé");
+        }
       }
 
-      $this->get('session')->setFlash('maintenance', $message);
-      
       return $this->render('PlateformeCoreBundle:Maintenance:index.html.twig');
     }
     

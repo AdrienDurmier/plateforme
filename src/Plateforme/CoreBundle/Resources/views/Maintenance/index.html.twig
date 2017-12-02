@@ -1,0 +1,49 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+
+{% block title %}
+  Mode maintenance - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h1>Mode maintenance</h1>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item active">Mode maitenance</li>
+  </ol>
+
+  <hr>
+  
+  <div class="alert alert-info" role="alert">
+    <i class="fa fa-info" aria-hidden="true"></i> Seules les adresses IPV6 autorisées dans <code>app/config/config.yml</code> accéderons au site.
+  </div>
+
+  <form 
+    id="form_maintenance"
+    action="{{ path('plateforme_core_maintenance_index') }}" 
+    method="post"
+    >
+
+    <div class="form-check">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="maintenance_mode" value="0">
+        Désactivé
+      </label>
+    </div>
+
+    <div class="form-check">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="maintenance_mode" value="1">
+        Activé
+      </label>
+    </div>
+    
+    <hr>
+
+    <button type="submit" class="btn btn-success btn-sm">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
+    </button>
+  </form>
+
+{% endblock %}

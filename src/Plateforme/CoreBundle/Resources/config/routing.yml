@@ -26,6 +26,14 @@ plateforme_core_variables_delete:
         id: \d*
 
 ################################################################################
+# MAINTENANCE
+################################################################################
+plateforme_core_maintenance_index:
+    path:      /admin/maintenance
+    defaults:
+        _controller: PlateformeCoreBundle:Maintenance:index
+
+################################################################################
 # PAGE ACCUEIL
 ################################################################################
 plateforme_core_homepage:
