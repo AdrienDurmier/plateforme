@@ -126,20 +126,10 @@ class ProduitController extends Controller {
     if (null === $produit) {
       throw new NotFoundHttpException("Le produit ayant l'identifiant " . $id . " n'existe pas.");
     }
-    $form = $this->get('form.factory')->create();
-
-    if ($request->isMethod('POST')) {
-      $em = $this->getDoctrine()->getManager();
-      $em->remove($produit);
-      $em->flush();
-      $request->getSession()->getFlashBag()->add('info', "Produit supprimé avec succès");
-      return $this->redirectToRoute('plateforme_catalogue_produits_crud');
-    }
-
-    return $this->render('PlateformeCatalogueBundle:Produit:delete.html.twig', array(
-          'produit' => $produit,
-          'form' => $form->createView(),
-    ));
+    $em->remove($produit);
+    $em->flush();
+    $request->getSession()->getFlashBag()->add('info', "Produit supprimé avec succès");
+    return $this->redirectToRoute('plateforme_catalogue_produits_crud');
   }
 
   /**

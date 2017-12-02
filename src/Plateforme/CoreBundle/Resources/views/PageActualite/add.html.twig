@@ -2,7 +2,15 @@
 
 {% block body %}
 
-  <h2>Création d'une actualité</h2>
+  <h1>Création d'une actualité</h1>
+  
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_page_actualites_crud') }}">Actualités</a></li>
+    <li class="breadcrumb-item active">Création</li>
+  </ol>
+    
+  <hr>
 
   {{ include("PlateformeCoreBundle:PageActualite:form.html.twig") }}
 

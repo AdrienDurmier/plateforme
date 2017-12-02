@@ -2,8 +2,15 @@
 
 {% block body %}
 
-  <h2>Édition d'une categorie</h2>
-  
+  <h1>Édition d'une catégorie</h1>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_page_faq_edit') }}">FAQ</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_page_faq_categorie_crud') }}">Catégories</a></li>
+    <li class="breadcrumb-item active">Édition</li>
+  </ol>
+
   <hr>
 
   {{ include("PlateformeCoreBundle:FAQCategorie:form.html.twig") }}

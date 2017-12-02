@@ -5,7 +5,6 @@ namespace Plateforme\CoreBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
 class PageActualiteType extends AbstractType
@@ -15,7 +14,6 @@ class PageActualiteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('save',      SubmitType::class);
     }
     
     public function getParent()

@@ -5,7 +5,6 @@ namespace Plateforme\CoreBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
 class FAQQuestionType extends AbstractType
@@ -21,8 +20,7 @@ class FAQQuestionType extends AbstractType
             ->add('weight')
             ->add('page_faq')
             ->add('faq_categorie')
-            ->add('published')
-            ->add('save',     SubmitType::class);
+            ->add('published');
     }
     
     /**

@@ -6,22 +6,23 @@
 
 {% block body %}
   
-  <div class="row">
-    <div class="col-xs-6">
-      <h1>Gestion des actualités</h1>
-    </div>
-    <div class="col-xs-6 text-right">
-      <br>
-      <a href="{{ path('plateforme_core_page_actualites_add') }}" class="btn btn-success">
-        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer une actualité
-      </a>
-    </div>
-  </div>
-        
+  <h1>Gestion des actualités</h1>
+  
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item active">Actualités</li>
+  </ol>
+  
   <hr>
   
+  <a href="{{ path('plateforme_core_page_actualites_add') }}" class="btn btn-success btn-sm">
+    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer une actualité
+  </a>
+        
+  <br><br>
+  
   <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table table-striped table-sm">
       <thead>
         <tr>
           <th>ID</th>
@@ -48,7 +49,7 @@
                 <i class="fa fa-clone" aria-hidden="true"></i>
               </a>
               &nbsp;|&nbsp;
-              <a href="{{ path('plateforme_core_page_actualites_delete', {'id': actualite.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer">
+              <a href="{{ path('plateforme_core_page_actualites_delete', {'id': actualite.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer" onclick="return confirm('Êtes-vous sûr ?');">
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </a>
             </td>

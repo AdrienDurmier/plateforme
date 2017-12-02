@@ -68,7 +68,7 @@ class MarqueController extends Controller {
     $em = $this->getDoctrine()->getManager();
     $marque = $em->getRepository('PlateformeCatalogueBundle:Marque')->find($id);
     if (null === $marque) {
-      throw new NotFoundHttpException("Le marque ayant l'identifiant " . $id . " n'existe pas.");
+      throw new NotFoundHttpException("La marque ayant l'identifiant " . $id . " n'existe pas.");
     }
     $form = $this->get('form.factory')->create(MarqueType::class, $marque);
 
@@ -96,7 +96,7 @@ class MarqueController extends Controller {
     $em = $this->getDoctrine()->getManager();
     $marque = $em->getRepository('PlateformeCatalogueBundle:Marque')->find($id);
     if (null === $marque) {
-      throw new NotFoundHttpException("Le marque ayant l'identifiant " . $id . " n'existe pas.");
+      throw new NotFoundHttpException("La marque ayant l'identifiant " . $id . " n'existe pas.");
     }
     $marque_clone = new Marque();
     $marque_clone->setTitre("[CLONE] " . $marque->getTitre());
@@ -114,7 +114,7 @@ class MarqueController extends Controller {
     $em = $this->getDoctrine()->getManager();
     $marque = $em->getRepository('PlateformeCatalogueBundle:Marque')->find($id);
     if (null === $marque) {
-      throw new NotFoundHttpException("Le marque ayant l'identifiant " . $id . " n'existe pas.");
+      throw new NotFoundHttpException("La marque ayant l'identifiant " . $id . " n'existe pas.");
     }
     $em->remove($marque);
     $em->flush();
@@ -129,7 +129,7 @@ class MarqueController extends Controller {
     $em = $this->getDoctrine()->getManager();
     $marque = $em->getRepository('PlateformeCatalogueBundle:Marque')->findOneBySlug($slug);
     if (null === $marque) {
-      throw new NotFoundHttpException("Le marque ayant l'url " . $slug . " n'existe pas.");
+      throw new NotFoundHttpException("La marque ayant l'url " . $slug . " n'existe pas.");
     }
     $produits = $em->getRepository('PlateformeCatalogueBundle:Produit')->findByMarque($marque);
 

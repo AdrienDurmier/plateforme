@@ -14,8 +14,6 @@ class PageAccueilType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-          ->add('save',      SubmitType::class);
     }
     
     public function getParent()

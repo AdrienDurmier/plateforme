@@ -6,16 +6,16 @@
 
 {% block body %}
   
-  <h1>Actualités</h1>
-        
-  <hr>
+  <div class="container">
+    <h1>Actualités</h1>
 
-  {% for actualite in actualites %}
-    <div class="col-xs-12 col-sm-6 col-lg-4">
-      <a href="{{ path('plateforme_core_page_actualites_view', {'slug': actualite.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
-        {{ actualite.titre }}
-      </a>
-    </div>
-  {% endfor %}
+    {% for actualite in actualites %}
+      <div class="col-xs-12 col-sm-6 col-lg-4">
+        <a href="{{ path('plateforme_core_page_actualites_view', {'slug': actualite.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+          {{ actualite.titre }}
+        </a>
+      </div>
+    {% endfor %}
+  </div>
   
 {% endblock %}

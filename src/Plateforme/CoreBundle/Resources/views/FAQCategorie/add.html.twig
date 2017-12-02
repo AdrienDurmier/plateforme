@@ -2,7 +2,16 @@
 
 {% block body %}
 
-  <h2>Création d'une catégorie pour la FAQ</h2>
+  <h1>Création d'une catégorie pour la FAQ</h1>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_page_faq_edit') }}">FAQ</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_page_faq_categorie_crud') }}">Catégories</a></li>
+    <li class="breadcrumb-item active">Création</li>
+  </ol>
+
+  <hr>
 
   {{ include("PlateformeCoreBundle:FAQCategorie:form.html.twig") }}
 
