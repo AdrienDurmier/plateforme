@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),                                 // @see http://knpbundles.com/FriendsOfSymfony/FOSUserBundle
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),                     // http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/index.html + installation CKeditor: http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/installation.html,
             new Plateforme\PaiementBundle\PlateformePaiementBundle(),
+            new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),        // https://github.com/lexik/LexikMaintenanceBundle/blob/master/Resources/doc/index.md
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

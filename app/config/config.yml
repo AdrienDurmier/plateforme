@@ -109,3 +109,14 @@ ivory_ck_editor:
     configs:
         full_config:
             toolbar: "full"
+
+# Pensez à autorisez les IPV6 autorisées pour le mode maintenance
+lexik_maintenance:
+    authorized:
+        ips: ['127.0.0.1', '::1']
+    driver:
+        class: '\Lexik\Bundle\MaintenanceBundle\Drivers\FileDriver'
+        options: {file_path: %kernel.root_dir%\maintenance\active.txt}
+    response:
+        code: 503
+        status: "Service temporairement indisponible"

@@ -1,0 +1,19 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  Erreur {{ status_code }} - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container">
+    
+    <h1>Erreur {{ status_code }} - {{ status_text }}</h1>
+    
+    <div class="text-center">
+      <p>La page que vous cherchez n'existe pas (ou plus).</p>
+    </div>
+    
+  </div>
+
+{% endblock %}

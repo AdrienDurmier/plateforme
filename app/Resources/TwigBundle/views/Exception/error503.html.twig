@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Plateforme">
+    <meta name="author" content="Comevents">
+    <title>Erreur {{ status_code }}</title>
+    {% block stylesheets %}
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link href="{{ asset('css/frontoffice.css') }}" rel="stylesheet">
+    {% endblock %}
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
+  </head>
+
+  <body>
+
+    <div class="container">
+      
+      <h1>Erreur {{ status_code }} - {{ status_text }}</h1>
+
+      <div class="text-center">
+        <p>Le site est actuellement en maintenance</p>
+      </div>
+                
+    </div>
+                
+    {% block javascripts %}
+      <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    {% endblock %}
+
+  </body>
+
+</html>
