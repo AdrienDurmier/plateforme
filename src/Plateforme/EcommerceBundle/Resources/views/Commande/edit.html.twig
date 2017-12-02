@@ -6,11 +6,142 @@
 
 {% block body %}
 
-  <h1>Édition de la commande {{ commande.id }}</h1>
-  
+  <h1>Commande #{{ commande.id }}</h1>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_ecommerce_commandes_crud') }}">Commandes</a></li>
+    <li class="breadcrumb-item active">Commande #{{ commande.id }}</li>
+  </ol>
+
   <hr>
 
-  {{ include("PlateformeEcommerceBundle:Commande:form.html.twig") }}
+  <div class="row">
+    
+    <div class="col-xs-12 col-sm-3">
+      <h2><i class="fa fa-address-book text-primary" aria-hidden="true"></i> Client</h2>
+      {{ commande.user.civilite }} {{ commande.user.prenom }} {{ commande.user.nom }}
+      <br><a href="mailto:{{ commande.user.email }}">{{ commande.user.email }}</a>
+      <br>{{ commande.user.telephone }}
+      <br>{{ commande.user.fax }}
+    </div>
+    
+    <div class="col-xs-12 col-sm-3">
+      <h2><i class="fa fa-file-text-o text-primary" aria-hidden="true"></i> Facturation</h2>
+      {{ commande.coordonneesFacturation['facturation_prenom'] }} {{ commande.coordonneesFacturation['facturation_nom'] }}
+      <br>{{ commande.coordonneesFacturation['facturation_adresse'] }} {{ commande.coordonneesFacturation['facturation_complement'] }}
+      <br>{{ commande.coordonneesFacturation['facturation_cp'] }} {{ commande.coordonneesFacturation['facturation_commune'] }} ({{ commande.coordonneesFacturation['facturation_pays'] }})
+    </div>
+    
+    <div class="col-xs-12 col-sm-3">
+      <h2><i class="fa fa-truck text-primary" aria-hidden="true"></i> Livraison</h2>
+      {{ commande.coordonneesLivraison['livraison_prenom'] }} {{ commande.coordonneesLivraison['livraison_nom'] }}
+      <br>{{ commande.coordonneesLivraison['livraison_adresse'] }} {{ commande.coordonneesLivraison['livraison_complement'] }}
+      <br>{{ commande.coordonneesLivraison['livraison_cp'] }} {{ commande.coordonneesLivraison['livraison_commune'] }} ({{ commande.coordonneesLivraison['livraison_pays'] }})
+    </div>
+    
+    <div class="col-xs-12 col-sm-3">
+      <div class="bg-light p-2">
+        <form action="{{ path('plateforme_ecommerce_commandes_status', { 'id' : commande.id }) }}" method="post">
+          <div class="input-group input-group-sm">
+            <span class="input-group-addon">{{ commande.modeLivraison|mode_livraison }}</span>
+            <select class="form-control" id="status_livraison" name="status_livraison" onChange="this.form.submit();">
+            {% for etat_livraison in etats_livraison %}
+              <option value="{{ etat_livraison.id }}" {% if etat_livraison.id == commande.etatLivraison.id %}selected{% endif %}>{{ etat_livraison.label }}</option>
+            {% endfor %}
+            </select>
+          </div>
+          <div class="input-group input-group-sm pt-2">
+            <span class="input-group-addon">{{ commande.modePaiement|mode_paiement }}</span>
+            <select class="form-control" id="status_paiement" name="status_paiement" onChange="this.form.submit();">
+            {% for etat_paiement in etats_paiement %}
+              <option value="{{ etat_paiement.id }}" {% if etat_paiement.id == commande.etatPaiement.id %}selected{% endif %}>{{ etat_paiement.label }}</option>
+            {% endfor %}
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+  </div>
+    
+  <hr>
   
+  <h2>Contenu de la commande</h2>
+  
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Référence</th>
+          <th>Désignation</th>
+          <th>Prix unitaire HT</th>
+          <th>TVA</th>
+          <th>Quantité</th>
+          <th>Total HT</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ligne in lignes_commande %}
+          <tr>
+            <td>
+              {{ ligne.reference }}
+            </td>
+            <td>
+              {{ ligne.designation }}
+            </td>
+            <td>
+              {{ ligne.prixUnitaireHt }} €
+            </td>
+            <td>
+              {{ ligne.tva }}
+            </td>
+            <td>
+              {{ ligne.quantite }}
+            </td>
+            <td>
+              {{ ligne.prixTotalHt }} €
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      </tfoot>
+        <tr>
+          <td colspan="5" class="text-right">
+            <b>Total HT</b>
+          </td>
+          <td>
+            {{ commande.totalHt }} €
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5" class="text-right">
+            <b>Frais de port</b>
+          </td>
+          <td>
+            {{ commande.totalLivraison['TTC'] }} €
+          </td>
+        </tr>
+        {% for tva in commande.totalTva %}
+          <tr>
+            <td colspan="5" class="text-right">
+              <b>TVA</b>
+            </td>
+            <td>
+              {{ tva }} €
+            </td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="5" class="text-right">
+            <b>Total TTC</b>
+          </td>
+          <td>
+            {{ commande.totalTtc }} €
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 
 {% endblock %}

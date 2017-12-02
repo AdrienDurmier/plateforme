@@ -18,8 +18,10 @@ class PanierController extends Controller {
     $session = $request->getSession();
     $nb_articles = 0;
     if ($session->has('panier')) {
-      foreach ($session->get('panier') as $article_ajoute) {
-        $nb_articles += $article_ajoute;
+      foreach ($session->get('panier') as $key => $article_ajoute) {
+        if ($key != null) {
+          $nb_articles += $article_ajoute;
+        }
       }
     }
     return $this->render('PlateformeEcommerceBundle:Panier:compteur.html.twig', array(
@@ -43,6 +45,15 @@ class PanierController extends Controller {
           'produits' => $produits,
           'panier' => $session->get('panier')
     ));
+  }
+
+  /**
+   * Méthode pour vider le panier
+   */
+  public function viderAction(Request $request) {
+    $session = $request->getSession();
+    $session->set('panier', array());
+    return $this->redirectToRoute('plateforme_ecommerce_tunnel_panier');
   }
 
   /**

@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EtatPaiement {
 
+  public function __toString() {
+    return $this->label;
+  }
+
   /**
    * @var int
    *
@@ -20,6 +24,13 @@ class EtatPaiement {
    * @ORM\GeneratedValue(strategy="AUTO")
    */
   private $id;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="code", type="string", length=255, unique=true)
+   */
+  private $code;
 
   /**
    * @var string
@@ -42,6 +53,28 @@ class EtatPaiement {
    */
   public function getId() {
     return $this->id;
+  }
+
+  /**
+   * Set code
+   *
+   * @param string $code
+   *
+   * @return EtatPaiement
+   */
+  public function setCode($code) {
+    $this->code = $code;
+
+    return $this;
+  }
+
+  /**
+   * Get code
+   *
+   * @return string
+   */
+  public function getCode() {
+    return $this->code;
   }
 
   /**

@@ -20,6 +20,7 @@ class CommandeLigne
      */
     protected $produit;
     
+    
     /** 
      * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Plateforme\EcommerceBundle\Entity\Commande") 
@@ -141,125 +142,5 @@ class CommandeLigne
     public function getCommande()
     {
         return $this->commande;
-    }
-
-    /**
-     * Set reference
-     *
-     * @param string $reference
-     *
-     * @return CommandeLigne
-     */
-    public function setReference($reference)
-    {
-        $this->reference = $reference;
-
-        return $this;
-    }
-
-    /**
-     * Get reference
-     *
-     * @return string
-     */
-    public function getReference()
-    {
-        return $this->reference;
-    }
-
-    /**
-     * Set designation
-     *
-     * @param string $designation
-     *
-     * @return CommandeLigne
-     */
-    public function setDesignation($designation)
-    {
-        $this->designation = $designation;
-
-        return $this;
-    }
-
-    /**
-     * Get designation
-     *
-     * @return string
-     */
-    public function getDesignation()
-    {
-        return $this->designation;
-    }
-
-    /**
-     * Set prixUnitaireHt
-     *
-     * @param string $prixUnitaireHt
-     *
-     * @return CommandeLigne
-     */
-    public function setPrixUnitaireHt($prixUnitaireHt)
-    {
-        $this->prix_unitaire_ht = $prixUnitaireHt;
-
-        return $this;
-    }
-
-    /**
-     * Get prixUnitaireHt
-     *
-     * @return string
-     */
-    public function getPrixUnitaireHt()
-    {
-        return $this->prix_unitaire_ht;
-    }
-
-    /**
-     * Set tva
-     *
-     * @param string $tva
-     *
-     * @return CommandeLigne
-     */
-    public function setTva($tva)
-    {
-        $this->tva = $tva;
-
-        return $this;
-    }
-
-    /**
-     * Get tva
-     *
-     * @return string
-     */
-    public function getTva()
-    {
-        return $this->tva;
-    }
-
-    /**
-     * Set prixTotalHt
-     *
-     * @param string $prixTotalHt
-     *
-     * @return CommandeLigne
-     */
-    public function setPrixTotalHt($prixTotalHt)
-    {
-        $this->prix_total_ht = $prixTotalHt;
-
-        return $this;
-    }
-
-    /**
-     * Get prixTotalHt
-     *
-     * @return string
-     */
-    public function getPrixTotalHt()
-    {
-        return $this->prix_total_ht;
     }
 }

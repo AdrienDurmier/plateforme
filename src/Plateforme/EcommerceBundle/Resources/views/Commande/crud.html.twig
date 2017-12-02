@@ -5,46 +5,82 @@
 {% endblock %}
 
 {% block body %}
-  
+
   <h1>Gestion des commandes</h1>
-  
+
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
     <li class="breadcrumb-item active">Commandes</li>
   </ol>
-    
+
   <hr>
-  
+
   <a href="{{ path('plateforme_ecommerce_commandes_add') }}" class="btn btn-success btn-sm">
     <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer une commande
   </a>
-        
+
   <br><br>
-  
+
   <div class="table-responsive">
-    <table class="table table-striped table-sm">
+    <table class="table table-striped table-bordered table-sm">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Actions</th>
+          <th rowspan="2">#</th>
+          <th rowspan="2">Client</th>
+          <th colspan="3" class="text-center">Paiement</th>
+          <th colspan="3"  class="text-center">Livraison</th>
+          <th rowspan="2">Actions</th>
+        </tr>
+        <tr>
+          <th class="text-muted">Mode</th>
+          <th class="text-muted">Status</th>
+          <th class="text-muted">Total TTC</th>
+          <th class="text-muted">Mode</th>
+          <th class="text-muted">Status</th>
+          <th class="text-muted">Frais de port</th>
         </tr>
       </thead>
-        {% for commande in commandes %}
-          <tr>
-            <td>{{ commande.id }}</td>
-            <td>
-              <a href="{{ path('plateforme_ecommerce_commandes_edit', {'id': commande.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
-                <i class="fa fa-pencil" aria-hidden="true"></i>
-              </a>
-              &nbsp;|&nbsp;
-              <a href="{{ path('plateforme_ecommerce_commandes_delete', {'id': commande.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer" onclick="return confirm('Êtes-vous sûr ?');">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </a>
-            </td>
-          </tr>
-        {% endfor %}
+      {% for commande in commandes %}
+        <tr>
+          <td>{{ commande.id }}</td>
+          <td>{{ commande.user.prenom }} {{ commande.user.nom }}</td>
+          {# Paiement #}
+          <td>
+            {{ commande.modePaiement|mode_paiement }}
+          </td>
+          <td>
+            <span class="p-1 text-light" style="background-color:{{ commande.etatPaiement.color }};">
+              {{ commande.etatPaiement.label }}
+            </span>
+          </td>
+          <td>
+            {{ commande.totalTtc|number_format(2) }} €
+          </td>
+          {# Livraison #}
+          <td>
+            {{ commande.modeLivraison|mode_livraison }}
+          </td>
+          <td>
+            <span class="p-1 text-light" style="background-color:{{ commande.etatLivraison.color }};">
+              {{ commande.etatLivraison.label }}
+            </span>
+          </td>
+          <td>
+            {{ commande.totalLivraison|number_format(2) }} €
+          </td>
+          <td>
+            <a href="{{ path('plateforme_ecommerce_commandes_edit', {'id': commande.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </a>
+            &nbsp;|&nbsp;
+            <a href="{{ path('plateforme_ecommerce_commandes_delete', {'id': commande.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer" onclick="return confirm('Êtes-vous sûr ?');">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
       </tbody>
     </table>
   </div>
-  
+
 {% endblock %}

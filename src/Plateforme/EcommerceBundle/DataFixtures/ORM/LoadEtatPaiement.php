@@ -11,16 +11,19 @@ class LoadEtatPaiement extends AbstractFixture implements OrderedFixtureInterfac
   public function load(ObjectManager $manager)
   {
     $etat1 = new EtatPaiement();
+    $etat1->setCode('etat_paiement_attente');
     $etat1->setLabel('En attente');
     $etat1->setColor('#17a2b8');
     $manager->persist($etat1);
     
     $etat2 = new EtatPaiement();
+    $etat2->setCode('etat_paiement_accepte');
     $etat2->setLabel('Accepté');
     $etat2->setColor('#28a745');
     $manager->persist($etat2);
     
     $etat3 = new EtatPaiement();
+    $etat3->setCode('etat_paiement_erreur');
     $etat3->setLabel('Erreur de paiement');
     $etat3->setColor('#dc3545');
     $manager->persist($etat3);

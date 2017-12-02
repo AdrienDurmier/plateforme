@@ -23,6 +23,9 @@ plateforme_ecommerce_commandeligne_add:
 plateforme_ecommerce_commandeligne_delete:
     path:  /commandeligne-delete/{id}
     defaults: { _controller: PlateformeEcommerceBundle:Panier:delete }
+plateforme_ecommerce_panier_vider:
+    path:  /panier-vider
+    defaults: { _controller: PlateformeEcommerceBundle:Panier:vider }
 plateforme_ecommerce_livraison_suppression:
     path:  /livraison/adresse/suppression/{id}
     defaults: { _controller: PlateformeEcommerceBundle:Livraison:adresseSuppression }
@@ -90,6 +93,13 @@ plateforme_ecommerce_commandes_edit:
         _controller: PlateformeEcommerceBundle:Commande:edit
     requirements:
         id: \d*
+plateforme_ecommerce_commandes_status:
+    path:      /admin/commandes/status/{id}
+    defaults:
+        _controller: PlateformeEcommerceBundle:Commande:status
+    requirements:
+        id: \d*
+    methods: [post]
 plateforme_ecommerce_commandes_delete:
     path:      /admin/commandes/delete/{id}
     defaults:

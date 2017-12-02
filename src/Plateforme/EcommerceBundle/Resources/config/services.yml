@@ -11,3 +11,11 @@ services:
         class: Plateforme\EcommerceBundle\Twig\Extension\TVAExtension
         tags:
             - { name: twig.extension }
+    mode_paiement:
+        class: Plateforme\EcommerceBundle\Twig\Extension\ModePaiementExtension
+        tags:
+            - { name: twig.extension }
+    mode_livraison:
+        class: Plateforme\EcommerceBundle\Twig\Extension\ModeLivraisonExtension
+        tags:
+            - { name: twig.extension }

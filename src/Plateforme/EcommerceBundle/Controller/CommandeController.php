@@ -54,23 +54,45 @@ class CommandeController extends Controller {
     if (null === $commande) {
       throw new NotFoundHttpException("Le commande ayant l'identifiant " . $id . " n'existe pas.");
     }
-    $form = $this->get('form.factory')->create(CommandeType::class, $commande);
+
+    $lignes_commande = $em->getRepository('PlateformeEcommerceBundle:CommandeLigne')->findByCommande($commande->getId());
+    $etats_paiement = $em->getRepository('PlateformeEcommerceBundle:EtatPaiement')->findAll();
+    $etats_livraison = $em->getRepository('PlateformeEcommerceBundle:EtatLivraison')->findAll();
 
     if ($request->isMethod('POST')) {
-      $form->handleRequest($request);
-      if ($form->isValid()) {
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($commande);
-        $em->flush();
-        $request->getSession()->getFlashBag()->add('info', "Commande modifiée avec succès");
-        return $this->redirectToRoute('plateforme_ecommerce_commandes_crud');
-      }
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($commande);
+      $em->flush();
+      $request->getSession()->getFlashBag()->add('info', "Commande modifiée avec succès");
+      return $this->redirectToRoute('plateforme_ecommerce_commandes_crud');
     }
 
     return $this->render('PlateformeEcommerceBundle:Commande:edit.html.twig', array(
           'commande' => $commande,
-          'form' => $form->createView(),
+          'lignes_commande' => $lignes_commande,
+          'etats_paiement' => $etats_paiement,
+          'etats_livraison' => $etats_livraison,
     ));
+  }
+
+  /**
+   * Mise à jour du statut d'une commande
+   */
+  public function statusAction($id, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $valeurs_recu = $request->request->all();
+    $commande = $em->getRepository('PlateformeEcommerceBundle:Commande')->find($id);
+    if (null === $commande) {
+      throw new NotFoundHttpException("Le commande ayant l'identifiant " . $id . " n'existe pas.");
+    }
+    $etat_livraison = $em->getRepository('PlateformeEcommerceBundle:EtatLivraison')->find($valeurs_recu['status_livraison']);
+    $commande->setEtatLivraison($etat_livraison);
+    $etat_paiement = $em->getRepository('PlateformeEcommerceBundle:EtatPaiement')->find($valeurs_recu['status_paiement']);
+    $commande->setEtatPaiement($etat_paiement);
+    $em->persist($commande);
+    $em->flush();
+    $request->getSession()->getFlashBag()->add('success', "Status de la commande mis à jour");
+    return $this->redirectToRoute('plateforme_ecommerce_commandes_edit', array('id' => $id));
   }
 
   /**

@@ -133,7 +133,7 @@
           {% if tva > 0 %}
             <tr>
               <td colspan="3" class="text-right"><b>TVA {{ key }}</b></td>
-              <td>{{ tva }} €</td>
+              <td>{{ tva|number_format(2) }} €</td>
               <td></td>
             </tr>
           {% endif %}
@@ -155,6 +155,10 @@
       <a href="{{ path('plateforme_catalogue_produits_index') }}" class="btn btn-primary text-right">
         <i class="fa fa-reply" aria-hidden="true"></i>
         Continuer mes achats
+      </a>
+      <a href="{{ path('plateforme_ecommerce_panier_vider') }}" class="btn btn-danger text-right">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        Vider le panier
       </a>
     {% endif %}
 
