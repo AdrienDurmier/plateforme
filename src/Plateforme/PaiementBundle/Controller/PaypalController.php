@@ -11,40 +11,37 @@ class PaypalController extends Controller {
   /**
    * Formulaire de paiement paypal
    */
-  public function formAction($commande, $lignes_commande, $tva_sur_livraison) {
+  public function formAction($commande) {
     $em = $this->getDoctrine()->getManager();
     // URL du module de paiement
-    $mode = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('paypal_mode');
+    $mode = $this->container->getParameter('paypal_mode');
     // URLs de retours
-    $paypal_url_return = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('paypal_url_return');
-    $paypal_url_cancel = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('paypal_url_cancel');
-    $paypal_url_notify = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('paypal_url_notify');
+    $paypal_url_return = $this->container->getParameter('paypal_url_return');
+    $paypal_url_cancel = $this->container->getParameter('paypal_url_cancel');
+    $paypal_url_notify = $this->container->getParameter('paypal_url_notify');
     $paypal_url = null;
     $paypal_mail_vendeur = null;
-    switch ($mode->getValue()) {
+    switch ($mode) {
       case "sandbox":
-        $paypal_url_var = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('paypal_sandbox');
-        $paypal_url = $paypal_url_var->getValue();
-        $paypal_mail_vendeur_var = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('paypal_mail_sandbox');
-        $paypal_mail_vendeur = $paypal_mail_vendeur_var->getValue();
+        $paypal_url = $this->container->getParameter('paypal_sandbox');
+        $paypal_mail_vendeur = $this->container->getParameter('paypal_sandbox_mail');
         break;
       case "production":
-        $paypal_url_var = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('paypal_prod');
-        $paypal_url = $paypal_url_var->getValue();
-        $paypal_mail_vendeur_var = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('paypal_mail');
-        $paypal_mail_vendeur = $paypal_mail_vendeur_var->getValue();
+        $paypal_url = $this->container->getParameter('paypal_prod');
+        $paypal_mail_vendeur = $this->container->getParameter('paypal_prod_mail');
         break;
     }
     // Nom du site
     $site_name = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('site_name');
     
     return $this->render('PlateformePaiementBundle:Paypal:form.html.twig', array(
-          'paypal_url' => $paypal_url,
-          'paypal_url_return' => $paypal_url_return->getValue(),
-          'paypal_url_cancel' => $paypal_url_cancel->getValue(),
-          'paypal_url_notify' => $paypal_url_notify->getValue(),
-          'paypal_mail' => $paypal_mail_vendeur,
-          'site_name' => $site_name->getValue(),
+          'paypal_url'        => $paypal_url,
+          'paypal_url_return' => $paypal_url_return,
+          'paypal_url_cancel' => $paypal_url_cancel,
+          'paypal_url_notify' => $paypal_url_notify,
+          'paypal_mail'       => $paypal_mail_vendeur,
+          'site_name'         => $site_name->getValue(),
+          'commande'          => $commande,
     ));
   }
   

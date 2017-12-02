@@ -19,8 +19,8 @@ class PaiementController extends Controller {
     
     // Création de la commande
     $commande = new Commande();
-    $commande->setTotalTtc(number_format($valeurs_recu['totalTTC'],2));
-    $commande->setTotalHt(number_format($valeurs_recu['totalHT'],2));
+    $commande->setTotalTtc(number_format($valeurs_recu['totalTTC'],2, '.', ''));  // Retire le séparateur des milliers
+    $commande->setTotalHt(number_format($valeurs_recu['totalHT'],2, '.', ''));    // Retire le séparateur des milliers
     if(isset($valeurs_recu['totalTva'])){
       $commande->setTotalTva($valeurs_recu['totalTva']);
     }
@@ -61,19 +61,17 @@ class PaiementController extends Controller {
         $response = $this->forward('PlateformePaiementBundle:Cheque:form', array(
         ));
         return $response;
-        break;
       // Paiement par virement bancaire
       case "paiement_virement":
         $response = $this->forward('PlateformePaiementBundle:Virement:form', array(
         ));
         return $response;
-        break;
       // Paiement par Paypal
       case "paiement_paypal":
         $response = $this->forward('PlateformePaiementBundle:Paypal:form', array(
+          'commande' => $commande
         ));
         return $response;
-        break;
     }
 
     $this->get('session')->getFlashBag()->add('warning', 'Aucun mode de paiement choisi.');

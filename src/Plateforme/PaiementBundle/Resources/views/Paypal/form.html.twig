@@ -7,46 +7,67 @@
 {% block body %}
   <div class="container">
 
-    {{ render(controller("PlateformeEcommerceBundle:Commande:recapitulatif", { 'commande': commande, 'lignes_commande': lignes_commande, 'tva_sur_livraison': tva_sur_livraison } )) }}
+    <div class="hidden-small">
+      <div class="row">
+        <div class="col-2 text-center">
+          <a href="{{ path('plateforme_ecommerce_tunnel_panier') }}" class="text-success">
+            <small>Votre panier</small>
+            <br><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="col-2 text-center text-success">
+          <small>Authentification</small>
+          <br><i class="fa fa-sign-in" aria-hidden="true"></i>
+        </div>
+        <div class="col-2 text-center">
+          <a href="{{ path('plateforme_ecommerce_tunnel_livraison') }}" class="text-success">
+            <small>Livraison</small>
+            <br><i class="fa fa-truck" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="col-2 text-center text-success">
+          <small>Validation</small>
+          <br><i class="fa fa-check-square" aria-hidden="true"></i>
+        </div>
+        <div class="col-2 text-center text-primary">
+          <small>Paiement</small>
+          <br><i class="fa fa-money" aria-hidden="true"></i>
+        </div>
+        <div class="col-2 text-center text-muted">
+          <small>Récapitulatif</small>
+          <br><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="progress" style="height: 1px;">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 66%" aria-valuemax="100"></div>
+        <div class="progress-bar" role="progressbar" style="width: 16%" aria-valuemax="100"></div>
+      </div>
+      <br>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <p class="lead text-center">
+          Patientez... Vous allez être redirigé vers le site de <i>Paypal</i> pour procéder au paiement de votre commande.
+          <br>
+          <br>
+          <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        </p>
+      </div>
+    </div>
 
     {#
       Test des achats avec le compte sandbox:
       login: test-achat@personnal.fr
-      password: test1234
-    
-      Compte réel
-      fran@comevents.fr
-      pLS5qy32
-    
-      Compte sandbox personal
-      email address: paypal-acheteur@comevents.fr
-      password: d35n3iU6Vdg7CgJLa82D
-      first name : Acheteur
-      last name : Comevents
-      Bank Verified Account: yes
-      Select Payment Card: Paypal
-      Credit Cards: Visa
-      
-      Compte sandbox business
-      email address: paypal-vendeur@comevents.fr
-      password: zK889cs8S6xvrC8A4AGe
-      first name : Vendeur
-      last name : Comevents
-      Bank Verified Account: yes
-      Select Payment Card: Paypal
-      Credit Cards: Visa
+      login: test-achat@business.fr
+      passwords: test1234
     #}
-
     <form
+      id="form_paypal"
+      name="form_paypal"
       action="{{ paypal_url }}"
       method="post"
-      onsubmit="
-          if (!$('#cgv_checked').is(':checked')) {
-            alert('Veuillez acceptez les Conditions Générales de Vente');
-            return false;
-          }"
       >
-      <input id="cgv_checked" type="checkbox"> J'ai lu et j'accepte les <a href="{{ path('plateforme_core_homepage') }}pages/conditions-generales-de-vente" target="_blank">conditions générales de vente.</a>
       <input type='hidden' value="{{ commande.totalTtc|number_format(2, '.', ',') }}" name="amount" />
       <input name="currency_code" type="hidden" value="EUR" />
       <input name="shipping" type="hidden" value="0.00" />
@@ -61,10 +82,20 @@
       <input name="lc" type="hidden" value="FR" />
       <input name="bn" type="hidden" value="PP-BuyNowBF" />
       <input name="custom" type="hidden" value="{{ app.user.email }}" />
-      <button id="bouton_panier_validation" class="btn btn-success pull-right" type="submit">
-        <i class="fa fa-paypal" aria-hidden="true"></i>
-        Procéder au paiement par Paypal
-      </button>
     </form>
   </div>
+{% endblock %}
+
+{% block javascripts %}
+  {# Récupération des scripts des parents #}
+  {{ parent() }}
+
+  <script type="text/javascript">
+    function formAutoSubmit() {
+      var frm = document.getElementById("form_paypal");
+      frm.submit();
+    }
+    //window.onload = formAutoSubmit;
+  </script>
+
 {% endblock %}

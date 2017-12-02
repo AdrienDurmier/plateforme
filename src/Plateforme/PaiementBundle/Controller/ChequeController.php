@@ -20,7 +20,6 @@ class ChequeController extends Controller {
     $adresse_commune = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('adresse_commune');
     $adresse_pays = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('adresse_pays');
 
-
     return $this->render('PlateformePaiementBundle:Cheque:form.html.twig', array(
           'site_name'             => $site_name->getValue(),
           'adresse_voie'          => $adresse_voie->getValue(),
