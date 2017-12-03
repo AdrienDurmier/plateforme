@@ -17,6 +17,7 @@ class LoadProduit extends AbstractFixture implements OrderedFixtureInterface
     $produit1->setPrix('189.99');
     $produit1->setImage($this->getReference('image_1'));
     $produit1->setTva($this->getReference('tva1'));
+    $produit1->setStock(50);
     $produit1->setPoids(1.800);
     $manager->persist($produit1);
     
@@ -27,6 +28,7 @@ class LoadProduit extends AbstractFixture implements OrderedFixtureInterface
     $produit2->setPrix('94.99');
     $produit2->setImage($this->getReference('image_2'));
     $produit2->setTva($this->getReference('tva2'));
+    $produit2->setStock(250);
     $produit2->setPoids(2.450);
     $manager->persist($produit2);
     
@@ -37,6 +39,7 @@ class LoadProduit extends AbstractFixture implements OrderedFixtureInterface
     $produit3->setPrix('59.99');
     $produit3->setImage($this->getReference('image_3'));
     $produit3->setTva($this->getReference('tva2'));
+    $produit3->setStock(4);
     $produit3->setPoids(2.450);
     $manager->persist($produit3);
     

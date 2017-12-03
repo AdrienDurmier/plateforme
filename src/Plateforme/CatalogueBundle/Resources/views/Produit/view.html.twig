@@ -19,15 +19,26 @@
       </div>
       <div class="col-sm-6">
         prix: {{ produit.prix }} € HT
+        
         <br>
-        {% if panier[produit.id] is not defined %}
-          <a class="btn btn-success" href="{{ path('plateforme_ecommerce_commandeligne_add', { 'id' : produit.id }) }}">
-            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>&nbsp;Ajouter au panier
-          </a>
+        {% if produit.stock > 0 %}
+          {% if produit.stock == 1 %}
+            <p>{{ produit.stock }} disponible</p>
+          {% endif %}
+          {% if produit.stock > 1 %}
+            <p>{{ produit.stock }} disponibles</p>
+          {% endif %}
+          {% if panier[produit.id] is not defined %}
+            <a class="btn btn-success" href="{{ path('plateforme_ecommerce_commandeligne_add', { 'id' : produit.id }) }}">
+              <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>&nbsp;Ajouter au panier
+            </a>
+          {% else %}
+            <a class="btn btn-warning" href="{{ path('plateforme_ecommerce_commandeligne_delete', { 'id' : produit.id }) }}">
+              <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Retirer du panier
+            </a>
+          {% endif %}
         {% else %}
-          <a class="btn btn-warning" href="{{ path('plateforme_ecommerce_commandeligne_delete', { 'id' : produit.id }) }}">
-            <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Retirer du panier
-          </a>
+          <p>momentanément indisponible</p>
         {% endif %}
       </div>
     </div>

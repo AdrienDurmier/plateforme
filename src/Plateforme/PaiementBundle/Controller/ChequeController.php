@@ -10,16 +10,32 @@ class ChequeController extends Controller {
   /**
    * Formulaire de paiement
    */
-  public function indexAction(Request $request) {
+  public function indexAction($commande, Request $request) {
+    
     $em = $this->getDoctrine()->getManager();
-
+    
+    // Mise à jour de la commande
+    $lignes_commande = $em->getRepository('PlateformeEcommerceBundle:CommandeLigne')->findByCommande($commande->getId());
+    foreach($lignes_commande as $ligne){
+      $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($ligne->getProduit());
+      $stock_actuel = $produit->getStock();
+      $quantite_commande = $ligne->getQuantite();
+      $produit->setStock($stock_actuel - $quantite_commande);
+      $em->persist($ligne);
+    }
+    $em->flush();
+    
+    // Création d'une notification
+    
+    
+    // Récupération des données utiles pour le paiement par chèque
     $site_name = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('site_name');
     $adresse_voie = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('adresse_voie');
     $adresse_complement = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('adresse_complement');
     $adresse_code_postal = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('adresse_code_postal');
     $adresse_commune = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('adresse_commune');
     $adresse_pays = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('adresse_pays');
-
+    
     return $this->render('PlateformePaiementBundle:Cheque:index.html.twig', array(
           'site_name'             => $site_name->getValue(),
           'adresse_voie'          => $adresse_voie->getValue(),

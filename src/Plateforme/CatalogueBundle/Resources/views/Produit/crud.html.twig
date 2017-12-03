@@ -29,6 +29,7 @@
           <th>ID</th>
           <th>Titre</th>
           <th>Slug</th>
+          <th>Stock</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -37,6 +38,18 @@
             <td>{{ produit.id }}</td>
             <td>{{ produit.titre }}</td>
             <td>{{ produit.slug }}</td>
+            <td>
+              {% if produit.stock == 0 %}
+                  <i class="fa fa-circle text-danger" aria-hidden="true"></i>
+              {% endif %}
+              {% if produit.stock >1 and produit.stock < 10 %}
+                  <i class="fa fa-circle text-warning" aria-hidden="true"></i>
+              {% endif %}
+              {% if produit.stock >= 10 %}
+                  <i class="fa fa-circle text-success" aria-hidden="true"></i>
+              {% endif %}
+                  {{ produit.stock }}
+            </td>
             <td>
               <a href="{{ path('plateforme_catalogue_produits_view', {'slug': produit.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
                 <i class="fa fa-eye" aria-hidden="true"></i>

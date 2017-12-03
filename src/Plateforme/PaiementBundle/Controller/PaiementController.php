@@ -59,6 +59,7 @@ class PaiementController extends Controller {
       // Paiement par chèque
       case "paiement_cheque":
         $response = $this->forward('PlateformePaiementBundle:Cheque:index', array(
+          'commande' => $commande
         ));
         return $response;
       // Paiement par virement bancaire
