@@ -58,12 +58,12 @@ class PaiementController extends Controller {
 
       // Paiement par chèque
       case "paiement_cheque":
-        $response = $this->forward('PlateformePaiementBundle:Cheque:form', array(
+        $response = $this->forward('PlateformePaiementBundle:Cheque:index', array(
         ));
         return $response;
       // Paiement par virement bancaire
       case "paiement_virement":
-        $response = $this->forward('PlateformePaiementBundle:Virement:form', array(
+        $response = $this->forward('PlateformePaiementBundle:Virement:index', array(
         ));
         return $response;
       // Paiement par Paypal

@@ -31,6 +31,7 @@ class PaypalController extends Controller {
         $paypal_mail_vendeur = $this->container->getParameter('paypal_prod_mail');
         break;
     }
+    
     // Nom du site
     $site_name = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('site_name');
     
@@ -51,14 +52,14 @@ class PaypalController extends Controller {
   public function returnAction(Request $request) {
     $session = $request->getSession();
     $session->remove('panier');
-    return $this->render('PlateformeEcommerceBundle:PaiementPaypal:retour_ok.html.twig');
+    return $this->render('PlateformePaiementBundle:Paypal:retour_ok.html.twig');
   }
 
   /**
    * Page de retour pour les paiements annulés
    */
   public function cancelAction(Request $request) {
-    return $this->render('PlateformeEcommerceBundle:PaiementPaypal:retour_cancel.html.twig');
+    return $this->render('PlateformePaiementBundle:Paypal:retour_cancel.html.twig');
   }
 
   /**

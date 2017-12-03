@@ -68,7 +68,7 @@
       action="{{ paypal_url }}"
       method="post"
       >
-      <input type='hidden' value="{{ commande.totalTtc|number_format(2, '.', ',') }}" name="amount" />
+      <input type='hidden' value="{{ commande.totalTtc|number_format(2, '.', '') }}" name="amount" />
       <input name="currency_code" type="hidden" value="EUR" />
       <input name="shipping" type="hidden" value="0.00" />
       <input name="tax" type="hidden" value="0.00" />
@@ -95,7 +95,7 @@
       var frm = document.getElementById("form_paypal");
       frm.submit();
     }
-    //window.onload = formAutoSubmit;
+    window.onload = formAutoSubmit;
   </script>
 
 {% endblock %}

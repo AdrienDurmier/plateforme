@@ -7,7 +7,7 @@
 {% block body %}
 
   <div class="container">
-    
+
     <div class="hidden-small">
       <div class="row">
         <div class="col-2 text-center">
@@ -26,7 +26,7 @@
             <br><i class="fa fa-truck" aria-hidden="true"></i>
           </a>
         </div>
-        <div class="col-2 text-center">
+        <div class="col-2 text-center text-success">
           <small>Validation</small>
           <br><i class="fa fa-check-square" aria-hidden="true"></i>
         </div>
@@ -45,34 +45,29 @@
       </div>
       <br>
     </div>
-    
-    <h1>Votre commande vient d'être prise en compte</h1>
-    
-    <h3>Paiement par chèque</h3>
-    
-    <p>
-      Pour réglez par chèque: l'établir à l'ordre de {{ site_name }}, en euro sur une banque française uniquement.
-    </p>
-    
-    <p>
-      L'envoyer à :
-      <br>
-      <br>
-      {{ site_name }}
-      <br>
-      {{ adresse_voie }} {{ adresse_complement }}
-      <br>
-      {{ adresse_code_postal }} {{ adresse_commune }} ({{ adresse_pays }})
-    </p>
 
-    <hr>
+    <h1>Votre commande a bien été prise en compte</h1>
 
-    <p class="text-center">
-      <strong>La validation de la commande et le délai d'approvisionnement ne seront effectifs qu'à réception et encaissement de votre paiement.</strong>
-    </p>
-    <p class="text-center">
-    <big><strong>Merci d'avoir fait vos achats en ligne avec nous !</strong></big>
+    <div class="jumbotron">
+      <h2 class="display-5 text-center">Paiement par virement bancaire</h2>
+      <p class="lead text-center">
+        Pour réglez par virement bancaire:
+      </p>
+      <hr class="my-4">
+      <p class="lead text-center">
+        IBAN: TODO
+      </p>
+      <hr class="my-4">
+      <p class="text-center">
+        <strong>La validation de la commande et le délai d'approvisionnement ne seront effectifs qu'à réception et encaissement de votre paiement.</strong>
+      </p>
+      <p class="text-center">
+      <big><strong>Merci d'avoir fait vos achats en ligne avec nous !</strong></big>
+    </div>
+
   </p>
+
+</p>
 </div>
 
 {% endblock %}

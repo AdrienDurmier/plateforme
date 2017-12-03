@@ -11,8 +11,8 @@ class VirementController extends Controller {
   /**
    * Formulaire de paiement
    */
-  public function formAction($commande, $lignes_commande, $tva_sur_livraison) {
-    return $this->render('PlateformePaiementBundle:Virement:form.html.twig', array(
+  public function indexAction(Request $request) {
+    return $this->render('PlateformePaiementBundle:Virement:index.html.twig', array(
     ));
   }
 

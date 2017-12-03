@@ -24,13 +24,13 @@ plateforme_paiement_virement_return:
 ################################################################################
 # page de retour si paiement accepté
 plateforme_paiement_paypal_return:
-    path:  /paypal/return
-    defaults: { _controller: PlateformePaiementBundle:PaiementPaypal:return }
+    path:  /paypal-return
+    defaults: { _controller: PlateformePaiementBundle:Paypal:return }
 # page de retour si la transaction est annulée
 plateforme_paiement_paypal_cancel_return:
-    path:  /paypal/cancel
-    defaults: { _controller: PlateformePaiementBundle:PaiementPaypal:cancel }
+    path:  /paypal-cancel
+    defaults: { _controller: PlateformePaiementBundle:Paypal:cancel }
 # page qui sera appelée par l'IPN
 plateforme_paiement_paypal_notify_url:
-    path:  /paypal/notify
-    defaults: { _controller: PlateformePaiementBundle:PaiementPaypal:notify }
+    path:  /paypal-notify
+    defaults: { _controller: PlateformePaiementBundle:Paypal:notify }

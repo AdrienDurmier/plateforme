@@ -10,7 +10,7 @@ class ChequeController extends Controller {
   /**
    * Formulaire de paiement
    */
-  public function formAction(Request $request) {
+  public function indexAction(Request $request) {
     $em = $this->getDoctrine()->getManager();
 
     $site_name = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('site_name');
@@ -20,7 +20,7 @@ class ChequeController extends Controller {
     $adresse_commune = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('adresse_commune');
     $adresse_pays = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('adresse_pays');
 
-    return $this->render('PlateformePaiementBundle:Cheque:form.html.twig', array(
+    return $this->render('PlateformePaiementBundle:Cheque:index.html.twig', array(
           'site_name'             => $site_name->getValue(),
           'adresse_voie'          => $adresse_voie->getValue(),
           'adresse_complement'    => $adresse_complement->getValue(),
