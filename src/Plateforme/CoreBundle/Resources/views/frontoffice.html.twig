@@ -127,15 +127,32 @@
     {% endblock %}
 
     <div class="clearfix"></div>
-    
+
     <footer class="bg-dark text-light mt-2">
-      <nav class="navbar container">
-        <span class="navbar-text">
-          2017 © Adrien Durmier - <a href="http://www.codeur-job.fr" class="text-light" target="_blank">www.codeur-job.fr</a>
-        </span>
-      </nav>
+      <div class="container p-3">
+        <div class="row">
+          <div class="col-xs-12 col-sm-4">
+            2017 © Adrien Durmier - <a href="http://www.codeur-job.fr" class="text-light" target="_blank">www.codeur-job.fr</a>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <a href="#">
+              <i class="fa fa-facebook-square fa-2x text-light" aria-hidden="true"></i>
+            </a>
+            <a href="#">
+              <i class="fa fa-twitter-square fa-2x text-light" aria-hidden="true"></i>
+            </a>
+            <a href="#">
+              <i class="fa fa-google-plus-square fa-2x text-light" aria-hidden="true"></i>
+            </a>
+            <a href="#">
+              <i class="fa fa-share-alt-square fa-2x text-light" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
     </footer>
-    
+
     {% block javascripts %}
       <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
@@ -162,13 +179,13 @@
                 }, "data.produit"],
               template:
                       '<span>' +
-                        '<span class="produit-image">' +
-                          '<img src="{% verbatim %}{{image}}{% endverbatim %}" width="50" height="50">' +
-                        '</span>' +
-                        '<span class="produit-information">' +
-                          '<span class="produit">{% verbatim %}{{produit}}{% endverbatim %}</span>' +
-                          '<span class="text-muted"> - Code produit: {% verbatim %}{{id}}{% endverbatim %}</span>' +
-                        '</span>' +
+                      '<span class="produit-image">' +
+                      '<img src="{% verbatim %}{{image}}{% endverbatim %}" width="50" height="50">' +
+                      '</span>' +
+                      '<span class="produit-information">' +
+                      '<span class="produit">{% verbatim %}{{produit}}{% endverbatim %}</span>' +
+                      '<span class="text-muted"> - Code produit: {% verbatim %}{{id}}{% endverbatim %}</span>' +
+                      '</span>' +
                       '</span>'
             }
           },

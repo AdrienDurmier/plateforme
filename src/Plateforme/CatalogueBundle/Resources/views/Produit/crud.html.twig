@@ -42,7 +42,7 @@
               {% if produit.stock == 0 %}
                   <i class="fa fa-circle text-danger" aria-hidden="true"></i>
               {% endif %}
-              {% if produit.stock >1 and produit.stock < 10 %}
+              {% if produit.stock > 0 and produit.stock < 10 %}
                   <i class="fa fa-circle text-warning" aria-hidden="true"></i>
               {% endif %}
               {% if produit.stock >= 10 %}

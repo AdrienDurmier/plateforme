@@ -19,3 +19,6 @@ services:
         class: Plateforme\EcommerceBundle\Twig\Extension\ModeLivraisonExtension
         tags:
             - { name: twig.extension }
+    ecommerce_commande:
+        class: Plateforme\EcommerceBundle\Services\CommandeService
+        arguments: ["@doctrine.orm.entity_manager"]
