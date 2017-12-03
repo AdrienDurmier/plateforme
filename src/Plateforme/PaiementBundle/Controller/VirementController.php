@@ -12,7 +12,14 @@ class VirementController extends Controller {
    * Formulaire de paiement
    */
   public function indexAction(Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    // URL du module de paiement
+    $virement_iban = $this->container->getParameter('virement_iban');
+    $virement_bic = $this->container->getParameter('virement_bic');
+    
     return $this->render('PlateformePaiementBundle:Virement:index.html.twig', array(
+      'virement_iban' => $virement_iban,
+      'virement_bic'  => $virement_bic,
     ));
   }
 
