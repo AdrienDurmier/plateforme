@@ -65,6 +65,7 @@ class PaiementController extends Controller {
       // Paiement par virement bancaire
       case "paiement_virement":
         $response = $this->forward('PlateformePaiementBundle:Virement:index', array(
+          'commande' => $commande
         ));
         return $response;
       // Paiement par Paypal

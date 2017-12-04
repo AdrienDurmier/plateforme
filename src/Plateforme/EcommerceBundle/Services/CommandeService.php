@@ -16,6 +16,7 @@ class CommandeService {
   public function update($commande) {
     $em = $this->em;
     $lignes_commande = $em->getRepository('PlateformeEcommerceBundle:CommandeLigne')->findByCommande($commande->getId());
+    // Mise à jour du stock
     foreach ($lignes_commande as $ligne) {
       $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($ligne->getProduit());
       $stock_actuel = $produit->getStock();
@@ -23,6 +24,9 @@ class CommandeService {
       $produit->setStock($stock_actuel - $quantite_commande);
       $em->persist($ligne);
     }
+    // TODO Création d'une notification
+    
+    
     $em->flush();
   }
 

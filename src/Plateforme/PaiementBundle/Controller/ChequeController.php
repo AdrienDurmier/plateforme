@@ -14,24 +14,9 @@ class ChequeController extends Controller {
     
     $em = $this->getDoctrine()->getManager();
     
-     // On récupère le service
+     // Mise à jour de la commande à partir du service
     $service_maj_commande = $this->container->get('ecommerce_commande');
     $service_maj_commande->update($commande);
-        
-        
-        
-    // $lignes_commande = $em->getRepository('PlateformeEcommerceBundle:CommandeLigne')->findByCommande($commande->getId());
-    /*foreach($lignes_commande as $ligne){
-      $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($ligne->getProduit());
-      $stock_actuel = $produit->getStock();
-      $quantite_commande = $ligne->getQuantite();
-      $produit->setStock($stock_actuel - $quantite_commande);
-      $em->persist($ligne);
-    }
-    $em->flush();*/
-    
-    // TODO Création d'une notification
-    
     
     // Récupération des données utiles pour le paiement par chèque
     $site_name = $em->getRepository('PlateformeCoreBundle:Variable')->findOneByCode('site_name');
