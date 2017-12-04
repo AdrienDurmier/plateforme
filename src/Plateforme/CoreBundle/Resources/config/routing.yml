@@ -186,6 +186,13 @@ plateforme_core_page_adresses_delete:
 
         
 ################################################################################
+# RÉSEAUX SOCIAUX
+################################################################################
+plateforme_core_reseaux_sociaux:
+    path:     /admin/réseaux-sociaux
+    defaults: { _controller: PlateformeCoreBundle:ReseauxSociaux:manage }
+        
+################################################################################
 # PAGE ACCUEIL DU BACK OFFICE
 ################################################################################
 plateforme_core_bo_homepage:

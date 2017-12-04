@@ -1,0 +1,15 @@
+{{ form_start(form) }}
+{# Les erreurs générales du formulaire. #}
+{{ form_errors(form) }}
+
+{# Génération automatique des champs pas encore écrits. (champ CSRF) #}
+{{ form_rest(form) }}
+
+<hr>
+
+<button type="submit" class="btn btn-success btn-sm">
+  <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
+</button>
+
+{# Fermeture de la balise <form> du formulaire HTML #}
+{{ form_end(form) }}

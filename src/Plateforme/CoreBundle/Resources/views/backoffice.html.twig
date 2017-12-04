@@ -68,7 +68,7 @@
     <div class="container-fluid">
       <div class="row">
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
-          <b>&nbsp;Gestion des pages</b>
+          <b>&nbsp;Gestion de la vitrine</b>
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
               <a class="nav-link" href="{{ path('plateforme_core_homepage_edit') }}">
@@ -139,28 +139,28 @@
             <div class="alert alert-success alert-dismissible fade in show" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">×</span>
-              </button> {{ message }}
+              </button> <i class="fa fa-check-circle" aria-hidden="true"></i> {{ message }}
             </div>
           {% endfor %} 
           {% for message in app.session.flashbag.get('info') %}
             <div class="alert alert-info alert-dismissible fade in show" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">×</span>
-              </button> {{ message }}
+              </button> <i class="fa fa-info-circle" aria-hidden="true"></i> {{ message }}
             </div>
           {% endfor %} 
           {% for message in app.session.flashbag.get('warning') %}
             <div class="alert alert-warning alert-dismissible fade in show" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">×</span>
-              </button> {{ message }}
+              </button> <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
             </div>
           {% endfor %} 
           {% for message in app.session.flashbag.get('danger') %}
             <div class="alert alert-danger alert-dismissible fade in show" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">×</span>
-              </button> {{ message }}
+              </button> <i class="fa fa-times-circle" aria-hidden="true"></i> {{ message }}
             </div>
           {% endfor %} 
 
