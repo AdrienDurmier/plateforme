@@ -114,7 +114,7 @@ plateforme_core_page_faq_categorie_delete:
         id: \d*
         
 ################################################################################
-# PAGES ACTUALIES
+# PAGES ACTUALITES
 ################################################################################
 plateforme_core_page_actualites_index:
     path:      /actualites

@@ -3,15 +3,89 @@
 {% block body %}
 
   <h1>Édition de la page d'accueil</h1>
-  
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
-    <li class="breadcrumb-item active">Accueil</li>
-  </ol>
-  
+
+  <div class="row">
+    <div class="col-9">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+        <li class="breadcrumb-item active">Accueil</li>
+      </ol>
+    </div>
+    <div class="col-3 text-right">
+      <a href="{{ path('plateforme_core_homepage') }}">
+        <i class="fa fa-eye" aria-hidden="true"></i> Voir la page d'accueil
+      </a>
+    </div>
+  </div>
+
   <hr>
 
-  {{ include("PlateformeCoreBundle:PageAccueil:form.html.twig") }}
-  
+  <form 
+    id="form_maintenance"
+    action="{{ path('plateforme_core_homepage_edit') }}" 
+    method="post"
+    >
 
+    <div class="row">
+      <div class="col-xs-12 col-sm-8">
+        <div class="p-2">
+          <h2>Contenu</h2>
+          <hr>
+          <div class="form-group">
+            <label for="titre">Titre</label>
+            <input type="text" class="form-control form-control-sm" id="titre" name="titre" value="{{ page.titre }}">
+          </div>
+
+          <div class="form-group">
+            <label for="contenu">Contenu</label>
+            <textarea class="form-control form-control-sm" id="contenu" name="contenu" rows="3">{{ page.contenu|raw }}</textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-4">
+        <div class="bg-light p-2">
+          <h2>Référencement</h2>
+          <hr>
+          <div class="form-group">
+            <label for="metatitle">Meta title</label>
+            <input type="text" class="form-control form-control-sm" id="metatitle" name="metatitle" value="{{ page.metatitle }}">
+            <small id="metatitle_help" class="form-text text-muted"><i class="fa fa-info-circle" aria-hidden="true"></i> Sera une copie du titre si vide.</small>
+          </div>
+
+          <label for="metadescription">Meta description</label>
+          <div class="input-group input-group-sm">
+            <textarea class="form-control form-control-sm" id="metadescription" name="metadescription" rows="3">{{ page.metadescription|raw }}</textarea>
+            <span class="input-group-addon" id="metadescription_size">{{ page.metadescription|length }}</span>
+          </div>
+          <small id="metadescription_help" class="form-text text-muted">
+            <i class="fa fa-info-circle" aria-hidden="true"></i> Ce texte apparait dans les résultats des moteurs de recherche. Il est conseillé d'avoir entre 130 et 165 caractères.
+          </small>
+
+        </div>
+      </div>
+
+    </div>
+
+    <hr>
+
+    <button type="submit" class="btn btn-success btn-sm">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
+    </button>
+
+  </form>
+
+{% endblock %}
+
+{% block javascripts %}
+  {# Récupération des scripts des parents #}
+  {{ parent() }}
+
+  <script>
+    // Permet de compter les caractères pour conseillez à l'utilisateur de saisir environ 165 caractères.
+    jQuery(document).on('change keyup', '#metadescription', function (event) {
+      var taille_metadescription = $(this).val().length;
+      $('#metadescription_size').text(taille_metadescription);
+    });
+  </script>
 {% endblock %}

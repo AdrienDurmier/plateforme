@@ -56,6 +56,21 @@ abstract class Page
     private $slug;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="metatitle", type="string", length=255)
+     */
+    private $metatitle;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metadescription", type="string", length=255)
+     */
+    private $metadescription;
+    
+    
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetimetz")
@@ -175,6 +190,53 @@ abstract class Page
         return $texte;
     }
     
+    /**
+     * Set metatitle
+     *
+     * @param string $metatitle
+     *
+     * @return Page
+     */
+    public function setMetatitle($metatitle)
+    {
+        $this->metatitle = $metatitle;
+    
+        return $this;
+    }
+
+    /**
+     * Get metatitle
+     *
+     * @return string
+     */
+    public function getMetatitle()
+    {
+        return $this->metatitle;
+    }
+    
+    /**
+     * Set metadescription
+     *
+     * @param string $metadescription
+     *
+     * @return Page
+     */
+    public function setMetadescription($metadescription)
+    {
+        $this->metadescription = $metadescription;
+    
+        return $this;
+    }
+
+    /**
+     * Get metadescription
+     *
+     * @return string
+     */
+    public function getMetadescription()
+    {
+        return $this->metadescription;
+    }
 
     /**
      * Set created
