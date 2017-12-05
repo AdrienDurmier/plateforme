@@ -58,14 +58,14 @@ abstract class Page
     /**
      * @var string
      *
-     * @ORM\Column(name="metatitle", type="string", length=255)
+     * @ORM\Column(name="metatitle", type="string", length=255, nullable=true)
      */
     private $metatitle;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="metadescription", type="string", length=255)
+     * @ORM\Column(name="metadescription", type="string", length=255, nullable=true)
      */
     private $metadescription;
     
