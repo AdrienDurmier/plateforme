@@ -13,6 +13,8 @@ class LoadPageAccueil extends AbstractFixture implements OrderedFixtureInterface
     $page_accueil = new PageAccueil();
     $page_accueil->setTitre('Plateforme');
     $page_accueil->setContenu("Contenu de la page d'accueil");
+    $page_accueil->setMetatitle("Bienvenue sur notre plateforme");
+    $page_accueil->setMetadescription("Contenu apparaissant dans les résultats des moteurs de recherches.");
     $manager->persist($page_accueil);
     
     $manager->flush();

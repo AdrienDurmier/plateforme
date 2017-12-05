@@ -27,6 +27,7 @@
         <tr>
           <th rowspan="2">#</th>
           <th rowspan="2">Client</th>
+          <th rowspan="2">Date</th>
           <th colspan="3" class="text-center">Paiement</th>
           <th colspan="3"  class="text-center">Livraison</th>
           <th rowspan="2">Actions</th>
@@ -44,6 +45,7 @@
         <tr>
           <td>{{ commande.id }}</td>
           <td>{{ commande.user.prenom }} {{ commande.user.nom }}</td>
+          <td>{{ commande.created|date('d/m/Y h:i:s') }}</td>
           {# Paiement #}
           <td>
             {{ commande.modePaiement|mode_paiement }}
