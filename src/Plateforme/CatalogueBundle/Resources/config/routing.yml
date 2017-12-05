@@ -77,3 +77,51 @@ plateforme_catalogue_marques_view:
     path:      /marques/{slug}
     defaults:
         _controller: PlateformeCatalogueBundle:Marque:view
+
+################################################################################
+# CATEGORIE D'ATTRIBUTS
+################################################################################
+plateforme_catalogue_attributs_categories_crud:
+    path:      /admin/attributs-categories
+    defaults:
+        _controller: PlateformeCatalogueBundle:AttributCategorie:crud
+plateforme_catalogue_attributs_categories_add:
+    path:      /admin/attributs-categories/add
+    defaults:
+        _controller: PlateformeCatalogueBundle:AttributCategorie:add
+plateforme_catalogue_attributs_categories_edit:
+    path:      /admin/attributs-categories/edit/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:AttributCategorie:edit
+    requirements:
+        id: \d*
+plateforme_catalogue_attributs_categories_delete:
+    path:      /admin/attributs-categories/delete/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:AttributCategorie:delete
+    requirements:
+        id: \d*
+
+################################################################################
+# ATTRIBUTS
+################################################################################
+plateforme_catalogue_attributs_crud:
+    path:      /admin/attributs
+    defaults:
+        _controller: PlateformeCatalogueBundle:Attribut:crud
+plateforme_catalogue_attributs_add:
+    path:      /admin/attributs/add
+    defaults:
+        _controller: PlateformeCatalogueBundle:Attribut:add
+plateforme_catalogue_attributs_edit:
+    path:      /admin/attributs/edit/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Attribut:edit
+    requirements:
+        id: \d*
+plateforme_catalogue_attributs_delete:
+    path:      /admin/attributs/delete/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Attribut:delete
+    requirements:
+        id: \d*
