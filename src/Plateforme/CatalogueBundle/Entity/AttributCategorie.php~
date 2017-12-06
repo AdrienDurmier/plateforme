@@ -70,28 +70,4 @@ class AttributCategorie {
     return $this->nom;
   }
 
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return AttributCategorie
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
 }

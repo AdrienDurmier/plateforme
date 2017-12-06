@@ -1,23 +1,24 @@
 {% extends "PlateformeCoreBundle::backoffice.html.twig" %}
 
 {% block title %}
-  Gestion des attributs - {{ parent() }}
+  Gestion des attributs de <i>{{ categorie.nom}}</i> - {{ parent() }}
 {% endblock %}
 
 {% block body %}
 
-  <h1>Gestion des attributs</h1>
+  <h1>Gestion des attributs de <i>{{ categorie.nom}}</i></h1>
 
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
-    <li class="breadcrumb-item active">Attributs</li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_catalogue_attributs_categories_crud') }}">Catégories d'attributs</a></li>
+    <li class="breadcrumb-item active">Attributs de <i>{{ categorie.nom}}</i></li>
   </ol>
 
   <hr>
 
-  <a href="{{ path('plateforme_catalogue_attributs_add') }}" class="btn btn-success btn-sm">
-    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer un attribut
+  <a href="{{ path('plateforme_catalogue_attributs_categories_categorie_add', {'id': categorie.id}) }}" class="btn btn-success btn-sm">
+    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer un attribut de <i>{{ categorie.nom}}</i>
   </a>
 
   <br><br>
@@ -27,20 +28,26 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Nom</th>
+          <th>Valeur</th>
+          {% if categorie.type == 'couleur' %}
+            <th>Couleur</th>
+          {% endif %}
           <th>Actions</th>
         </tr>
       </thead>
       {% for attribut in attributs %}
         <tr>
           <td>{{ attribut.id }}</td>
-          <td>{{ attribut.nom }}</td>
+          <td>{{ attribut.valeur }}</td>
+          {% if categorie.type == 'couleur' %}
+            <td><i class="fa fa-circle" aria-hidden="true" style="color:{{ attribut.couleur }};"></i> {{ attribut.couleur }}</td>
+          {% endif %}
           <td>
-            <a href="{{ path('plateforme_catalogue_attributs_edit', {'id': attribut.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+            <a href="{{ path('plateforme_catalogue_attributs_categories_categorie_edit', {'categorie_id': categorie.id, 'attribut_id': attribut.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
               <i class="fa fa-pencil" aria-hidden="true"></i>
             </a>
             &nbsp;|&nbsp;
-            <a href="{{ path('plateforme_catalogue_attributs_delete', {'id': attribut.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer" onclick="return confirm('Êtes-vous sûr ?');">
+            <a href="{{ path('plateforme_catalogue_attributs_categories_categorie_delete', {'categorie_id': categorie.id, 'attribut_id': attribut.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer" onclick="return confirm('Êtes-vous sûr ?');">
               <i class="fa fa-trash" aria-hidden="true"></i>
             </a>
           </td>

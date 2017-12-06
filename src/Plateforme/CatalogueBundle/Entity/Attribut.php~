@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Attribut {
 
+  public function __toString() {
+    return $this->valeur;
+  }
+
   /**
    * @var int
    *
@@ -24,8 +28,30 @@ class Attribut {
   /**
    * @var string
    *
-   * @ORM\Column(name="nom", type="string", length=255)
+   * @ORM\Column(name="valeur", type="string", length=255)
    */
-  private $nom;
+  private $valeur;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="couleur", type="string", length=255, unique=false)
+   */
+  private $couleur;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\CatalogueBundle\Entity\AttributCategorie", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $categorie;
+
+  /**
+   * Get id
+   *
+   * @return integer
+   */
+  public function getId() {
+    return $this->id;
+  }
 
 }

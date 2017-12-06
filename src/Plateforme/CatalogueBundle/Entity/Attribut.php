@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Attribut {
 
+  public function __toString() {
+    return $this->valeur;
+  }
+
   /**
    * @var int
    *
@@ -24,42 +28,102 @@ class Attribut {
   /**
    * @var string
    *
-   * @ORM\Column(name="nom", type="string", length=255)
+   * @ORM\Column(name="valeur", type="string", length=255)
    */
-  private $nom;
+  private $valeur;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="couleur", type="string", length=255, nullable=true)
+   */
+  private $couleur;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\CatalogueBundle\Entity\AttributCategorie", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $categorie;
+
+  /**
+   * Get id
+   *
+   * @return integer
+   */
+  public function getId() {
+    return $this->id;
+  }
 
 
     /**
-     * Get id
+     * Set valeur
      *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set nom
-     *
-     * @param string $nom
+     * @param string $valeur
      *
      * @return Attribut
      */
-    public function setNom($nom)
+    public function setValeur($valeur)
     {
-        $this->nom = $nom;
+        $this->valeur = $valeur;
 
         return $this;
     }
 
     /**
-     * Get nom
+     * Get valeur
      *
      * @return string
      */
-    public function getNom()
+    public function getValeur()
     {
-        return $this->nom;
+        return $this->valeur;
+    }
+
+    /**
+     * Set couleur
+     *
+     * @param string $couleur
+     *
+     * @return Attribut
+     */
+    public function setCouleur($couleur)
+    {
+        $this->couleur = $couleur;
+
+        return $this;
+    }
+
+    /**
+     * Get couleur
+     *
+     * @return string
+     */
+    public function getCouleur()
+    {
+        return $this->couleur;
+    }
+
+    /**
+     * Set categorie
+     *
+     * @param \Plateforme\CatalogueBundle\Entity\AttributCategorie $categorie
+     *
+     * @return Attribut
+     */
+    public function setCategorie(\Plateforme\CatalogueBundle\Entity\AttributCategorie $categorie)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \Plateforme\CatalogueBundle\Entity\AttributCategorie
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
     }
 }

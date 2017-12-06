@@ -79,49 +79,47 @@ plateforme_catalogue_marques_view:
         _controller: PlateformeCatalogueBundle:Marque:view
 
 ################################################################################
-# CATEGORIE D'ATTRIBUTS
+# ATTRIBUTS
 ################################################################################
 plateforme_catalogue_attributs_categories_crud:
-    path:      /admin/attributs-categories
+    path:      /admin/attributs
     defaults:
         _controller: PlateformeCatalogueBundle:AttributCategorie:crud
 plateforme_catalogue_attributs_categories_add:
-    path:      /admin/attributs-categories/add
+    path:      /admin/attributs/add
     defaults:
         _controller: PlateformeCatalogueBundle:AttributCategorie:add
 plateforme_catalogue_attributs_categories_edit:
-    path:      /admin/attributs-categories/edit/{id}
+    path:      /admin/attributs/edit/{id}
     defaults:
         _controller: PlateformeCatalogueBundle:AttributCategorie:edit
     requirements:
         id: \d*
 plateforme_catalogue_attributs_categories_delete:
-    path:      /admin/attributs-categories/delete/{id}
+    path:      /admin/attributs/delete/{id}
     defaults:
         _controller: PlateformeCatalogueBundle:AttributCategorie:delete
     requirements:
         id: \d*
-
-################################################################################
-# ATTRIBUTS
-################################################################################
-plateforme_catalogue_attributs_crud:
-    path:      /admin/attributs
+plateforme_catalogue_attributs_categories_categorie:
+    path:      /admin/attributs/categorie/{id}
     defaults:
         _controller: PlateformeCatalogueBundle:Attribut:crud
-plateforme_catalogue_attributs_add:
-    path:      /admin/attributs/add
+    requirements:
+        id: \d*
+plateforme_catalogue_attributs_categories_categorie_add:
+    path:      /admin/attributs/categorie/{id}/add
     defaults:
         _controller: PlateformeCatalogueBundle:Attribut:add
-plateforme_catalogue_attributs_edit:
-    path:      /admin/attributs/edit/{id}
+    requirements:
+        id: \d*
+plateforme_catalogue_attributs_categories_categorie_edit:
+    path:      /admin/attributs/categorie/{categorie_id}/edit/{attribut_id}
     defaults:
         _controller: PlateformeCatalogueBundle:Attribut:edit
     requirements:
         id: \d*
-plateforme_catalogue_attributs_delete:
-    path:      /admin/attributs/delete/{id}
+plateforme_catalogue_attributs_categories_categorie_delete:
+    path:      /admin/attributs/categorie/{categorie_id}/delete/{attribut_id}
     defaults:
         _controller: PlateformeCatalogueBundle:Attribut:delete
-    requirements:
-        id: \d*

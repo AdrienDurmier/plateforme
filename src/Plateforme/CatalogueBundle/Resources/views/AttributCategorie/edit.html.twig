@@ -6,6 +6,8 @@
 
 {% block body %}
   
+  <h1>Édition de la catégorie d''attribut <i>"{{ categorie.nom }}"</i></h1>
+  
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
@@ -13,10 +15,6 @@
     <li class="breadcrumb-item active">Édition</li>
   </ol>
 
-  <hr>
-
-  <h1>Édition de la catégorie d''attribut <i>"{{ categorie.nom }}"</i></h1>
-  
   <hr>
 
   {{ include("PlateformeCatalogueBundle:AttributCategorie:form.html.twig") }}

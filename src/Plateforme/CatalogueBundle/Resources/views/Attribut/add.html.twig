@@ -1,7 +1,7 @@
 {% extends "PlateformeCoreBundle::backoffice.html.twig" %}
 
 {% block title %}
-  Création d'une fiche attribut - {{ parent() }}
+  Création d'un attribut - {{ parent() }}
 {% endblock %}
 
 {% block body %}
@@ -11,12 +11,32 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
-    <li class="breadcrumb-item"><a href="{{ path('plateforme_catalogue_attributs_crud') }}">Attributs</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_catalogue_attributs_categories_crud') }}">Catégories d'attributs</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_catalogue_attributs_categories_categorie', {'id': categorie.id}) }}">Attributs de <i>{{ categorie.nom}}</i></a></li>
     <li class="breadcrumb-item active">Création</li>
   </ol>
     
   <hr>
 
-  {{ include("PlateformeCatalogueBundle:Attribut:form.html.twig") }}
+  <form action="{{ path('plateforme_catalogue_attributs_categories_categorie_add', {'id': categorie.id}) }}" method="post">
+
+    <div class="form-group">
+      <label for="valeur">Valeur</label>
+      <input type="text" class="form-control" id="valeur" name="valeur">
+    </div>
+    {% if categorie.type == 'couleur' %}
+    <div class="form-group">
+      <label for="couleur">Couleur</label>
+      <input type="color" class="form-control" id="couleur" name="couleur">
+    </div>
+    {% endif %}
+
+    <hr>
+
+    <button type="submit" class="btn btn-success btn-sm">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
+    </button>
+
+  </form>
 
 {% endblock %}

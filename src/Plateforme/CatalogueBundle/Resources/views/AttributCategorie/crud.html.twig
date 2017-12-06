@@ -28,6 +28,7 @@
         <tr>
           <th>ID</th>
           <th>Nom</th>
+          <th>Type</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -35,7 +36,12 @@
         <tr>
           <td>{{ categorie.id }}</td>
           <td>{{ categorie.nom }}</td>
+          <td>{{ categorie.type }}</td>
           <td>
+            <a href="{{ path('plateforme_catalogue_attributs_categories_categorie', {'id': categorie.id}) }}" data-toggle="tooltip" data-placement="top" title="Voir ses attributs">
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            </a>
+            &nbsp;|&nbsp;
             <a href="{{ path('plateforme_catalogue_attributs_categories_edit', {'id': categorie.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
               <i class="fa fa-pencil" aria-hidden="true"></i>
             </a>
