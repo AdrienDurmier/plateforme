@@ -14,13 +14,13 @@ class AttributCategorieType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder
+        ->add('machine')
         ->add('nom')
-        ->add('type')
         ->add('type', ChoiceType::class, array(
           'choices' => array(
-            "Liste déroulante" => 'liste',
-            "Boutons radio" => 'radio',
-            "Couleur" => 'couleur',
+            "select"  => 'Liste déroulante',
+            "radio"   => 'Boutons radio',
+            "color"   => 'Couleur',
           )
         ))
     ;

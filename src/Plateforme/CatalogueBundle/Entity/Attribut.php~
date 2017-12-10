@@ -35,7 +35,7 @@ class Attribut {
   /**
    * @var string
    *
-   * @ORM\Column(name="couleur", type="string", length=255, unique=false)
+   * @ORM\Column(name="couleur", type="string", length=255, nullable=true)
    */
   private $couleur;
 
@@ -53,5 +53,78 @@ class Attribut {
   public function getId() {
     return $this->id;
   }
+
+
+    /**
+     * Set valeur
+     *
+     * @param string $valeur
+     *
+     * @return Attribut
+     */
+    public function setValeur($valeur)
+    {
+        $this->valeur = $valeur;
+
+        return $this;
+    }
+
+    /**
+     * Get valeur
+     *
+     * @return string
+     */
+    public function getValeur()
+    {
+        return $this->valeur;
+    }
+
+    /**
+     * Set couleur
+     *
+     * @param string $couleur
+     *
+     * @return Attribut
+     */
+    public function setCouleur($couleur)
+    {
+        $this->couleur = $couleur;
+
+        return $this;
+    }
+
+    /**
+     * Get couleur
+     *
+     * @return string
+     */
+    public function getCouleur()
+    {
+        return $this->couleur;
+    }
+
+    /**
+     * Set categorie
+     *
+     * @param \Plateforme\CatalogueBundle\Entity\AttributCategorie $categorie
+     *
+     * @return Attribut
+     */
+    public function setCategorie(\Plateforme\CatalogueBundle\Entity\AttributCategorie $categorie)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \Plateforme\CatalogueBundle\Entity\AttributCategorie
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
 
 }

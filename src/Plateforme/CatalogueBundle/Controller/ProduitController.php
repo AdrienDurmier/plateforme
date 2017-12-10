@@ -3,7 +3,7 @@
 namespace Plateforme\CatalogueBundle\Controller;
 
 use Plateforme\CatalogueBundle\Entity\Produit;
-use Plateforme\CatalogueBundle\Form\ProduitType;
+use Plateforme\CatalogueBundle\Entity\Declinaison;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -53,21 +53,41 @@ class ProduitController extends Controller {
    */
   public function addAction(Request $request) {
     $em = $this->getDoctrine()->getManager();
-    $produit = new Produit();
-    $form = $this->get('form.factory')->create(ProduitType::class, $produit);
+    $marques = $em->getRepository('PlateformeCatalogueBundle:Marque')->findAll();
+    $tvas = $em->getRepository('PlateformeEcommerceBundle:Tva')->findAll();
 
     if ($request->isMethod('POST')) {
-      $form->handleRequest($request);
-      if ($form->isValid()) {
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($produit);
-        $em->flush();
-        $request->getSession()->getFlashBag()->add('info', "Produit créé avec succès");
-        return $this->redirectToRoute('plateforme_catalogue_produits_view', array('slug' => $produit->getSlug()));
+      $produit = new Produit();
+      $valeurs_recu = $request->request->all();
+      $produit->setTitre($valeurs_recu['titre']);
+      $produit->setContenu($valeurs_recu['contenu']);
+      $marque = $em->getRepository('PlateformeCatalogueBundle:Marque')->find($valeurs_recu['marque']);
+      $produit->setMarque($marque);
+      $produit->setPrix($valeurs_recu['prix']);
+      $tva = $em->getRepository('PlateformeEcommerceBundle:Tva')->find($valeurs_recu['tva']);
+      $produit->setTva($tva);
+      $produit->setPoids($valeurs_recu['poids']);
+      if ($valeurs_recu['metatitle'] == null || $valeurs_recu['metatitle'] == '') {
+        $produit->setMetatitle($valeurs_recu['titre']);
       }
+      else {
+        $produit->setMetatitle($valeurs_recu['metatitle']);
+      }
+      if ($valeurs_recu['metadescription'] == null || $valeurs_recu['metadescription'] == '') {
+        $produit->setMetadescription(substr($valeurs_recu['contenu'], 0, 165));
+      }
+      else {
+        $produit->setMetadescription($valeurs_recu['metadescription']);
+      }
+      $em->persist($produit);
+      $em->flush();
+      $request->getSession()->getFlashBag()->add('info', "Produit créé avec succès");
+      return $this->redirectToRoute('plateforme_catalogue_produits_crud');
     }
+
     return $this->render('PlateformeCatalogueBundle:Produit:add.html.twig', array(
-          'form' => $form->createView(),
+          'marques' => $marques,
+          'tvas' => $tvas,
     ));
   }
 
@@ -80,23 +100,90 @@ class ProduitController extends Controller {
     if (null === $produit) {
       throw new NotFoundHttpException("Le produit ayant l'identifiant " . $id . " n'existe pas.");
     }
-    $form = $this->get('form.factory')->create(ProduitType::class, $produit);
+    $marques = $em->getRepository('PlateformeCatalogueBundle:Marque')->findAll();
+    $tvas = $em->getRepository('PlateformeEcommerceBundle:Tva')->findAll();
 
     if ($request->isMethod('POST')) {
-      $form->handleRequest($request);
-      if ($form->isValid()) {
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($produit);
-        $em->flush();
-        $request->getSession()->getFlashBag()->add('info', "Produit modifié avec succès");
-        return $this->redirectToRoute('plateforme_catalogue_produits_view', array('slug' => $produit->getSlug()));
+      $valeurs_recu = $request->request->all();
+      $produit->setTitre($valeurs_recu['titre']);
+      $produit->setContenu($valeurs_recu['contenu']);
+      $marque = $em->getRepository('PlateformeCatalogueBundle:Marque')->find($valeurs_recu['marque']);
+      $produit->setMarque($marque);
+      $produit->setPrix($valeurs_recu['prix']);
+      $tva = $em->getRepository('PlateformeEcommerceBundle:Tva')->find($valeurs_recu['tva']);
+      $produit->setTva($tva);
+      $produit->setPoids($valeurs_recu['poids']);
+      if ($valeurs_recu['metatitle'] == null || $valeurs_recu['metatitle'] == '') {
+        $produit->setMetatitle($valeurs_recu['titre']);
       }
+      else {
+        $produit->setMetatitle($valeurs_recu['metatitle']);
+      }
+      if ($valeurs_recu['metadescription'] == null || $valeurs_recu['metadescription'] == '') {
+        $produit->setMetadescription(substr($valeurs_recu['contenu'], 0, 165));
+      }
+      else {
+        $produit->setMetadescription($valeurs_recu['metadescription']);
+      }
+      $em->persist($produit);
+      $em->flush();
+      $request->getSession()->getFlashBag()->add('info', "Produit créé avec succès");
+      return $this->redirectToRoute('plateforme_catalogue_produits_crud');
     }
 
     return $this->render('PlateformeCatalogueBundle:Produit:edit.html.twig', array(
           'produit' => $produit,
-          'form' => $form->createView(),
+          'marques' => $marques,
+          'tvas' => $tvas,
     ));
+  }
+
+  /**
+   * Formulaire d'édition des déclinaisons d'un produit
+   */
+  public function editDeclinaisonsAction($id, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($id);
+    if (null === $produit) {
+      throw new NotFoundHttpException("Le produit ayant l'identifiant " . $id . " n'existe pas.");
+    }
+    $attributs_categories = $em->getRepository('PlateformeCatalogueBundle:AttributCategorie')->findAll();
+    $attributs = $em->getRepository('PlateformeCatalogueBundle:Attribut')->findAll();
+    $declinaisons = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->findByProduit($produit);
+
+    if ($request->isMethod('POST')) {
+      $valeurs_recu = $request->request->all();
+      $combinaisons = $this->getCombinaisons($produit, $valeurs_recu, array_keys($valeurs_recu), array());
+      $request->getSession()->getFlashBag()->add('info', "Vos modifications ont bien été prises en compte.");
+      return $this->redirectToRoute('plateforme_catalogue_produits_edit', array('id' => $id));
+    }
+
+
+    return $this->render('PlateformeCatalogueBundle:Produit:edit_declinaisons.html.twig', array(
+          'produit' => $produit,
+          'declinaisons' => $declinaisons,
+          'attributs_categories' => $attributs_categories,
+          'attributs' => $attributs,
+    ));
+    }
+
+    public function getCombinaisons ($produit, $tab, $keys, $variantes) {
+    if (count($keys) == 0) {
+      //var_dump($variantes);
+      $em = $this->getDoctrine()->getManager();
+      $declinaison = new Declinaison();
+      $declinaison->setProduit($produit);
+      $declinaison->setCombinaison($variantes);
+      $em->persist($declinaison);
+      $em->flush();
+      return;
+    }
+    $key = array_shift($keys);
+    foreach ($tab[$key] as $e) {
+      $tvariantes = $variantes;
+      $tvariantes[] = $e;
+      $this->getCombinaisons($produit, $tab, $keys, $tvariantes);
+    }
   }
 
   /**

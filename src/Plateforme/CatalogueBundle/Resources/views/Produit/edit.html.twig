@@ -8,9 +8,106 @@
 
   <h1>Édition d'un produit</h1>
   
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_catalogue_produits_crud') }}">Produits</a></li>
+    <li class="breadcrumb-item active">Édition</li>
+  </ol>
+
   <hr>
 
-  {{ include("PlateformeCatalogueBundle:Produit:form.html.twig") }}
-  
+  <form action="{{ path('plateforme_catalogue_produits_add') }}" method="post">
 
+    <div class="row">
+      <div class="col-xs-12 col-sm-8">
+        <div class="p-2">
+          <h2>Contenu</h2>
+          <hr>
+          <div class="form-group">
+            <label for="titre">Titre</label>
+            <input type="text" class="form-control form-control-sm" id="titre" name="titre" value="{{ produit.titre }}">
+          </div>
+
+          <div class="form-group">
+            <label for="contenu">Contenu</label>
+            <textarea class="form-control form-control-sm" id="contenu" name="contenu" rows="3">{{ produit.contenu|raw }}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="marque">Marque</label>
+            <select class="form-control form-control-sm" id="marque" name="marque">
+              <option value="_none"> - Sélectionner une marque - </option>
+              {% for marque in marques %}
+                <option value="{{ marque.id }}" {% if marque.id == produit.marque.id %}selected{% endif %}>{{ marque }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="prix">Prix</label>
+            <input type="number" step="0.01" class="form-control form-control-sm" id="prix" name="prix" value="{{ produit.prix }}">
+          </div>
+
+          <div class="form-group">
+            <label for="marque">TVA</label>
+            <select class="form-control form-control-sm" id="tva" name="tva">
+              {% for tva in tvas %}
+                <option value="{{ tva.id }} {% if tva.id == produit.tva.id %}selected{% endif %}">{{ tva }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="poids">Poids en kg</label>
+            <input type="number" step="0.001" class="form-control form-control-sm" id="poids" name="poids" value="{{ produit.poids }}">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-4">
+        <div class="bg-light p-2">
+          <h2>Référencement</h2>
+          <hr>
+          <div class="form-group">
+            <label for="metatitle">Meta title</label>
+            <input type="text" class="form-control form-control-sm" id="metatitle" name="metatitle" value="{{ produit.metatitle }}">
+            <small id="metatitle_help" class="form-text text-muted"><i class="fa fa-info-circle" aria-hidden="true"></i> Sera une copie du titre si vide.</small>
+          </div>
+
+          <label for="metadescription">Meta description</label>
+          <div class="input-group input-group-sm">
+            <textarea class="form-control form-control-sm" id="metadescription" name="metadescription" rows="3">{{ produit.metadescription }}</textarea>
+            <span class="input-group-addon" id="metadescription_size"></span>
+          </div>
+          <small id="metadescription_help" class="form-text text-muted">
+            <i class="fa fa-info-circle" aria-hidden="true"></i> Ce texte apparait dans les résultats des moteurs de recherche. Il est conseillé d'avoir entre 130 et 165 caractères.
+          </small>
+
+        </div>
+      </div>
+
+    </div>
+
+    <hr>
+
+    <button type="submit" class="btn btn-success btn-sm">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
+    </button>
+
+  </form>
+
+{% endblock %}
+
+{% block javascripts %}
+  {# Récupération des scripts des parents #}
+  {{ parent() }}
+
+  <script>
+    // Permet de compter les caractères pour conseillez à l'utilisateur de saisir environ 165 caractères.
+    jQuery(document).on('change keyup', '#metadescription', function (event) {
+      var taille_metadescription = $(this).val().length;
+      $('#metadescription_size').text(taille_metadescription);
+    });
+  </script>
 {% endblock %}

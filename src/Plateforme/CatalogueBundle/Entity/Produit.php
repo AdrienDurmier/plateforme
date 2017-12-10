@@ -31,7 +31,7 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
   /**
    * @var string
    *
-   * @ORM\Column(name="poids", type="decimal", precision=10, scale=2)
+   * @ORM\Column(name="poids", type="decimal", precision=10, scale=3, nullable=true)
    */
   private $poids;
 
@@ -151,28 +151,26 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
     return $this->tva;
   }
 
+  /**
+   * Set stock
+   *
+   * @param integer $stock
+   *
+   * @return Produit
+   */
+  public function setStock($stock) {
+    $this->stock = $stock;
 
-    /**
-     * Set stock
-     *
-     * @param integer $stock
-     *
-     * @return Produit
-     */
-    public function setStock($stock)
-    {
-        $this->stock = $stock;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get stock
+   *
+   * @return integer
+   */
+  public function getStock() {
+    return $this->stock;
+  }
 
-    /**
-     * Get stock
-     *
-     * @return integer
-     */
-    public function getStock()
-    {
-        return $this->stock;
-    }
 }

@@ -19,6 +19,12 @@ plateforme_catalogue_produits_edit:
         _controller: PlateformeCatalogueBundle:Produit:edit
     requirements:
         id: \d*
+plateforme_catalogue_produits_edit_declinaisons:
+    path:      /admin/produits/edit-declinaisons/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Produit:editDeclinaisons
+    requirements:
+        id: \d*
 plateforme_catalogue_produits_clone:
     path:      /admin/produits/clone/{id}
     defaults:

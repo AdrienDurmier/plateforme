@@ -24,6 +24,13 @@ class AttributCategorie {
    * @ORM\GeneratedValue(strategy="AUTO")
    */
   private $id;
+  
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="machine", type="string", length=255)
+   */
+  private $machine;
 
   /**
    * @var string
@@ -93,5 +100,29 @@ class AttributCategorie {
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set machine
+     *
+     * @param string $machine
+     *
+     * @return AttributCategorie
+     */
+    public function setMachine($machine)
+    {
+        $this->machine = $machine;
+
+        return $this;
+    }
+
+    /**
+     * Get machine
+     *
+     * @return string
+     */
+    public function getMachine()
+    {
+        return $this->machine;
     }
 }

@@ -126,4 +126,5 @@ class Attribut {
     {
         return $this->categorie;
     }
+
 }
