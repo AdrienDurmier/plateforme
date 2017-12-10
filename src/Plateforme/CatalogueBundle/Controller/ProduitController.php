@@ -81,7 +81,7 @@ class ProduitController extends Controller {
       }
       $em->persist($produit);
       $em->flush();
-      $request->getSession()->getFlashBag()->add('info', "Produit créé avec succès");
+      $request->getSession()->getFlashBag()->add('success', "Produit créé avec succès");
       return $this->redirectToRoute('plateforme_catalogue_produits_crud');
     }
 
@@ -127,7 +127,7 @@ class ProduitController extends Controller {
       }
       $em->persist($produit);
       $em->flush();
-      $request->getSession()->getFlashBag()->add('info', "Produit créé avec succès");
+      $request->getSession()->getFlashBag()->add('success', "Produit modifié avec succès");
       return $this->redirectToRoute('plateforme_catalogue_produits_crud');
     }
 
@@ -136,54 +136,6 @@ class ProduitController extends Controller {
           'marques' => $marques,
           'tvas' => $tvas,
     ));
-  }
-
-  /**
-   * Formulaire d'édition des déclinaisons d'un produit
-   */
-  public function editDeclinaisonsAction($id, Request $request) {
-    $em = $this->getDoctrine()->getManager();
-    $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($id);
-    if (null === $produit) {
-      throw new NotFoundHttpException("Le produit ayant l'identifiant " . $id . " n'existe pas.");
-    }
-    $attributs_categories = $em->getRepository('PlateformeCatalogueBundle:AttributCategorie')->findAll();
-    $attributs = $em->getRepository('PlateformeCatalogueBundle:Attribut')->findAll();
-    $declinaisons = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->findByProduit($produit);
-
-    if ($request->isMethod('POST')) {
-      $valeurs_recu = $request->request->all();
-      $combinaisons = $this->getCombinaisons($produit, $valeurs_recu, array_keys($valeurs_recu), array());
-      $request->getSession()->getFlashBag()->add('info', "Vos modifications ont bien été prises en compte.");
-      return $this->redirectToRoute('plateforme_catalogue_produits_edit', array('id' => $id));
-    }
-
-
-    return $this->render('PlateformeCatalogueBundle:Produit:edit_declinaisons.html.twig', array(
-          'produit' => $produit,
-          'declinaisons' => $declinaisons,
-          'attributs_categories' => $attributs_categories,
-          'attributs' => $attributs,
-    ));
-    }
-
-    public function getCombinaisons ($produit, $tab, $keys, $variantes) {
-    if (count($keys) == 0) {
-      //var_dump($variantes);
-      $em = $this->getDoctrine()->getManager();
-      $declinaison = new Declinaison();
-      $declinaison->setProduit($produit);
-      $declinaison->setCombinaison($variantes);
-      $em->persist($declinaison);
-      $em->flush();
-      return;
-    }
-    $key = array_shift($keys);
-    foreach ($tab[$key] as $e) {
-      $tvariantes = $variantes;
-      $tvariantes[] = $e;
-      $this->getCombinaisons($produit, $tab, $keys, $tvariantes);
-    }
   }
 
   /**
@@ -200,12 +152,12 @@ class ProduitController extends Controller {
     $produit_clone->setContenu($produit->getContenu());
     $em->persist($produit_clone);
     $em->flush();
-    $request->getSession()->getFlashBag()->add('info', "Produit cloné avec succès");
+    $request->getSession()->getFlashBag()->add('success', "Produit cloné avec succès");
     return $this->redirectToRoute('plateforme_catalogue_produits_crud');
   }
 
   /**
-   * Formulaire de suppression d'un produit
+   * Suppression d'un produit
    */
   public function deleteAction($id, Request $request) {
     $em = $this->getDoctrine()->getManager();
@@ -215,7 +167,7 @@ class ProduitController extends Controller {
     }
     $em->remove($produit);
     $em->flush();
-    $request->getSession()->getFlashBag()->add('info', "Produit supprimé avec succès");
+    $request->getSession()->getFlashBag()->add('success', "Produit supprimé avec succès");
     return $this->redirectToRoute('plateforme_catalogue_produits_crud');
   }
 
@@ -283,6 +235,91 @@ class ProduitController extends Controller {
       )
     );
     return new JsonResponse($response);
+  }
+
+  /**
+   * Formulaire d'édition des déclinaisons d'un produit
+   */
+  public function editDeclinaisonsAction($id, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($id);
+    if (null === $produit) {
+      throw new NotFoundHttpException("Le produit ayant l'identifiant " . $id . " n'existe pas.");
+    }
+    $attributs_categories = $em->getRepository('PlateformeCatalogueBundle:AttributCategorie')->findAll();
+    $attributs = $em->getRepository('PlateformeCatalogueBundle:Attribut')->findAll();
+    $declinaisons = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->findByProduit($produit);
+
+    if ($request->isMethod('POST')) {
+      $valeurs_recu = $request->request->all();
+      $combinaisons = $this->getCombinaisons($produit, $valeurs_recu, array_keys($valeurs_recu), array());
+      $request->getSession()->getFlashBag()->add('success', "Vos modifications ont bien été prises en compte.");
+      return $this->redirectToRoute('plateforme_catalogue_produits_edit_declinaisons', array('id' => $id));
+    }
+
+
+    return $this->render('PlateformeCatalogueBundle:Produit:edit_declinaisons.html.twig', array(
+          'produit' => $produit,
+          'declinaisons' => $declinaisons,
+          'attributs_categories' => $attributs_categories,
+          'attributs' => $attributs,
+    ));
+  }
+
+  public function getCombinaisons($produit, $tab, $keys, $variantes) {
+    if (count($keys) == 0) {
+      //var_dump($variantes);
+      $em = $this->getDoctrine()->getManager();
+      $declinaison = new Declinaison();
+      $declinaison->setProduit($produit);
+      $declinaison->setCombinaison($variantes);
+      $em->persist($declinaison);
+      $em->flush();
+      return;
+    }
+    $key = array_shift($keys);
+    foreach ($tab[$key] as $e) {
+      $tvariantes = $variantes;
+      $tvariantes[] = $e;
+      $this->getCombinaisons($produit, $tab, $keys, $tvariantes);
+    }
+  }
+
+  /**
+   * Suppression d'une déclinaison
+   */
+  public function deleteDeclinaisonAction($id, $declinaison_id, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($id);
+    if (null === $produit) {
+      throw new NotFoundHttpException("Le produit ayant l'identifiant " . $id . " n'existe pas.");
+    }
+    $declinaison = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->find($declinaison_id);
+    if (null === $declinaison) {
+      throw new NotFoundHttpException("La déclinaison ayant l'identifiant " . $id . " n'existe pas.");
+    }
+    $em->remove($declinaison);
+    $em->flush();
+    $request->getSession()->getFlashBag()->add('success', "Déclinaison supprimée avec succès");
+    return $this->redirectToRoute('plateforme_catalogue_produits_edit_declinaisons', array('id' => $id, 'declinaison_id' => $declinaison_id));
+  }
+
+  /**
+   * Suppression de toutes les déclinaisons
+   */
+  public function deleteDeclinaisonsAction($id, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($id);
+    if (null === $produit) {
+      throw new NotFoundHttpException("Le produit ayant l'identifiant " . $id . " n'existe pas.");
+    }
+    $declinaisons = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->findByProduit($produit);
+    foreach($declinaisons as $declinaison) {
+      $em->remove($declinaison);
+    }
+    $em->flush();
+    $request->getSession()->getFlashBag()->add('success', "Déclinaison supprimée avec succès");
+    return $this->redirectToRoute('plateforme_catalogue_produits_edit_declinaisons', array('id' => $id));
   }
 
 }

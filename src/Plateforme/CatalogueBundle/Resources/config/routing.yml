@@ -25,6 +25,18 @@ plateforme_catalogue_produits_edit_declinaisons:
         _controller: PlateformeCatalogueBundle:Produit:editDeclinaisons
     requirements:
         id: \d*
+plateforme_catalogue_produits_delete_declinaison:
+    path:      /admin/produits/delete-declinaison/{id}/{declinaison_id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Produit:deleteDeclinaison
+    requirements:
+        id: \d*
+plateforme_catalogue_produits_delete_declinaisons:
+    path:      /admin/produits/delete-declinaisons/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Produit:deleteDeclinaisons
+    requirements:
+        id: \d*
 plateforme_catalogue_produits_clone:
     path:      /admin/produits/clone/{id}
     defaults:
