@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-  
+
   <div class="container">
     <h1>{{ produit.titre }}</h1>
 
@@ -15,11 +15,46 @@
           class="img-fluid"
           src="{{ asset(produit.image.webPath) }}"
           alt="{{ produit.image.alt }}"
-        />
+          />
       </div>
       <div class="col-sm-6">
+
+        {% for categorie in attribut_categories %}
+          <div>
+            <b>{{ categorie.nom }}</b>
+          </div>
+          {% if categorie.type == 'select' %}
+            <select class="form-control" id="{{ categorie.machine }}" name="{{ categorie.machine }}">
+              <option value="" >todo</option>
+            </select>
+          {% endif %}
+
+          {% if categorie.type == 'color' %}
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="{{ categorie.machine }}" id="{{ categorie.machine }}" value="option1">
+              </label>
+            </div>
+          {% endif %}
+
+          {% if categorie.type == 'radio' %}
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="{{ categorie.machine }}" id="{{ categorie.machine }}" value="option1">
+              </label>
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        {% for declinaison in declinaisons %}
+          {% for combinaison in declinaison.combinaison %}
+          {% endfor %}
+        {% endfor %}
+
+        <hr>
+
         prix: {{ produit.prix }} € HT
-        
+
         <br>
         {% if produit.stock > 0 %}
           {% if produit.stock == 1 %}
@@ -47,8 +82,8 @@
       <h2>Description</h2>
       {{ produit.contenu|raw }}
     </div>
-    
-    
+
+
   </div>
-  
+
 {% endblock %}

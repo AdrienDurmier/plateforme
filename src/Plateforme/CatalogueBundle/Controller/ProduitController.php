@@ -180,8 +180,24 @@ class ProduitController extends Controller {
     if (null === $produit) {
       throw new NotFoundHttpException("Le produit ayant l'url " . $slug . " n'existe pas.");
     }
+    // ENCOURS: récupérer uniquement les attributs présents dans des déclinaisons de produits
+    $attribut_categories = $em->getRepository('PlateformeCatalogueBundle:AttributCategorie')->findAll();
+    $attributs = $em->getRepository('PlateformeCatalogueBundle:Attribut')->findAll();
+    $declinaisons = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->findByProduit($produit);
+    $attributs_en_declinaisons = array();
+    foreach($attribut_categories as $attribut_categorie){
+      foreach($attributs as $attribut){
+        foreach($declinaisons as $declinaison){
+          if (in_array($attribut, $declinaison->getCombinaison())) {
+            $attributs_en_declinaisons[$attribut_categorie->getId()] = $attribut;
+          }
+        }
+      }
+    }
+    var_dump($attributs_en_declinaisons);
+    die();
 
-    // permettra de retirer le bouton d'ajout si le produit est déjà ajouter
+    // Permettra de retirer le bouton d'ajout si le produit est déjà ajouter
     $session = $request->getSession();
     if ($session->has('panier')) {
       $panier = $session->get('panier');
@@ -192,6 +208,8 @@ class ProduitController extends Controller {
 
     return $this->render('PlateformeCatalogueBundle:Produit:view.html.twig', array(
           'produit' => $produit,
+          'declinaisons' => $declinaisons,
+          'attribut_categories' => $attribut_categories,
           'panier' => $panier,
     ));
   }
@@ -267,9 +285,10 @@ class ProduitController extends Controller {
   }
 
   public function getCombinaisons($produit, $tab, $keys, $variantes) {
+    $em = $this->getDoctrine()->getManager();
     if (count($keys) == 0) {
       //var_dump($variantes);
-      $em = $this->getDoctrine()->getManager();
+      // TODO: ne pas créer de déclinaison si la combinaison existe déjà ?
       $declinaison = new Declinaison();
       $declinaison->setProduit($produit);
       $declinaison->setCombinaison($variantes);
@@ -278,9 +297,14 @@ class ProduitController extends Controller {
       return;
     }
     $key = array_shift($keys);
-    foreach ($tab[$key] as $e) {
+    foreach ($tab[$key] as $attribut_value) {
+      $attribut_categorie = $em->getRepository('PlateformeCatalogueBundle:AttributCategorie')->findOneByMachine($key);
+      $attribut = $em->getRepository('PlateformeCatalogueBundle:Attribut')->findOneBy(array(
+        'categorie' => $attribut_categorie,
+        'valeur' => $attribut_value,
+      ));
       $tvariantes = $variantes;
-      $tvariantes[] = $e;
+      $tvariantes[] = $attribut;
       $this->getCombinaisons($produit, $tab, $keys, $tvariantes);
     }
   }

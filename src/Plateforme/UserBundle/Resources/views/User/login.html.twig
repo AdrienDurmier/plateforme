@@ -1,31 +1,48 @@
-{# src/Plateforme/UserBundle/Resources/views/User/index.html.twig #}
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Formulaire de connexion">
+    <meta name="author" content="Adrien Durmier - www.codeur-job.fr">
+    <title>Se connecter</title>
+    {% block stylesheets %}
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link href="{{ asset('css/frontoffice.css') }}" rel="stylesheet">
+      <style>
+        #monkeys_logo {background-image:url('../img/monkeys.png');width:100%;height:176px;position:absolute;left:0;right:0;top:-105px;background-size:100px;background-repeat:no-repeat;background-position:center;}
+        #_submit {width:100%;}
+      </style>
+    {% endblock %}
+  </head>
+  <body class="bg-light">
 
-{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+    <div class="container" style="max-width:500px;margin:0 auto">
 
-{% block title %}
-  S'authentifier - {{ parent() }}
-{% endblock %}
+      <div class="p-5"></div>
 
-{% block body %}
-
-  <div class="container">
-    <h1>S'authentifier</h1>
-
-    <div class="row">
-      <div class="col-xs-12 col-lg-6">
-        <h2>Client enregistré</h2>
-        <p>J'ai déjà commandé.</p>
-        {{ render(controller('FOSUserBundle:Security:login')) }}
+      <div class="bg-white p-4 border border-secondary relative">
+        <div id="monkeys_logo"></div>
+        <form class="form-signin">
+          {{ render(controller('FOSUserBundle:Security:login')) }}
+          <hr>
+          <div class="text-center text-muted">
+            <a href="{{ path('plateforme_user_inscription_client') }}">Inscription</a>
+          </div>
+          <hr>
+        </form>
       </div>
-      <div class="col-xs-12 col-lg-6">
-        <h2>Nouveau client</h2>
-        <p>Je suis un nouveau client.</p>
-        <a href="{{ path('plateforme_user_inscription_client') }}" class="btn btn-success">
-          S'inscrire
-        </a>
+      <div class="text-center text-muted">
+        <small><i>MonKeys<sup><i class="fa fa-trademark" aria-hidden="true"></i></sup></i> by Adrien Durmier</small>
       </div>
+
     </div>
-      
-  </div>
-
-{% endblock %}
+    {% block javascripts %}
+      <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    {% endblock %}
+  </body>
+</html>
