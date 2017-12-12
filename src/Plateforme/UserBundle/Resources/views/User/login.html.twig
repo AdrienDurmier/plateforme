@@ -25,14 +25,12 @@
 
       <div class="bg-white p-4 border border-secondary relative">
         <div id="monkeys_logo"></div>
-        <form class="form-signin">
-          {{ render(controller('FOSUserBundle:Security:login')) }}
-          <hr>
-          <div class="text-center text-muted">
-            <a href="{{ path('plateforme_user_inscription_client') }}">Inscription</a>
-          </div>
-          <hr>
-        </form>
+        {{ render(controller('FOSUserBundle:Security:login')) }}
+        <hr>
+        <div class="text-center text-muted">
+          <a href="{{ path('plateforme_user_inscription_client') }}">Inscription</a>
+        </div>
+        <hr>
       </div>
       <div class="text-center text-muted">
         <small><i>MonKeys<sup><i class="fa fa-trademark" aria-hidden="true"></i></sup></i> by Adrien Durmier</small>

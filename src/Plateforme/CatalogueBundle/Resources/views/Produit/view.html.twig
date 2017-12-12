@@ -6,44 +6,65 @@
 
 {% block body %}
 
-  <div class="container">
-    <h1>{{ produit.titre }}</h1>
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">Produits</li>
+      <li class="breadcrumb-item">{{ produit.marque }}</li>
+      <li class="breadcrumb-item active">{{ produit.titre }}</li>
+    </ol>
+  </nav>
+
+  <div class="container" itemscope itemtype="http://schema.org/Product">
+
 
     <div class="row">
-      <div class="col-sm-6">
+
+      <div class="col-12 col-sm-6">
         <img
+          itemprop="image"
           class="img-fluid"
           src="{{ asset(produit.image.webPath) }}"
           alt="{{ produit.image.alt }}"
           />
       </div>
-      <div class="col-sm-6">
 
-        {% for categorie in attribut_categories %}
+      <div class="col-12 col-sm-6">
+        <h1 itemprop="name">{{ produit.titre }}</h1>
+
+        {% for categorie_machine, attributs in attributes_by_categorie %}
           <div>
-            <b>{{ categorie.nom }}</b>
+            <b>{{ categorie_machine|getCategoryEntity.nom }}</b>
           </div>
-          {% if categorie.type == 'select' %}
-            <select class="form-control" id="{{ categorie.machine }}" name="{{ categorie.machine }}">
-              <option value="" >todo</option>
+          {% if categorie_machine|getCategoryEntity.type == 'select' %}
+            <select class="form-control" id="{{ categorie_machine }}" name="{{ categorie_machine }}">
+              {% for attribut in attributs %}
+                <option value="{{ attribut }}" >{{ attribut }}</option>
+              {% endfor %}
             </select>
           {% endif %}
 
-          {% if categorie.type == 'color' %}
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="{{ categorie.machine }}" id="{{ categorie.machine }}" value="option1">
-              </label>
-            </div>
+          {% if categorie_machine|getCategoryEntity.type == 'color' %}
+            {% for attribut in attributs %}
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="{{ categorie_machine }}" id="{{ categorie_machine }}" value="{{ attribut }}">
+                  {{ attribut }} 
+                </label>
+              </div>
+            {% endfor %}
           {% endif %}
 
-          {% if categorie.type == 'radio' %}
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="{{ categorie.machine }}" id="{{ categorie.machine }}" value="option1">
-              </label>
-            </div>
+          {% if categorie_machine|getCategoryEntity.type == 'radio' %}
+            {% for attribut in attributs %}
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="{{ categorie_machine }}" id="{{ categorie_machine }}" value="{{ attribut }}">
+                  {{ attribut }} 
+                </label>
+              </div>
+            {% endfor %}
           {% endif %}
+
         {% endfor %}
 
         {% for declinaison in declinaisons %}
@@ -53,7 +74,14 @@
 
         <hr>
 
-        prix: {{ produit.prix }} € HT
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <meta itemprop="priceCurrency" content="EUR" />
+          Prix: <span itemprop="price">{{ produit.prix }}</span> € HT
+        </div>
+
+        <div>
+          Référence: <span itemprop="identifier">{{ produit.id }}</span>
+        </div>
 
         <br>
         {% if produit.stock > 0 %}
@@ -78,11 +106,10 @@
       </div>
     </div>
 
-    <div>
-      <h2>Description</h2>
+    <h2>Description</h2>
+    <div itemprop="description">
       {{ produit.contenu|raw }}
     </div>
-
 
   </div>
 

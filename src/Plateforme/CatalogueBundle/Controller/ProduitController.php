@@ -180,22 +180,30 @@ class ProduitController extends Controller {
     if (null === $produit) {
       throw new NotFoundHttpException("Le produit ayant l'url " . $slug . " n'existe pas.");
     }
-    // ENCOURS: récupérer uniquement les attributs présents dans des déclinaisons de produits
+    // Récupére uniquement les attributs présents dans des déclinaisons de produits
+    // o_O Optimisable ? ça fait beaucoup de boucles quand même !!
     $attribut_categories = $em->getRepository('PlateformeCatalogueBundle:AttributCategorie')->findAll();
-    $attributs = $em->getRepository('PlateformeCatalogueBundle:Attribut')->findAll();
     $declinaisons = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->findByProduit($produit);
     $attributs_en_declinaisons = array();
-    foreach($attribut_categories as $attribut_categorie){
-      foreach($attributs as $attribut){
-        foreach($declinaisons as $declinaison){
-          if (in_array($attribut, $declinaison->getCombinaison())) {
-            $attributs_en_declinaisons[$attribut_categorie->getId()] = $attribut;
+    foreach ($declinaisons as $declinaison) {
+      foreach ($declinaison->getCombinaison() as $combinaison) {
+        $attributs_en_declinaisons[$combinaison->getCategorie()->getId()] = $combinaison->getCategorie();
+      }
+    }
+    $attributes_by_categorie = array();
+    foreach ($attributs_en_declinaisons as $categorie) {
+      foreach ($declinaisons as $declinaison) {
+        foreach ($declinaison->getCombinaison() as $combinaison) {
+          if ($combinaison->getCategorie()->getId() == $categorie->getId()) {
+            if (isset($attributes_by_categorie[$categorie->getMachine()]) && in_array($combinaison->getValeur(), $attributes_by_categorie[$categorie->getMachine()])) {
+              continue;
+            }else{
+              $attributes_by_categorie[$categorie->getMachine()][] = $combinaison->getValeur();
+            }
           }
         }
       }
     }
-    var_dump($attributs_en_declinaisons);
-    die();
 
     // Permettra de retirer le bouton d'ajout si le produit est déjà ajouter
     $session = $request->getSession();
@@ -209,7 +217,7 @@ class ProduitController extends Controller {
     return $this->render('PlateformeCatalogueBundle:Produit:view.html.twig', array(
           'produit' => $produit,
           'declinaisons' => $declinaisons,
-          'attribut_categories' => $attribut_categories,
+          'attributes_by_categorie' => $attributes_by_categorie,
           'panier' => $panier,
     ));
   }
@@ -338,7 +346,7 @@ class ProduitController extends Controller {
       throw new NotFoundHttpException("Le produit ayant l'identifiant " . $id . " n'existe pas.");
     }
     $declinaisons = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->findByProduit($produit);
-    foreach($declinaisons as $declinaison) {
+    foreach ($declinaisons as $declinaison) {
       $em->remove($declinaison);
     }
     $em->flush();
