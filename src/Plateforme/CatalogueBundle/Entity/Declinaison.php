@@ -47,12 +47,6 @@ class Declinaison {
   private $stock;
 
   /**
-   * @ORM\ManyToOne(targetEntity="Plateforme\EcommerceBundle\Entity\Tva", cascade={"persist"})
-   * @ORM\JoinColumn(nullable=true)
-   */
-  private $tva;
-
-  /**
    * @ORM\ManyToOne(targetEntity="Plateforme\CatalogueBundle\Entity\Produit", cascade={"persist"})
    * @ORM\JoinColumn(nullable=false)
    */
@@ -137,26 +131,6 @@ class Declinaison {
    */
   public function getStock() {
     return $this->stock;
-  }
-
-  /**
-   * Set tva
-   *
-   * @param \Plateforme\EcommerceBundle\Entity\Tva $tva
-   * @return Declinaisons
-   */
-  public function setTva(\Plateforme\EcommerceBundle\Entity\Tva $tva) {
-    $this->tva = $tva;
-    return $this;
-  }
-
-  /**
-   * Get tva
-   *
-   * @return \Plateforme\EcommerceBundle\Entity\Tva 
-   */
-  public function getTva() {
-    return $this->tva;
   }
 
   /**

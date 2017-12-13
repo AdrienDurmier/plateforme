@@ -31,46 +31,43 @@
       <div class="col-12 col-sm-6">
         <h1 itemprop="name">{{ produit.titre }}</h1>
 
-        {% for categorie_machine, attributs in attributes_by_categorie %}
-          <div>
-            <b>{{ categorie_machine|getCategoryEntity.nom }}</b>
-          </div>
-          {% if categorie_machine|getCategoryEntity.type == 'select' %}
-            <select class="form-control" id="{{ categorie_machine }}" name="{{ categorie_machine }}">
+        <div id="declinaisons_form_area">
+          {% for categorie_machine, attributs in attributes_by_categorie %}
+            <div>
+              <b>{{ categorie_machine|getCategoryEntity.nom }}</b>
+            </div>
+            {% if categorie_machine|getCategoryEntity.type == 'select' %}
+              <select class="form-control declinaison_input" id="{{ categorie_machine }}" name="{{ categorie_machine }}">
+                {% for attribut in attributs %}
+                  <option value="{{ attribut }}" >{{ attribut }}</option>
+                {% endfor %}
+              </select>
+            {% endif %}
+
+            {% if categorie_machine|getCategoryEntity.type == 'color' %}
               {% for attribut in attributs %}
-                <option value="{{ attribut }}" >{{ attribut }}</option>
+                <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                    <input class="form-check-input declinaison_input" type="radio" name="{{ categorie_machine }}" id="{{ categorie_machine }}" value="{{ attribut }}">
+                    {{ attribut }} 
+                  </label>
+                </div>
               {% endfor %}
-            </select>
-          {% endif %}
+            {% endif %}
 
-          {% if categorie_machine|getCategoryEntity.type == 'color' %}
-            {% for attribut in attributs %}
-              <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="radio" name="{{ categorie_machine }}" id="{{ categorie_machine }}" value="{{ attribut }}">
-                  {{ attribut }} 
-                </label>
-              </div>
-            {% endfor %}
-          {% endif %}
+            {% if categorie_machine|getCategoryEntity.type == 'radio' %}
+              {% for attribut in attributs %}
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input declinaison_input" type="radio" name="{{ categorie_machine }}" id="{{ categorie_machine }}" value="{{ attribut }}">
+                    {{ attribut }} 
+                  </label>
+                </div>
+              {% endfor %}
+            {% endif %}
 
-          {% if categorie_machine|getCategoryEntity.type == 'radio' %}
-            {% for attribut in attributs %}
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="radio" name="{{ categorie_machine }}" id="{{ categorie_machine }}" value="{{ attribut }}">
-                  {{ attribut }} 
-                </label>
-              </div>
-            {% endfor %}
-          {% endif %}
-
-        {% endfor %}
-
-        {% for declinaison in declinaisons %}
-          {% for combinaison in declinaison.combinaison %}
           {% endfor %}
-        {% endfor %}
+        </div>
 
         <hr>
 
@@ -113,4 +110,36 @@
 
   </div>
 
+{% endblock %}
+
+
+{% block javascripts %}
+  {# Récupération des scripts des parents #}
+  {{ parent() }}
+
+  <script>
+
+    // Lance le chargement des informations d'une déclinaison lors d'un choix
+    jQuery(document).on('change', '.declinaison_input', function (event) {
+      loadDeclinaison();
+    });
+
+
+    // Chargement de la déclinaison
+    function loadDeclinaison() {
+      var parametres = {
+        todo: 'todo'
+      };
+      $.ajax({
+        url: "{{ path('plateforme_catalogue_produits_majfiche') }}",
+        type: 'post',
+        dataType: 'json',
+        success: function (data) {
+          alert(data.prix);
+        },
+        data: parametres
+      });
+    }
+
+  </script>
 {% endblock %}

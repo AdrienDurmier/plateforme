@@ -10,15 +10,3 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: 952b895e0b56ce219c32baa4afaf5a0ba9d4fea0
-    # Module de paiement: Virement bancaire
-    virement_iban:        0000 0000 0000 0000
-    virement_bic:         000000
-    # Module de paiement: Paypal
-    paypal_mode:          sandbox
-    paypal_url_return:    http://localhost/plateforme/web/app_dev.php/paiement/paypal-return
-    paypal_url_cancel:    http://localhost/plateforme/web/app_dev.php/paiement/paypal-cancel
-    paypal_url_notify:    http://localhost/plateforme/web/app_dev.php/paiement/paypal-notify
-    paypal_sandbox:       https://www.sandbox.paypal.com/cgi-bin/webscr
-    paypal_sandbox_mail:  test-achat@business.fr
-    paypal_prod:          https://www.paypal.com/cgi-bin/webscr
-    paypal_prod_mail:     a.durmier@gmail.com

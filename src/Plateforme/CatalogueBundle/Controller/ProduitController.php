@@ -109,6 +109,7 @@ class ProduitController extends Controller {
       $produit->setContenu($valeurs_recu['contenu']);
       $marque = $em->getRepository('PlateformeCatalogueBundle:Marque')->find($valeurs_recu['marque']);
       $produit->setMarque($marque);
+      $produit->setStock($valeurs_recu['stock']);
       $produit->setPrix($valeurs_recu['prix']);
       $tva = $em->getRepository('PlateformeEcommerceBundle:Tva')->find($valeurs_recu['tva']);
       $produit->setTva($tva);
@@ -296,9 +297,11 @@ class ProduitController extends Controller {
     $em = $this->getDoctrine()->getManager();
     if (count($keys) == 0) {
       //var_dump($variantes);
-      // TODO: ne pas créer de déclinaison si la combinaison existe déjà ?
       $declinaison = new Declinaison();
       $declinaison->setProduit($produit);
+      $declinaison->setPrix($produit->getPrix());
+      $declinaison->setPoids($produit->getPoids());
+      $declinaison->setStock($produit->getStock());
       $declinaison->setCombinaison($variantes);
       $em->persist($declinaison);
       $em->flush();
@@ -315,6 +318,26 @@ class ProduitController extends Controller {
       $tvariantes[] = $attribut;
       $this->getCombinaisons($produit, $tab, $keys, $tvariantes);
     }
+  }
+
+  /**
+   * Édition d'une seule déclinaison
+   */
+  public function editDeclinaisonAction($id, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($id);
+    if (null === $produit) {
+      throw new NotFoundHttpException("Le produit ayant l'identifiant " . $id . " n'existe pas.");
+    }
+    $valeurs_recu = $request->request->all();
+    $declinaison = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->find($valeurs_recu['declinaison_id']);
+    $declinaison->setPrix($valeurs_recu['declinaison_prix']);
+    $declinaison->setPoids($valeurs_recu['declinaison_poids']);
+    $declinaison->setStock($valeurs_recu['declinaison_stock']);
+    $em->persist($declinaison);
+    $em->flush();
+    $request->getSession()->getFlashBag()->add('success', "Déclinaison modifiée avec succès");
+    return $this->redirectToRoute('plateforme_catalogue_produits_edit_declinaisons', array('id' => $id, 'declinaison_id' => $valeurs_recu['declinaison_id']));
   }
 
   /**
@@ -352,6 +375,20 @@ class ProduitController extends Controller {
     $em->flush();
     $request->getSession()->getFlashBag()->add('success', "Déclinaison supprimée avec succès");
     return $this->redirectToRoute('plateforme_catalogue_produits_edit_declinaisons', array('id' => $id));
+  }
+  
+  /*
+   * Mise à jour d'un produit à partir de la declinaison déduite avec les combinaisons saisies
+   */
+  public function majFicheProduitAction(Request $request){
+    $em = $this->getDoctrine()->getManager();
+    $valeurs_recu = $request->request->all();
+    
+    $declinaison = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->find(35);
+    $response = array(
+      'prix' => $declinaison->getPrix(),
+    );
+    return new JsonResponse($response);
   }
 
 }

@@ -21,11 +21,12 @@ class AppKernel extends Kernel
             new Plateforme\CatalogueBundle\PlateformeCatalogueBundle(),
             new Plateforme\EcommerceBundle\PlateformeEcommerceBundle(),
             new Plateforme\UserBundle\PlateformeUserBundle(),
-            // Bundles de la communauté
-            new PUGX\MultiUserBundle\PUGXMultiUserBundle(),                     // @see https://github.com/PUGX/PUGXMultiUserBundle/blob/master/Resources/doc/index.md
-            new FOS\UserBundle\FOSUserBundle(),                                 // @see http://knpbundles.com/FriendsOfSymfony/FOSUserBundle
-            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),                     // http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/index.html + installation CKeditor: http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/installation.html,
             new Plateforme\PaiementBundle\PlateformePaiementBundle(),
+            // Bundles de la communauté
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),                       // https://symfony.com/doc/master/bundles/FOSJsRoutingBundle/installation.html
+            new PUGX\MultiUserBundle\PUGXMultiUserBundle(),                     // https://github.com/PUGX/PUGXMultiUserBundle/blob/master/Resources/doc/index.md
+            new FOS\UserBundle\FOSUserBundle(),                                 // http://knpbundles.com/FriendsOfSymfony/FOSUserBundle
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),                     // http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/index.html + installation CKeditor: http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/installation.html,
             new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),        // https://github.com/lexik/LexikMaintenanceBundle/blob/master/Resources/doc/index.md
         ];
 

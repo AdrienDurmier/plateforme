@@ -17,6 +17,10 @@ plateforme_user:
     resource: "@PlateformeUserBundle/Resources/config/routing.yml"
     prefix:   /
 
+# FOS JS Routing
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
 # CoreBundle
 plateforme_core:
     resource: "@PlateformeCoreBundle/Resources/config/routing.yml"

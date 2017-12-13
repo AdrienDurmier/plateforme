@@ -25,6 +25,13 @@ plateforme_catalogue_produits_edit_declinaisons:
         _controller: PlateformeCatalogueBundle:Produit:editDeclinaisons
     requirements:
         id: \d*
+plateforme_catalogue_produits_edit_declinaison:
+    path:      /admin/produits/edit-declinaison/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Produit:editDeclinaison
+    requirements:
+        id: \d*
+    methods: [post]
 plateforme_catalogue_produits_delete_declinaison:
     path:      /admin/produits/delete-declinaison/{id}/{declinaison_id}
     defaults:
@@ -53,6 +60,10 @@ plateforme_catalogue_produits_view:
     path:      /produits/{slug}
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:view
+plateforme_catalogue_produits_majfiche:
+    path:      /produits-majfiche
+    defaults:
+        _controller: PlateformeCatalogueBundle:Produit:majFicheProduit
 plateforme_catalogue_produits_json:
     path:      /search/produits/json
     defaults:
