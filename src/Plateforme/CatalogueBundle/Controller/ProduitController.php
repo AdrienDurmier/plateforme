@@ -279,7 +279,6 @@ class ProduitController extends Controller {
 
     if ($request->isMethod('POST')) {
       $valeurs_recu = $request->request->all();
-      $combinaisons = $this->getCombinaisons($produit, $valeurs_recu, array_keys($valeurs_recu), array());
       $request->getSession()->getFlashBag()->add('success', "Vos modifications ont bien été prises en compte.");
       return $this->redirectToRoute('plateforme_catalogue_produits_edit_declinaisons', array('id' => $id));
     }
@@ -383,8 +382,8 @@ class ProduitController extends Controller {
   public function majFicheProduitAction(Request $request){
     $em = $this->getDoctrine()->getManager();
     $valeurs_recu = $request->request->all();
+    $declinaison = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->findOneByCombinaisons($valeurs_recu);
     
-    $declinaison = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->find(35);
     $response = array(
       'prix' => $declinaison->getPrix(),
     );

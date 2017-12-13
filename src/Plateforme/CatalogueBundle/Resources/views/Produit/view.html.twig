@@ -31,7 +31,8 @@
       <div class="col-12 col-sm-6">
         <h1 itemprop="name">{{ produit.titre }}</h1>
 
-        <div id="declinaisons_form_area">
+        <form id="form_combinaisons" action="{{ path('plateforme_catalogue_produits_majfiche') }}">
+          <input type="hidden" name="produit_id" value="{{ produit.id }}">
           {% for categorie_machine, attributs in attributes_by_categorie %}
             <div>
               <b>{{ categorie_machine|getCategoryEntity.nom }}</b>
@@ -48,7 +49,7 @@
               {% for attribut in attributs %}
                 <div class="form-check form-check-inline">
                   <label class="form-check-label">
-                    <input class="form-check-input declinaison_input" type="radio" name="{{ categorie_machine }}" id="{{ categorie_machine }}" value="{{ attribut }}">
+                    <input class="form-check-input declinaison_input" type="radio" name="{{ categorie_machine }}" id="{{ categorie_machine }}" value="{{ attribut }}" {% if loop.first %}checked{% endif %}>
                     {{ attribut }} 
                   </label>
                 </div>
@@ -59,7 +60,7 @@
               {% for attribut in attributs %}
                 <div class="form-check">
                   <label class="form-check-label">
-                    <input class="form-check-input declinaison_input" type="radio" name="{{ categorie_machine }}" id="{{ categorie_machine }}" value="{{ attribut }}">
+                    <input class="form-check-input declinaison_input" type="radio" name="{{ categorie_machine }}" id="{{ categorie_machine }}" value="{{ attribut }}" {% if loop.first %}checked{% endif %}>
                     {{ attribut }} 
                   </label>
                 </div>
@@ -67,7 +68,7 @@
             {% endif %}
 
           {% endfor %}
-        </div>
+        </form>
 
         <hr>
 
@@ -118,18 +119,12 @@
   {{ parent() }}
 
   <script>
-
-    // Lance le chargement des informations d'une déclinaison lors d'un choix
+    // Evenement pour lancer la recherche
     jQuery(document).on('change', '.declinaison_input', function (event) {
       loadDeclinaison();
     });
-
-
     // Chargement de la déclinaison
     function loadDeclinaison() {
-      var parametres = {
-        todo: 'todo'
-      };
       $.ajax({
         url: "{{ path('plateforme_catalogue_produits_majfiche') }}",
         type: 'post',
@@ -137,9 +132,8 @@
         success: function (data) {
           alert(data.prix);
         },
-        data: parametres
+        data: $("#form_combinaisons").serialize()
       });
     }
-
   </script>
 {% endblock %}

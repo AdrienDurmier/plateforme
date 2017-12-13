@@ -10,4 +10,19 @@ namespace Plateforme\CatalogueBundle\Repository;
  */
 class DeclinaisonRepository extends \Doctrine\ORM\EntityRepository {
 
+  /**
+   * Recherche d'une declinaison à partir d'une combinaison
+   */
+  public function findOneByCombinaisons($valeurs_recu) {
+    $qb = $this->createQueryBuilder('d')
+        ->Select('d')
+        ->Where('d.produit = :produit')
+        ->andWhere('d.combinaison IN (:combinaisons)')
+        ->setParameter('produit', $valeurs_recu['produit_id'])
+        ->setParameter('combinaisons', $valeurs_recu);
+    $qb->setMaxResults(1);
+    
+    return $qb->getQuery()->getOneOrNullResult();
+  }
+
 }
