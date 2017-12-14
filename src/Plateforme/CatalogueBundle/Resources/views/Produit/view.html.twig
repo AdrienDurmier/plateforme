@@ -74,7 +74,7 @@
 
         <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
           <meta itemprop="priceCurrency" content="EUR" />
-          Prix: <span itemprop="price">{{ produit.prix }}</span> € HT
+          Prix: <span id="prix" itemprop="price">{{ produit.prix }}</span> € HT
         </div>
 
         <div>
@@ -83,12 +83,15 @@
 
         <br>
         {% if produit.stock > 0 %}
-          {% if produit.stock == 1 %}
-            <p>{{ produit.stock }} disponible</p>
-          {% endif %}
-          {% if produit.stock > 1 %}
-            <p>{{ produit.stock }} disponibles</p>
-          {% endif %}
+          <p>
+            <span id="stock">{{ produit.stock }}</span>
+            {% if produit.stock == 1 %}
+              disponible
+            {% endif %}
+            {% if produit.stock > 1 %}
+              disponibles
+            {% endif %}
+          </p>
           {% if panier[produit.id] is not defined %}
             <a class="btn btn-success" href="{{ path('plateforme_ecommerce_commandeligne_add', { 'id' : produit.id }) }}">
               <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>&nbsp;Ajouter au panier
@@ -130,7 +133,8 @@
         type: 'post',
         dataType: 'json',
         success: function (data) {
-          alert(data.id);
+          $('#prix').text(data.prix);
+          $('#stock').text(data.stock);
         },
         data: $("#form_combinaisons").serialize()
       });

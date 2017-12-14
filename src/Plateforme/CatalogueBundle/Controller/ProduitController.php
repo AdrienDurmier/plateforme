@@ -279,10 +279,10 @@ class ProduitController extends Controller {
 
     if ($request->isMethod('POST')) {
       $valeurs_recu = $request->request->all();
-      $request->getSession()->getFlashBag()->add('success', "Vos modifications ont bien été prises en compte.");
+      $combinaisons = $this->generateDeclinaisons($produit, $valeurs_recu, array_keys($valeurs_recu), array());
+      $request->getSession()->getFlashBag()->add('success', "Déclinaisons générées avec succès.");
       return $this->redirectToRoute('plateforme_catalogue_produits_edit_declinaisons', array('id' => $id));
     }
-
 
     return $this->render('PlateformeCatalogueBundle:Produit:edit_declinaisons.html.twig', array(
           'produit' => $produit,
@@ -292,7 +292,7 @@ class ProduitController extends Controller {
     ));
   }
 
-  public function getCombinaisons($produit, $tab, $keys, $variantes) {
+  public function generateDeclinaisons($produit, $tab, $keys, $variantes) {
     $em = $this->getDoctrine()->getManager();
     if (count($keys) == 0) {
       //var_dump($variantes);
@@ -315,7 +315,7 @@ class ProduitController extends Controller {
       ));
       $tvariantes = $variantes;
       $tvariantes[] = $attribut;
-      $this->getCombinaisons($produit, $tab, $keys, $tvariantes);
+      $this->generateDeclinaisons($produit, $tab, $keys, $tvariantes);
     }
   }
 
@@ -386,6 +386,8 @@ class ProduitController extends Controller {
     
     $response = array(
       'id' => $declinaison->getId(),
+      'prix' => $declinaison->getPrix(),
+      'stock' => $declinaison->getStock(),
     );
     return new JsonResponse($response);
   }
