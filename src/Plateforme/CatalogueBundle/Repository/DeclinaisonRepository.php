@@ -17,12 +17,21 @@ class DeclinaisonRepository extends \Doctrine\ORM\EntityRepository {
     $qb = $this->createQueryBuilder('d')
         ->Select('d')
         ->Where('d.produit = :produit')
-        ->andWhere('d.combinaison IN (:combinaisons)')
-        ->setParameter('produit', $valeurs_recu['produit_id'])
-        ->setParameter('combinaisons', $valeurs_recu);
-    $qb->setMaxResults(1);
+        ->setParameter('produit', $valeurs_recu['produit_id']);
+    $declinaisons = $qb->getQuery()->getResult();
     
-    return $qb->getQuery()->getOneOrNullResult();
+    $result = null;
+    foreach($declinaisons as $declinaison){
+      foreach($declinaison->getCombinaison() as $attribut){
+        // Si la valeur de cette combinaison ne correspond pas au choix du client alors on le saute
+        if (!in_array($attribut->getValeur(), $valeurs_recu)) {
+          continue 2;
+        }
+      }
+      $result = $declinaison;
+    }
+    
+    return $result;
   }
 
 }

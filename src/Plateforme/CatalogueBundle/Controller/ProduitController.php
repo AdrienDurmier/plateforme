@@ -385,7 +385,7 @@ class ProduitController extends Controller {
     $declinaison = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->findOneByCombinaisons($valeurs_recu);
     
     $response = array(
-      'prix' => $declinaison->getPrix(),
+      'id' => $declinaison->getId(),
     );
     return new JsonResponse($response);
   }
