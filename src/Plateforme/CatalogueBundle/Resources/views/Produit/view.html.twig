@@ -6,16 +6,17 @@
 
 {% block body %}
 
-  <nav aria-label="breadcrumb" role="navigation">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">Produits</li>
-      <li class="breadcrumb-item">{{ produit.marque }}</li>
-      <li class="breadcrumb-item active">{{ produit.titre }}</li>
-    </ol>
-  </nav>
+  <div class="container">
+    <nav aria-label="breadcrumb" role="navigation">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">Produits</li>
+        <li class="breadcrumb-item">{{ produit.marque }}</li>
+        <li class="breadcrumb-item active">{{ produit.titre }}</li>
+      </ol>
+    </nav>
+  </div>
 
   <div class="container" itemscope itemtype="http://schema.org/Product">
-
 
     <div class="row">
 
@@ -92,15 +93,13 @@
               disponibles
             {% endif %}
           </p>
-          {% if panier[produit.id] is not defined %}
-            <a class="btn btn-success" href="{{ path('plateforme_ecommerce_commandeligne_add', { 'id' : produit.id }) }}">
+          
+          <form id="form_panier" method="post" action="{{ path('plateforme_ecommerce_commandeligne_add', { 'id' : produit.id }) }}">
+            <input id="declinaison_id" name="declinaison_id" value="0" type="hidden">
+            <button type="submit" class="btn btn-success">
               <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>&nbsp;Ajouter au panier
-            </a>
-          {% else %}
-            <a class="btn btn-warning" href="{{ path('plateforme_ecommerce_commandeligne_delete', { 'id' : produit.id }) }}">
-              <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Retirer du panier
-            </a>
-          {% endif %}
+            </button>
+          </form>
         {% else %}
           <p>momentanément indisponible</p>
         {% endif %}
@@ -133,6 +132,7 @@
         type: 'post',
         dataType: 'json',
         success: function (data) {
+          $('#declinaison_id').val(data.id);
           $('#prix').text(data.prix);
           $('#stock').text(data.stock);
         },

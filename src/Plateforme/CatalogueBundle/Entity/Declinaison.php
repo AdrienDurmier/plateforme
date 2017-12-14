@@ -13,7 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Declinaison {
 
   public function __toString() {
-    return $this->titre;
+    $name = '';
+    $i=0;foreach($this->combinaison as $combinaison):
+      if ($i>0) {
+        $name .= ', ';
+      }
+      $name .= $combinaison->getCategorie()->getNom() . ': ' . $combinaison;
+    $i++;endforeach;
+    
+    return $name;
   }
 
   /**

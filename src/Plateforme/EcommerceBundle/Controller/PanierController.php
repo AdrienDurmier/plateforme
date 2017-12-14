@@ -20,7 +20,7 @@ class PanierController extends Controller {
     if ($session->has('panier')) {
       foreach ($session->get('panier') as $key => $article_ajoute) {
         if ($key != null) {
-          $nb_articles += $article_ajoute;
+          $nb_articles += $article_ajoute['quantite'];
         }
       }
     }
@@ -39,11 +39,30 @@ class PanierController extends Controller {
     }
 
     $em = $this->getDoctrine()->getManager();
-    $produits = $em->getRepository('PlateformeCatalogueBundle:Produit')->findArray(array_keys($session->get('panier')));
-
+    
+    $lignes_paniers = array();
+    foreach($session->get('panier') as $produit_id => $ligne_panier){
+      $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($produit_id);
+      if($ligne_panier['declinaison'] != 0){
+        $declinaison = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->find($ligne_panier['declinaison']);
+        $lignes_paniers[] = array(
+          'produit' => $produit,
+          'designation' => $produit->getTitre() . '<br><span class="text-muted">' . $declinaison.'</span>',
+          'prix_unitaire' => $declinaison->getPrix(),
+          'quantite' => $ligne_panier['quantite'],
+        );
+      }else{
+        $lignes_paniers[] = array(
+          'produit' => $produit,
+          'designation' => $produit->getTitre(),
+          'prix_unitaire' => $produit->getPrix(),
+          'quantite' => $ligne_panier['quantite'],
+        );
+      }
+    }
+    
     return $this->render('PlateformeEcommerceBundle:Panier:panier.html.twig', array(
-          'produits' => $produits,
-          'panier' => $session->get('panier')
+          'lignes_paniers' => $lignes_paniers,
     ));
   }
 
@@ -66,7 +85,7 @@ class PanierController extends Controller {
       $session->set('panier', array());
     }
     $panier = $session->get('panier');
-    foreach($valeurs_recu['qte'] as $id => $quantite){
+    foreach ($valeurs_recu['qte'] as $id => $quantite) {
       $panier[$id] = $quantite;
     }
     $session->set('panier', $panier);
@@ -95,6 +114,8 @@ class PanierController extends Controller {
    */
   public function addAction($id, Request $request) {
     $session = $request->getSession();
+    $valeurs_recu = $request->request->all();
+
     if (!$session->has('panier')) {
       $session->set('panier', array());
     }
@@ -102,20 +123,30 @@ class PanierController extends Controller {
 
     if (array_key_exists($id, $panier)) {
       if ($request->query->get('qte') != null) {
-        $panier[$id] = $request->query->get('qte');
+        $panier[$id] = array(
+          'quantite' => $request->query->get('qte'),
+          'declinaison' => $valeurs_recu['declinaison_id'],
+        );
       }
       $this->get('session')->getFlashBag()->add('success', 'Quantité modifié avec succès');
     }
     else {
       if ($request->query->get('qte') != null) {
-        $panier[$id] = $request->query->get('qte');
+        $panier[$id] = array(
+          'quantite' => $request->query->get('qte'),
+          'declinaison' => $valeurs_recu['declinaison_id'],
+        );
       }
       else {
-        $panier[$id] = 1;
+        $panier[$id] = array(
+          'quantite' => 1,
+          'declinaison' => $valeurs_recu['declinaison_id'],
+        );
       }
       $this->get('session')->getFlashBag()->add('success', 'Article ajouté avec succès');
     }
     $session->set('panier', $panier);
+
     return $this->redirect($this->generateUrl('plateforme_ecommerce_tunnel_panier'));
   }
 

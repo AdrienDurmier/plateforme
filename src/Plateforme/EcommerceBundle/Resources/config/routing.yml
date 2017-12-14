@@ -20,6 +20,7 @@ plateforme_ecommerce_tunnel_validation:
 plateforme_ecommerce_commandeligne_add:
     path:  /commandeligne-add/{id}
     defaults: { _controller: PlateformeEcommerceBundle:Panier:add }
+    methods: [post]
 plateforme_ecommerce_commandeligne_delete:
     path:  /commandeligne-delete/{id}
     defaults: { _controller: PlateformeEcommerceBundle:Panier:delete }

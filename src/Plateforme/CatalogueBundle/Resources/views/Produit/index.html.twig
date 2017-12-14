@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-  
+
   <div class="container">
     <h1>Produits</h1>
 
@@ -15,32 +15,28 @@
       <div class="row">
         {% for produit in produits %}
           <div class="col-sm-3">
-            <img
-              class="img-fluid"
-              src="{{ asset(produit.image.webPath) }}"
-              alt="{{ produit.image.alt }}"
-            />
-            <br>
-            <a href="{{ path('plateforme_catalogue_produits_view', {'slug': produit.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
-              {{ produit.titre }}
-            </a>
-            <br>
-            {% if panier[produit.id] is not defined %}
-              <a class="btn btn-success" href="{{ path('plateforme_ecommerce_commandeligne_add', { 'id' : produit.id }) }}">
-                <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>&nbsp;Ajouter au panier
+            <div class="card">
+              <a href="{{ path('plateforme_catalogue_produits_view', {'slug': produit.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+                <div class="card-header">
+                  <img
+                    class="img-fluid card-img-top"
+                    src="{{ asset(produit.image.webPath) }}"
+                    alt="{{ produit.image.alt }}"
+                  />
+                </div>
+                <div class="card-body">
+                  <div class="card-title">{{ produit.titre }}</div>
+                </div>
               </a>
-            {% else %}
-              <a class="btn btn-warning" href="{{ path('plateforme_ecommerce_commandeligne_delete', { 'id' : produit.id }) }}">
-                <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Retirer du panier
-              </a>
-            {% endif %}
+            </div>
+
           </div>
         {% endfor %}
       </div>
     {% else %}
       Aucun produit
     {% endif %}
-    
+
   </div>
-  
+
 {% endblock %}
