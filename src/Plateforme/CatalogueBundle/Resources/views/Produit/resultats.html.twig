@@ -1,0 +1,40 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  Résultats de votre recherche - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container">
+    
+    <h1>Résultats de votre recherche pour <i>"{{term}}"</i></h1>
+
+    {% if produits|length != 0 %}
+      <div class="row">
+        {% for produit in produits %}
+          <div class="col-sm-3">
+            <div class="card">
+              <a href="{{ path('plateforme_catalogue_produits_view', {'slug': produit.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+                <div class="card-header">
+                  <img
+                    class="img-fluid card-img-top"
+                    src="{{ asset(produit.image.webPath) }}"
+                    alt="{{ produit.image.alt }}"
+                    />
+                </div>
+                <div class="card-body">
+                  <div class="card-title">{{ produit.titre }}</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      Aucun résultats ne correspond à votre recherche
+    {% endif %}
+
+  </div>
+
+{% endblock %}

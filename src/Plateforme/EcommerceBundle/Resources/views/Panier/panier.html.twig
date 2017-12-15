@@ -126,7 +126,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="3" class="text-right">
+            <td colspan="4" class="text-right">
               <b>Total HT</b>
             </td>
             <td>{{ totalHT }} € HT</td>
@@ -135,21 +135,21 @@
           {% for key, tva in totalTVAs %}
             {% if tva > 0 %}
               <tr>
-                <td colspan="3" class="text-right"><b>TVA {{ key }}</b></td>
+                <td colspan="4" class="text-right"><b>TVA {{ key }}</b></td>
                 <td>{{ tva|number_format(2) }} €</td>
                 <td></td>
               </tr>
             {% endif %}
           {% endfor %}
           <tr>
-            <td colspan="3" class="text-right">
-        <big><b>Total TTC</b></big>
-        </td>
-        <td>
-        <big>{{ totalTTC }} € TTC</big>
-        </td>
-        <td></td>
-        </tr>
+            <td colspan="4" class="text-right">
+              <big><b>Total TTC</b></big>
+            </td>
+            <td>
+              <big>{{ totalTTC }} € TTC</big>
+            </td>
+            <td></td>
+          </tr>
         </tfoot>
       </table>
 

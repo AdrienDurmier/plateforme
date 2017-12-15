@@ -198,7 +198,8 @@ class ProduitController extends Controller {
           if ($combinaison->getCategorie()->getId() == $categorie->getId()) {
             if (isset($attributes_by_categorie[$categorie->getMachine()]) && in_array($combinaison->getValeur(), $attributes_by_categorie[$categorie->getMachine()])) {
               continue;
-            }else{
+            }
+            else {
               $attributes_by_categorie[$categorie->getMachine()][] = $combinaison->getValeur();
             }
           }
@@ -224,15 +225,14 @@ class ProduitController extends Controller {
   }
 
   /**
-   * Résultats d'une recherche en json
-   *  FIXME: n'affiche pas de résultats si pas d'image
-   *  exemple: http://localhost/plateforme/web/app_dev.php/produits/json?term=ecran
-   * @param Request $request
-   * @return JsonResponse
+   * Résultats d'une recherche en json utilisé pour l'autocomplétion
    */
   public function jsonAction(Request $request) {
     $em = $this->getDoctrine()->getManager();
-    $query = $request->query->get('term'); // Récupération du terme recherché ("ecran" dans l'exemple ci-dessus)
+
+    $query = $request->query->get('term'); // Récupération du terme recherché
+    $limit = $request->query->get('limit'); // Récupération du nombre maximum de résultats
+
     if (!isset($query)) {
       die("Veuillez saisir un terme");
     }
@@ -240,13 +240,13 @@ class ProduitController extends Controller {
     // Récupération des produits
     //  Attention, par souci de performance s'il y a d'autres champs à ajouter 
     //  dans les résultats des recherche: il faudra les ajouter dans le select de la méthode "findLikeTitre"
-    $produits = $em->getRepository('PlateformeCatalogueBundle:Produit')->findLikeTitre($query);
+    $produits = $em->getRepository('PlateformeCatalogueBundle:Produit')->findLikeTitre($query, $limit);
     $resultProduits = [];
     $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
     foreach ($produits as $produit) {
       $resultProduits[] = array(
         'id' => $produit['id'],
-        'produit' => $produit['titre'], // doit être le même nom que dans la réponse retourner (data)
+        'titre' => $produit['titre'], // doit être le même nom que dans la réponse retourner (data)
         'slug' => $produit['slug'], // doit être le même nom que dans la réponse retourner (data)
         'image' => $baseurl . '/uploads/img/' . $produit['filename'], // doit être le même nom que dans la réponse retourner (data)
       );
@@ -262,6 +262,36 @@ class ProduitController extends Controller {
       )
     );
     return new JsonResponse($response);
+  }
+
+  /**
+   * Page de résultats de recherche
+   */
+  public function resultatsAction($term, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    if (!isset($term)) {
+      die("Veuillez saisir un terme");
+    }
+
+    // Si le terme recherché est un identifiant alors on redirige directement vers la fiche de la déclinaison
+    $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($term);
+    if ($produit) {
+      return $this->redirectToRoute('plateforme_catalogue_produits_view', array(
+            'slug' => $produit->getSlug(),
+      ));
+    }
+    // Sinon il faut récupérer la liste des résultats possibles
+    $produits = $em->getRepository('PlateformeCatalogueBundle:Produit')->findLikeTitre($term, null);
+    $resultProduits = [];
+    foreach ($produits as $produit_result) {
+      $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($produit_result['id']);
+      $resultProduits[] = $produit;
+    }
+
+    return $this->render('PlateformeCatalogueBundle:Produit:resultats.html.twig', array(
+      'produits' => $resultProduits,
+      'term' => $term,
+    ));
   }
 
   /**
@@ -375,15 +405,16 @@ class ProduitController extends Controller {
     $request->getSession()->getFlashBag()->add('success', "Déclinaison supprimée avec succès");
     return $this->redirectToRoute('plateforme_catalogue_produits_edit_declinaisons', array('id' => $id));
   }
-  
+
   /*
    * Mise à jour d'un produit à partir de la declinaison déduite avec les combinaisons saisies
    */
-  public function majFicheProduitAction(Request $request){
+
+  public function majFicheProduitAction(Request $request) {
     $em = $this->getDoctrine()->getManager();
     $valeurs_recu = $request->request->all();
     $declinaison = $em->getRepository('PlateformeCatalogueBundle:Declinaison')->findOneByCombinaisons($valeurs_recu);
-    
+
     $response = array(
       'id' => $declinaison->getId(),
       'prix' => $declinaison->getPrix(),

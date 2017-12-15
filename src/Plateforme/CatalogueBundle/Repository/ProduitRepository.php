@@ -21,7 +21,7 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository {
   /*
    * Fonction pour rechercher à partir du titre ou d'une combinaison de mot
    */
-  public function findLikeTitre($query) {
+  public function findLikeTitre($query, $limit) {
     $termes = explode("+", $query); // Séparer les termes pour en faire autant de critère de recherche
     $fields = array('p.id', 'p.titre', 'p.slug', 'img.filename');
     $qb = $this->createQueryBuilder('p');
@@ -36,7 +36,9 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository {
       $qb->setParameter('term' . $i, '%' . $terme . '%');
       $i++;
     endforeach;
-
+    if($limit){
+      $qb->setMaxResults($limit);
+    }
     return $qb->getQuery()->getResult();
   }
 

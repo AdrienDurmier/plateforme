@@ -65,9 +65,13 @@ plateforme_catalogue_produits_majfiche:
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:majFicheProduit
 plateforme_catalogue_produits_json:
-    path:      /search/produits/json
+    path:      /recherche/produits
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:json
+plateforme_catalogue_produits_resultats:
+    path:      /recherche/resultats-produits/{term}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Produit:resultats
 
 ################################################################################
 # MARQUES
