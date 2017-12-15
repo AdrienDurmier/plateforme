@@ -1,46 +1,71 @@
-<footer class="bg-dark text-light mt-2">
-  <div class="container p-3">
-    <div class="row">
-      <div class="col-xs-12 col-sm-4">
-        <i>MonKeys<sup><i class="fa fa-trademark" aria-hidden="true"></i></sup></i> by Adrien Durmier
-        <hr>
-        <div><b>Responsive Design</b></div>
-        <div>
-          <i class="fa fa-laptop fa-2x" aria-hidden="true"></i>
-          &nbsp;
-          <i class="fa fa-tablet fa-2x" aria-hidden="true"></i>
-          &nbsp;
-          <i class="fa fa-mobile fa-2x" aria-hidden="true"></i>
-          &nbsp;
-          <i class="fa fa-desktop fa-2x" aria-hidden="true"></i>
-        </div>
-
-      </div>
-      <div class="col-xs-12 col-sm-4">
-        <div><b>Places de marché</b></div>
-        <hr>
-        <div><b>ERP</b></div>
-        <hr>
-        <div><b>Comptabilité</b></div>
-
-      </div>
-      <div class="col-xs-12 col-sm-4">
-        <div>
-          <div><b>Réseaux sociaux</b></div>
-          {{ render(controller("PlateformeCoreBundle:ReseauxSociaux:index")) }}
-          <hr>
-          <div><b>Livraison</b></div>
-
-          <hr>
-          <div><b>Paiement</b>
-            <div>
-              <i class="fa fa-cc-paypal fa-3x" aria-hidden="true"></i>
-              <i class="fa fa-cc-visa fa-3x" aria-hidden="true"></i>
-              <i class="fa fa-cc-mastercard fa-3x" aria-hidden="true"></i>
-              <i class="fa fa-cc-amex fa-3x" aria-hidden="true"></i>
-            </div>
-            <br>
+<footer class="text-light mt-2">
+  <div class="bg-dark">
+    <div class="bg-dark container p-3">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <div><b>Responsive Design</b></div>
+          <div>
+            <i class="fa fa-laptop fa-2x" aria-hidden="true"></i>
+            &nbsp;
+            <i class="fa fa-tablet fa-2x" aria-hidden="true"></i>
+            &nbsp;
+            <i class="fa fa-mobile fa-2x" aria-hidden="true"></i>
+            &nbsp;
+            <i class="fa fa-desktop fa-2x" aria-hidden="true"></i>
           </div>
+          <hr>
+          <div class="row text-center">
+            <div class="col-4">
+              <div><i class="fa fa-shield fa-3x" aria-hidden="true"></i><br><b>Plateforme sécurisé</b></div>
+            </div>
+            <div class="col-4">
+              <div><i class="fa fa-fighter-jet fa-3x" aria-hidden="true"></i><br><b>Haute performance</b></div>
+            </div>
+            <div class="col-4">
+              <div><i class="fa fa-child fa-3x" aria-hidden="true"></i><br><b>Search Engine Optimisation</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <div><b>Places de marché</b></div>
+          <hr>
+          <div><b>ERP</b></div>
+          <hr>
+          <div><b>Comptabilité</b></div>
+
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <div>
+            <div><b>Réseaux sociaux</b></div>
+            {{ render(controller("PlateformeCoreBundle:ReseauxSociaux:index")) }}
+            <hr>
+            <div><b>Livraison</b></div>
+
+            <hr>
+            <div><b>Paiement</b>
+              <div>
+                <i class="fa fa-cc-paypal fa-3x" aria-hidden="true"></i>
+                <i class="fa fa-cc-visa fa-3x" aria-hidden="true"></i>
+                <i class="fa fa-cc-mastercard fa-3x" aria-hidden="true"></i>
+                <i class="fa fa-cc-amex fa-3x" aria-hidden="true"></i>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p-2" style="background-color:#000;">
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <small>
+            <i class="fa fa-rocket" aria-hidden="true"></i> Propulsé par <i>MonKeys<sup><i class="fa fa-trademark" aria-hidden="true"></i></sup></i>
+          </small>
+        </div>
+        <div class="col-6 text-right">
+          <small><i class="fa fa-copyright" aria-hidden="true"></i> 2017 Adrien Durmier</small>
         </div>
       </div>
     </div>
