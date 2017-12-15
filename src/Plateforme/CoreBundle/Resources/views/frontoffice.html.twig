@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{% block metadescription %}{% endblock %}">
-    <meta name="author" content="Adrien Durmier - www.codeur-job.fr">
+    <meta name="author" content="Adrien Durmier">
     <title>{% block title %}Plateforme{% endblock %}</title>
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
@@ -132,19 +132,7 @@
 
     <div class="clearfix"></div>
 
-    <footer class="bg-dark text-light mt-2">
-      <div class="container p-3">
-        <div class="row">
-          <div class="col-xs-12 col-sm-4">
-            <i>MonKeys<sup><i class="fa fa-trademark" aria-hidden="true"></i></sup></i> by Adrien Durmier
-          </div>
-          <div class="col-xs-12 col-sm-4">
-          </div>
-          <div class="col-xs-12 col-sm-4">
-            {{ render(controller("PlateformeCoreBundle:ReseauxSociaux:index")) }}
-          </div>
-        </div>
-    </footer>
+    {{ include("PlateformeCoreBundle::footer.html.twig") }}
 
     {% block javascripts %}
       <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
@@ -152,18 +140,18 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
       <script>
         // Lance la recherche si l'utilisateur n'a pas saisie depuis 500ms
-        $('#search_engine').keyup(function() {
+        $('#search_engine').keyup(function () {
           clearTimeout($.data(this, 'timer'));
           var wait = setTimeout(searchProduit, 500);
           $(this).data('timer', wait);
         });
-        
+
         // Recherche de produit pour l'autocompletion
         function searchProduit() {
           var nb_caractere_debut_recherche = 3;
           if ($('#search_engine').val().length >= nb_caractere_debut_recherche) {
             var parametres = {
-              term: $('#search_engine').val().replace(' ', '+'),  // Terme à rechercher dans les titres de produits
+              term: $('#search_engine').val().replace(' ', '+'), // Terme à rechercher dans les titres de produits
               limit: 10                                           // Nombre maximum de résultats à afficher
             };
             $.ajax({
@@ -177,32 +165,32 @@
                 $('#header_search_results').show();
                 $('#search_engine_picto').html('<i class="fa fa-search"></i>');
                 var results_html = '';
-                if(data.data.produit.length > 0){
+                if (data.data.produit.length > 0) {
                   $.each(data.data.produit, function (index, element) {
                     results_html = results_html + '<div class="autocomplete_result bg-light">';
-                      results_html = results_html + '<a href="{{ path('plateforme_core_homepage') }}produits/' + element.slug + '">';
-                        results_html = results_html + '<div class="row">';
-                          results_html = results_html + '<div class="col-4">';
-                            results_html = results_html + '<img class="img-fluid" src="'+element.image+'">';
-                          results_html = results_html + '</div>';
-                          results_html = results_html + '<div class="col-8">';
-                            results_html = results_html + element.titre;
-                          results_html = results_html + '</div>';
-                        results_html = results_html + '</div>';
-                      results_html = results_html + '</a>';
+                    results_html = results_html + '<a href="{{ path('plateforme_core_homepage') }}produits/' + element.slug + '">';
+                    results_html = results_html + '<div class="row">';
+                    results_html = results_html + '<div class="col-4">';
+                    results_html = results_html + '<img class="img-fluid" src="' + element.image + '">';
+                    results_html = results_html + '</div>';
+                    results_html = results_html + '<div class="col-8">';
+                    results_html = results_html + element.titre;
+                    results_html = results_html + '</div>';
+                    results_html = results_html + '</div>';
+                    results_html = results_html + '</a>';
                     results_html = results_html + '</div>';
                   });
-                    results_html = results_html + '<div class="autocomplete_all_results bg-light text-muted">';
-                      results_html = results_html + '<a href="{{ path('plateforme_core_homepage') }}recherche/resultats/'+$('#search_engine').val().replace(' ', '+')+'">';
-                        results_html = results_html + '<small>';
-                          results_html = results_html + '<i class="fa fa-caret-right" aria-hidden="true"></i> Voir tous les produits';
-                        results_html = results_html + '</small>';
-                      results_html = results_html + '</a>';
-                    results_html = results_html + '</div>';
+                  results_html = results_html + '<div class="autocomplete_all_results bg-light text-muted">';
+                  results_html = results_html + '<a href="{{ path('plateforme_core_homepage') }}recherche/resultats/' + $('#search_engine').val().replace(' ', '+') + '">';
+                  results_html = results_html + '<small>';
+                  results_html = results_html + '<i class="fa fa-caret-right" aria-hidden="true"></i> Voir tous les produits';
+                  results_html = results_html + '</small>';
+                  results_html = results_html + '</a>';
                   results_html = results_html + '</div>';
-                }else{
-                  results_html = results_html + '<div class="autocomplete_categorie">';
-                    results_html = results_html + '<i class="fa fa-frown-o" aria-hidden="true"></i> Aucun résultat';
+                  results_html = results_html + '</div>';
+                } else {
+                  results_html = results_html + '<div class="autocomplete_result bg-light">';
+                  results_html = results_html + '<i class="fa fa-frown-o" aria-hidden="true"></i> Aucun résultat';
                   results_html = results_html + '</div>';
                 }
                 $('#header_search_produits').html(results_html);
@@ -212,13 +200,13 @@
           }
         }
         // Ferme les résultats d'autocomplétion lors d'un clic à l'extérieur de cet élement
-        $(document.body).click(function(e) {
+        $(document.body).click(function (e) {
           var div_cliquable = $('#form-search-engine');
-          if( !$(e.target).is(div_cliquable) && !$.contains(div_cliquable[0],e.target) ) {
+          if (!$(e.target).is(div_cliquable) && !$.contains(div_cliquable[0], e.target)) {
             $('#header_search_results').hide();
           }
         });
-        
+
         // Moteur de recherche - méthode par soumission de formulaire
         $('#form-search-engine').submit(function (e) {
           if ($('#search_engine').val() != '') {

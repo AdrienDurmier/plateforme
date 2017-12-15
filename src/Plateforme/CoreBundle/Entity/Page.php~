@@ -283,28 +283,4 @@ abstract class Page {
     $this->setUpdated(new \Datetime());
   }
 
-
-    /**
-     * Set isPublic
-     *
-     * @param boolean $isPublic
-     *
-     * @return Page
-     */
-    public function setIsPublic($isPublic)
-    {
-        $this->is_public = $isPublic;
-
-        return $this;
-    }
-
-    /**
-     * Get isPublic
-     *
-     * @return boolean
-     */
-    public function getIsPublic()
-    {
-        return $this->is_public;
-    }
 }
