@@ -19,7 +19,7 @@ class ReseauxSociauxController extends Controller {
     if ($existant) {
       $reseaux_sociaux = $existant[0];
     }
-    
+
     return $this->render('PlateformeCoreBundle:ReseauxSociaux:index.html.twig', array(
           'reseaux_sociaux' => $reseaux_sociaux,
     ));
@@ -54,6 +54,25 @@ class ReseauxSociauxController extends Controller {
           'reseaux_sociaux' => $reseaux_sociaux,
           'form' => $form->createView(),
     ));
+  }
+
+  public function shareAction(Request $request) {
+    $valeurs_recu = $request->request->all();
+    $mailer_user = $this->container->getParameter('mailer_user');
+    $message = \Swift_Message::newInstance()
+      ->setSubject('Un proche à partager une page pour vous')
+      ->setFrom($mailer_user)
+      ->setTo($valeurs_recu['share_email'])
+      ->setBody(
+        $this->renderView(
+          'PlateformeCoreBundle:ReseauxSociaux:mail_partage.html.twig', array(
+          'valeurs_recu' => $valeurs_recu,
+          'url' => $request->getUri(),
+        ))
+      );
+      $this->get('mailer')->send($message);
+      $request->getSession()->getFlashBag()->add('success', "Merci d'avoir partagé cette page");
+    return $this->redirect($request->server->get('HTTP_REFERER'));
   }
 
 }

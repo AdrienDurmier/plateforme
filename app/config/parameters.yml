@@ -10,3 +10,6 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: 952b895e0b56ce219c32baa4afaf5a0ba9d4fea0
+    # Variables (cf: config.yml > twig > globals)
+    site_name: Monkeys
+    ga_tracking: UA-xxxxx-x

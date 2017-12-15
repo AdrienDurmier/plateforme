@@ -186,11 +186,15 @@ plateforme_core_page_adresses_delete:
 
         
 ################################################################################
-# RÉSEAUX SOCIAUX
+# PARTAGE ET RÉSEAUX SOCIAUX
 ################################################################################
 plateforme_core_reseaux_sociaux:
     path:     /admin/réseaux-sociaux
     defaults: { _controller: PlateformeCoreBundle:ReseauxSociaux:manage }
+plateforme_core_share:
+    path:     /réseaux-sociaux/share
+    defaults: { _controller: PlateformeCoreBundle:ReseauxSociaux:share }
+    methods: [post]
         
 ################################################################################
 # PAGE ACCUEIL DU BACK OFFICE

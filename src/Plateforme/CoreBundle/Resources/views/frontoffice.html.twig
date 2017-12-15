@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{% block metadescription %}{% endblock %}">
     <meta name="author" content="Adrien Durmier">
-    <title>{% block title %}Plateforme{% endblock %}</title>
+    <title>{% block title %}{{ site_name }}{% endblock %}</title>
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
@@ -22,6 +22,68 @@
     {% endblock %}
   </head>
   <body>
+
+    <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-light">
+            <div class="modal-title" id="shareModalTitle">Partager cette page</div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" class="text-light">&times;</span>
+            </button>
+          </div>
+          <form id="form_share" action="{{ path('plateforme_core_share') }}" method="post">
+            <div class="modal-body">
+              <b>Utilisez un réseau social</b>
+              <br>
+              <a href="http://www.facebook.com/share.php?u={{ app.request.uri }}&amp;title={{ site_name }}" target="_blank">
+                <i class="fa fa-facebook-square fa-2x"></i>
+              </a>
+              &nbsp;
+              <a class="icon" href="http://twitter.com/home?status={{ app.request.uri }}" target="_blank">
+                <i class="fa fa-twitter-square  fa-2x"></i>
+              </a>
+              &nbsp;
+              <a class="icon" href="https://plus.google.com/share?url={{ app.request.uri }}l" target="_blank">
+                <i class="fa fa-google-plus-square  fa-2x"></i>
+              </a>
+              &nbsp;
+              <a class="icon" href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ app.request.uri }}&amp;title={{ site_name }}&amp;source={{ app.request.uri }}" target="_blank">
+                <i class="fa fa-linkedin-square  fa-2x"></i>
+              </a>
+              &nbsp;
+              <a class="icon" href="http://www.viadeo.com/shareit/share/?url={{ app.request.uri }}&amp;title={{ site_name }}&amp;source={{ app.request.uri }}" target="_blank">
+                <i class="fa fa-viadeo-square  fa-2x"></i>
+              </a>
+              <hr>
+              <b>Ou écrivez à un proche</b>
+              <br><span class="text-muted"><small><i class="fa fa-info-circle" aria-hidden="true"></i>Le destinataire recevra un mail avec votre message et l'adresse de cette page.</small></span>
+              <div class="input-group mt-2">
+                <span class="input-group-addon" style="width:100px;">Nom</span>
+                <input type="text" class="form-control" id="share_nom" name="share_nom" {% if app.user.nom is defined %}value="{{ app.user.nom }}"{% endif %}>
+              </div>
+              <div class="input-group mt-2">
+                <span class="input-group-addon" style="width:100px;">Prénom</span>
+                <input type="text" class="form-control" id="share_prenom" name="share_prenom" {% if app.user.prenom is defined %}value="{{ app.user.prenom }}"{% endif %}>
+              </div>
+              <div class="input-group mt-2">
+                <span class="input-group-addon" style="width:100px;">Destinataire</span>
+                <input type="email" class="form-control" id="share_email" name="share_email" {% if app.user.email is defined %}value="{{ app.user.email }}"{% endif %}>
+              </div>
+              <textarea class="form-control form-control mt-2" id="share_message" name="share_message" rows="3" placeholder="Votre message..."></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                <i class="fa fa-times" aria-hidden="true"></i> Annuler
+              </button>
+              <button type="submit" class="btn btn-success btn-sm">
+                <i class="fa fa-send-o" aria-hidden="true"></i>&nbsp;Partager
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
       <div class="container">
@@ -80,6 +142,11 @@
                 </a>
               </li>
             {% endif %}
+            <li class="nav-item">
+              <a href="#" class="btn btn-default" data-toggle="modal" data-target="#shareModal">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -181,7 +248,7 @@
                     results_html = results_html + '</div>';
                   });
                   results_html = results_html + '<div class="autocomplete_all_results bg-light text-muted">';
-                  results_html = results_html + '<a href="{{ path('plateforme_core_homepage') }}recherche/resultats/' + $('#search_engine').val().replace(' ', '+') + '">';
+                  results_html = results_html + '<a href="{{ path('plateforme_core_homepage') }}recherche/resultats-produits/' + $('#search_engine').val().replace(' ', '+') + '">';
                   results_html = results_html + '<small>';
                   results_html = results_html + '<i class="fa fa-caret-right" aria-hidden="true"></i> Voir tous les produits';
                   results_html = results_html + '</small>';
