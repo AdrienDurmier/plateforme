@@ -56,6 +56,11 @@ class LoadCategorie extends AbstractFixture implements OrderedFixtureInterface
     $this->addReference('categorie_vetements', $categorie1);
     $this->addReference('categorie_jouets', $categorie1);
     $this->addReference('categorie_vins', $categorie1);
+    $this->addReference('categorie_tshirt', $categorie1b);
+    $this->addReference('categorie_chemise', $categorie1c);
+    $this->addReference('categorie_chaussure', $categorie1d);
+    $this->addReference('categorie_basket', $categorie1da);
+    $this->addReference('categorie_escarpin', $categorie1db);
   }
   
   public function getOrder() {

@@ -19,3 +19,8 @@ h6 {font-size:1.15em;}
 .breadcrumb {padding:0;background-color: transparent;}
 /* Table */
 .table thead th {vertical-align:middle;}
+
+/* Moteur de recherche */
+.autocomplete_results_area {position:absolute;z-index:1;left:0;right:0;}
+.autocomplete_result {border-bottom:1px solid #eee;padding:3px 10px;}
+.autocomplete_all_results {text-align:right;padding:5px 10px;}

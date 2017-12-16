@@ -52,6 +52,14 @@ plateforme_catalogue_produits_delete:
         _controller: PlateformeCatalogueBundle:Produit:delete
     requirements:
         id: \d*
+plateforme_catalogue_produits_addcategorie:
+    path:      /admin/produits/add-categorie/{id_produit}/{id_categorie}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Produit:addCategorie
+plateforme_catalogue_produits_removecategorie:
+    path:      /admin/produits/remove-categorie/{id_produit}/{id_categorie}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Produit:removeCategorie
 plateforme_catalogue_produits_view:
     path:      /produits/{slug}
     defaults:
@@ -111,6 +119,10 @@ plateforme_catalogue_categories_delete:
         _controller: PlateformeCatalogueBundle:Categorie:delete
     requirements:
         id: \d*
+plateforme_catalogue_categories_json:
+    path:      /recherche/categories
+    defaults:
+        _controller: PlateformeCatalogueBundle:Categorie:json
 
 ################################################################################
 # MARQUES

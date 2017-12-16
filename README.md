@@ -10,3 +10,5 @@ Moteur de recherche a facette dans les résultats de produits
 Article avec signature + schema.org
 Page: Contributions, Historique/versionnement
 Limiter l'ajout/quantité max au panier au nombre maximum en stock
+Notification et Mails
+Ajout de vidéos aux produits

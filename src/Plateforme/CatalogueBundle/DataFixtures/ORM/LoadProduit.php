@@ -43,11 +43,24 @@ class LoadProduit extends AbstractFixture implements OrderedFixtureInterface
     $produit3->setPoids(2.450);
     $manager->persist($produit3);
     
+    $produit4 = new Produit();
+    $produit4->setMarque($this->getReference('marque_3'));
+    $produit4->addCategory($this->getReference('categorie_basket'));
+    $produit4->setTitre('Converse All Star Ox Classic Baskets Enfant');
+    $produit4->setContenu("<ul><li>Dessus: lin</li><li>Doublure: lin</li><li>Matériau de semelle: Caoutchouc</li><li>Fermeture: Lacets</li></ul>");
+    $produit4->setPrix('39.40');
+    $produit4->setImage($this->getReference('image_4'));
+    $produit4->setTva($this->getReference('tva2'));
+    $produit4->setStock(15);
+    $produit4->setPoids(0.250);
+    $manager->persist($produit4);
+    
     $manager->flush();
     
     $this->addReference('produit_1', $produit1);
     $this->addReference('produit_2', $produit2);
     $this->addReference('produit_3', $produit3);
+    $this->addReference('produit_4', $produit4);
   }
   
   public function getOrder() {

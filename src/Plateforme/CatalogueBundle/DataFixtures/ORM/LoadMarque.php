@@ -21,10 +21,16 @@ class LoadMarque extends AbstractFixture implements OrderedFixtureInterface
     $marque2->setContenu("<p>Smoby est une entreprise française de fabrication de jouets pour enfants, implantée à Lavans-lès-Saint-Claude dans le Jura.</p>");
     $manager->persist($marque2);
     
+    $marque3 = new Marque();
+    $marque3->setTitre('Converse');
+    $marque3->setContenu("<p>Converse est une entreprise des États-Unis qui fabrique essentiellement des chaussures de sport. Elle appartient au groupe Nike depuis 2003.</p>");
+    $manager->persist($marque3);
+    
     $manager->flush();
     
     $this->addReference('marque_1', $marque1);
     $this->addReference('marque_2', $marque2);
+    $this->addReference('marque_3', $marque3);
   }
   
   public function getOrder() {

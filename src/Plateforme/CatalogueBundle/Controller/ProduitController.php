@@ -266,8 +266,8 @@ class ProduitController extends Controller {
     }
 
     return $this->render('PlateformeCatalogueBundle:Produit:resultats.html.twig', array(
-      'produits' => $resultProduits,
-      'term' => $term,
+          'produits' => $resultProduits,
+          'term' => $term,
     ));
   }
 
@@ -398,6 +398,46 @@ class ProduitController extends Controller {
       'stock' => $declinaison->getStock(),
     );
     return new JsonResponse($response);
+  }
+
+  /**
+   * Ajout d'une liaison entre ce produit et une catégorie
+   */
+  public function addCategorieAction($id_produit,$id_categorie, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($id_produit);
+    if (null === $produit) {
+      throw new NotFoundHttpException("Le produit ayant l'identifiant " . $id_produit . " n'existe pas.");
+    }
+    $categorie = $em->getRepository('PlateformeCatalogueBundle:Categorie')->find($id_categorie);
+    if (null === $categorie) {
+      throw new NotFoundHttpException("La catégorie ayant l'identifiant " . $id_categorie . " n'existe pas.");
+    }
+    $produit->addCategory($categorie);
+    $em->persist($produit);
+    $em->flush();
+    $request->getSession()->getFlashBag()->add('success', "Liaison ajoutée avec succès.");
+    return $this->redirectToRoute('plateforme_catalogue_produits_edit', array('id' => $id_produit));
+  }
+  
+  /**
+   * Suppression d'une liaison entre ce produit et une catégorie
+   */
+  public function removeCategorieAction($id_produit,$id_categorie, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($id_produit);
+    if (null === $produit) {
+      throw new NotFoundHttpException("Le produit ayant l'identifiant " . $id_produit . " n'existe pas.");
+    }
+    $categorie = $em->getRepository('PlateformeCatalogueBundle:Categorie')->find($id_categorie);
+    if (null === $categorie) {
+      throw new NotFoundHttpException("La catégorie ayant l'identifiant " . $id_categorie . " n'existe pas.");
+    }
+    $produit->removeCategory($categorie);
+    $em->persist($produit);
+    $em->flush();
+    $request->getSession()->getFlashBag()->add('success', "Liaison supprimée avec succès.");
+    return $this->redirectToRoute('plateforme_catalogue_produits_edit', array('id' => $id_produit));
   }
 
 }

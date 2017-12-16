@@ -28,11 +28,18 @@ class LoadProduitImage extends AbstractFixture implements OrderedFixtureInterfac
     $img3->setFilename("smoby_caserne_sam_le_pompier.jpeg");
     $manager->persist($img3);
     
+    $img4 = new Image();
+    $img4->setUrl('converse_ox_classic.jpeg');
+    $img4->setAlt("Converse OX Classic");
+    $img4->setFilename("converse_ox_classic.jpeg");
+    $manager->persist($img4);
+    
     $manager->flush();
     
     $this->addReference('image_1', $img1);
     $this->addReference('image_2', $img2);
     $this->addReference('image_3', $img3);
+    $this->addReference('image_4', $img4);
   }
   
   public function getOrder() {

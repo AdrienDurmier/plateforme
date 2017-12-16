@@ -22,7 +22,7 @@ class CategorieController extends Controller {
           'categories' => $categories,
     ));
   }
-  
+
   /**
    * Fiche catégorie
    */
@@ -38,7 +38,7 @@ class CategorieController extends Controller {
           'categories_enfants' => $categories_enfants,
     ));
   }
-  
+
   /**
    * Gestion des catégories parents
    */
@@ -166,6 +166,40 @@ class CategorieController extends Controller {
     $em->flush();
     $request->getSession()->getFlashBag()->add('success', "Catégorie supprimée avec succès");
     return $this->redirectToRoute('plateforme_catalogue_categories_crud');
+  }
+
+  /**
+   * Résultats d'une recherche en json utilisé pour l'autocomplétion
+   */
+  public function jsonAction(Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $query = $request->query->get('term');  // Récupération du terme recherché
+    $limit = $request->query->get('limit'); // Récupération du nombre maximum de résultats
+    if (!isset($query)) {
+      die("Veuillez saisir un terme");
+    }
+    $status = true;
+    // Récupération des produits
+    $categories = $em->getRepository('PlateformeCatalogueBundle:Categorie')->findLikeTitre($query, $limit);
+    $results = [];
+    foreach ($categories as $categorie) {
+      $results[] = array(
+        'id' => $categorie['id'],
+        'titre' => $categorie['titre'], // doit être le même nom que dans la réponse retourner (data)
+        'slug' => $categorie['slug'], // doit être le même nom que dans la réponse retourner (data)
+      );
+    }
+    // S'il n'y a eu aucun résultat
+    if (empty($results)) {
+      $status = false;
+    }
+    $response = array(
+      'success' => $status,
+      'data' => array(
+        'produit' => $results
+      )
+    );
+    return new JsonResponse($response);
   }
 
 }

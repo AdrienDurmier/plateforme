@@ -30,5 +30,28 @@ class CategorieRepository extends \Doctrine\ORM\EntityRepository {
         ->setParameter('parent_id', $id);
     return $qb->getQuery()->getResult();
   }
+  
+  /*
+   * Recherche à partir du titre ou d'une combinaison de mot
+   */
+  public function findLikeTitre($query, $limit) {
+    $termes = explode("+", $query); // Séparer les termes pour en faire autant de critère de recherche
+    $fields = array('c.id', 'c.titre', 'c.slug');
+    $qb = $this->createQueryBuilder('c');
+    $qb->select($fields);
+    $qb->where('1 = 1');
+    $i = 0;
+    foreach ($termes as $terme):
+      $qb->andWhere(
+          $qb->expr()->like('c.titre', ':term' . $i)
+      );
+      $qb->setParameter('term' . $i, '%' . $terme . '%');
+      $i++;
+    endforeach;
+    if($limit){
+      $qb->setMaxResults($limit);
+    }
+    return $qb->getQuery()->getResult();
+  }
 
 }

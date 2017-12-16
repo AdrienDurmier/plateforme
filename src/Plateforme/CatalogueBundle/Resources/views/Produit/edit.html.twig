@@ -7,7 +7,7 @@
 {% block body %}
 
   <h1>Édition d'un produit</h1>
-  
+
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
@@ -17,90 +17,116 @@
 
   <hr>
 
-  <form action="{{ path('plateforme_catalogue_produits_add') }}" method="post">
-
-    <div class="row">
-      <div class="col-xs-12 col-sm-8">
-        <div class="p-2">
-          <h2>Contenu</h2>
-          <hr>
-          <div class="form-group">
-            <label for="titre">Titre</label>
-            <input type="text" class="form-control form-control-sm" id="titre" name="titre" value="{{ produit.titre }}">
-          </div>
-
-          <div class="form-group">
-            <label for="contenu">Contenu</label>
-            <textarea class="form-control form-control-sm" id="contenu" name="contenu" rows="3">{{ produit.contenu|raw }}</textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="marque">Marque</label>
-            <select class="form-control form-control-sm" id="marque" name="marque">
-              <option value="_none"> - Sélectionner une marque - </option>
-              {% for marque in marques %}
-                <option value="{{ marque.id }}" {% if marque.id == produit.marque.id %}selected{% endif %}>{{ marque }}</option>
-              {% endfor %}
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="prix">Stock</label>
-            <input type="number" class="form-control form-control-sm" id="stock" name="stock" value="{{ produit.stock }}">
-          </div>
-
-          <div class="form-group">
-            <label for="prix">Prix</label>
-            <input type="number" step="0.01" class="form-control form-control-sm" id="prix" name="prix" value="{{ produit.prix }}">
-          </div>
-
-          <div class="form-group">
-            <label for="marque">TVA</label>
-            <select class="form-control form-control-sm" id="tva" name="tva">
-              {% for tva in tvas %}
-                <option value="{{ tva.id }} {% if tva.id == produit.tva.id %}selected{% endif %}">{{ tva }}</option>
-              {% endfor %}
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="poids">Poids en kg</label>
-            <input type="number" step="0.001" class="form-control form-control-sm" id="poids" name="poids" value="{{ produit.poids }}">
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xs-12 col-sm-4">
-        <div class="bg-light p-2">
-          <h2><i class="fa fa-globe" aria-hidden="true"></i> Référencement</h2>
-          <hr>
-          <div class="form-group">
-            <label for="metatitle">Meta title</label>
-            <input type="text" class="form-control form-control-sm" id="metatitle" name="metatitle" value="{{ produit.metatitle }}">
-            <small id="metatitle_help" class="form-text text-muted"><i class="fa fa-info-circle" aria-hidden="true"></i> Sera une copie du titre si vide.</small>
-          </div>
-
-          <label for="metadescription">Meta description</label>
+  <div class="row">
+    <div class="col-12 col-lg-3">
+      <div class="bg-light p-2">
+        <h2><i class="fa fa-tags" aria-hidden="true"></i> Catégories</h2>
+        <hr>
+        <div style="position:relative;">
           <div class="input-group input-group-sm">
-            <textarea class="form-control form-control-sm" id="metadescription" name="metadescription" rows="3">{{ produit.metadescription }}</textarea>
-            <span class="input-group-addon" id="metadescription_size"></span>
+            <input id="search_categorie" class="form-control" name="search_categorie" placeholder="Rechercher" type="search">
+            <span id="search_categorie_picto" class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
           </div>
-          <small id="metadescription_help" class="form-text text-muted">
-            <i class="fa fa-info-circle" aria-hidden="true"></i> Ce texte apparait dans les résultats des moteurs de recherche. Il est conseillé d'avoir entre 130 et 165 caractères.
-          </small>
-
+          <div id="search_categorie_results" class="autocomplete_results_area" style="display:none;">
+            <div id="search_categories"></div>
+          </div>
         </div>
+        {% for categorie in produit.getCategories %}
+          <div class="btn btn-secondary btn-sm m-1">
+            <a href="{{ path('plateforme_catalogue_categories_edit', {'id': categorie.id}) }}" class="text-light">
+              {{ categorie.titre }}
+            </a>
+            <a href="{{ path('plateforme_catalogue_produits_removecategorie', {'id_produit': produit.id, 'id_categorie': categorie.id}) }}" class="text-dark">
+              <span class="badge badge-light">
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </span>
+            </a>
+          </div>
+        {% endfor %}
       </div>
-
     </div>
 
-    <hr>
+    <div class="col-12 col-lg-9">
+      <form action="{{ path('plateforme_catalogue_produits_edit', {'id': produit.id}) }}" method="post">
+        <div class="row">
+          <div class="col-12 col-lg-8">
+            <div class="p-2">
+              <h2><i class="fa fa-file-text" aria-hidden="true"></i> Contenu</h2>
+              <hr>
+              <div class="form-group">
+                <label for="titre">Titre</label>
+                <input type="text" class="form-control form-control-sm" id="titre" name="titre" value="{{ produit.titre }}">
+              </div>
 
-    <button type="submit" class="btn btn-success btn-sm">
-      <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
-    </button>
+              <div class="form-group">
+                <label for="contenu">Contenu</label>
+                <textarea class="form-control form-control-sm" id="contenu" name="contenu" rows="3">{{ produit.contenu|raw }}</textarea>
+              </div>
 
-  </form>
+              <div class="form-group">
+                <label for="marque">Marque</label>
+                <select class="form-control form-control-sm" id="marque" name="marque">
+                  <option value="_none"> - Sélectionner une marque - </option>
+                  {% for marque in marques %}
+                    <option value="{{ marque.id }}" {% if marque.id == produit.marque.id %}selected{% endif %}>{{ marque }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="prix">Stock</label>
+                <input type="number" class="form-control form-control-sm" id="stock" name="stock" value="{{ produit.stock }}">
+              </div>
+
+              <div class="form-group">
+                <label for="prix">Prix</label>
+                <input type="number" step="0.01" class="form-control form-control-sm" id="prix" name="prix" value="{{ produit.prix }}">
+              </div>
+
+              <div class="form-group">
+                <label for="marque">TVA</label>
+                <select class="form-control form-control-sm" id="tva" name="tva">
+                  {% for tva in tvas %}
+                    <option value="{{ tva.id }} {% if tva.id == produit.tva.id %}selected{% endif %}">{{ tva }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="poids">Poids en kg</label>
+                <input type="number" step="0.001" class="form-control form-control-sm" id="poids" name="poids" value="{{ produit.poids }}">
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4">
+            <div class="bg-light p-2">
+              <h2><i class="fa fa-globe" aria-hidden="true"></i> Référencement</h2>
+              <hr>
+              <div class="form-group">
+                <label for="metatitle">Meta title</label>
+                <input type="text" class="form-control form-control-sm" id="metatitle" name="metatitle" value="{{ produit.metatitle }}">
+                <small id="metatitle_help" class="form-text text-muted"><i class="fa fa-info-circle" aria-hidden="true"></i> Sera une copie du titre si vide.</small>
+              </div>
+              <label for="metadescription">Meta description</label>
+              <div class="input-group input-group-sm">
+                <textarea class="form-control form-control-sm" id="metadescription" name="metadescription" rows="3">{{ produit.metadescription }}</textarea>
+                <span class="input-group-addon" id="metadescription_size"></span>
+              </div>
+              <small id="metadescription_help" class="form-text text-muted">
+                <i class="fa fa-info-circle" aria-hidden="true"></i> Ce texte apparait dans les résultats des moteurs de recherche. Il est conseillé d'avoir entre 130 et 165 caractères.
+              </small>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-success btn-sm">
+          <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
+        </button>
+    </div>
+
+  </div>
+
+</form>
 
 {% endblock %}
 
@@ -109,6 +135,59 @@
   {{ parent() }}
 
   <script>
+    // Lance la recherche si l'utilisateur n'a pas saisie depuis 500ms
+    $('#search_categorie').keyup(function () {
+      clearTimeout($.data(this, 'timer'));
+      var wait = setTimeout(searchCategorie, 500);
+      $(this).data('timer', wait);
+    });
+
+    // Recherche de produit pour l'autocompletion
+    function searchCategorie() {
+      var nb_caractere_debut_recherche = 2;
+      if ($('#search_categorie').val().length >= nb_caractere_debut_recherche) {
+        var parametres = {
+          term: $('#search_categorie').val().replace(' ', '+'), // Terme à rechercher dans les titres de produits
+          limit: 10                                             // Nombre maximum de résultats à afficher
+        };
+        $.ajax({
+          url: "{{ path('plateforme_core_homepage') }}recherche/categories",
+          type: 'get',
+          dataType: 'json',
+          beforeSend: function () {
+            $('#search_categorie_picto').html('<i class="fa fa-refresh fa-pulse fa-fw"></i>');
+          },
+          success: function (data) {
+            $('#search_categorie_results').show();
+            $('#search_categorie_picto').html('<i class="fa fa-search"></i>');
+            var results_html = '';
+            if (data.data.produit.length > 0) {
+              $.each(data.data.produit, function (index, element) {
+                results_html = results_html + '<div class="autocomplete_result bg-light">';
+                  results_html = results_html + '<a href="{{ path('plateforme_core_homepage') }}admin/produits/add-categorie/{{produit.id}}/' + element.id + '">';
+                    results_html = results_html + '<i class="fa fa-plus" aria-hidden="true"></i> '+element.titre;
+                  results_html = results_html + '</a>';
+                results_html = results_html + '</div>';
+              });
+            } else {
+              results_html = results_html + '<div class="autocomplete_result bg-light">';
+                results_html = results_html + '<i class="fa fa-frown-o" aria-hidden="true"></i> Aucun résultat';
+              results_html = results_html + '</div>';
+            }
+            $('#search_categories').html(results_html);
+          },
+          data: parametres
+        });
+      }
+    }
+    // Ferme les résultats d'autocomplétion lors d'un clic à l'extérieur de cet élement
+    $(document.body).click(function (e) {
+      var div_cliquable = $('#form-search-engine');
+      if (!$(e.target).is(div_cliquable) && !$.contains(div_cliquable[0], e.target)) {
+        $('#header_search_results').hide();
+      }
+    });
+
     // Permet de compter les caractères pour conseillez à l'utilisateur de saisir environ 165 caractères.
     jQuery(document).on('change keyup', '#metadescription', function (event) {
       var taille_metadescription = $(this).val().length;

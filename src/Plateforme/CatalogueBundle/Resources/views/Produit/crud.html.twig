@@ -29,6 +29,7 @@
           <th>ID</th>
           <th>Titre</th>
           <th>Slug</th>
+          <th>Visible</th>
           <th>Stock</th>
           <th>Actions</th>
         </tr>
@@ -38,6 +39,7 @@
             <td>{{ produit.id }}</td>
             <td>{{ produit.titre }}</td>
             <td>{{ produit.slug }}</td>
+            <td>todo</td>
             <td>
               {% if produit.stock == 0 %}
                   <i class="fa fa-circle text-danger" aria-hidden="true"></i>
