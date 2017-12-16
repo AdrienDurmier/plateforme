@@ -1,10 +1,6 @@
 ################################################################################
 # PRODUITS
 ################################################################################
-plateforme_catalogue_produits_index:
-    path:      /produits
-    defaults:
-        _controller: PlateformeCatalogueBundle:Produit:index
 plateforme_catalogue_produits_crud:
     path:      /admin/produits
     defaults:
@@ -72,6 +68,49 @@ plateforme_catalogue_produits_resultats:
     path:      /recherche/resultats-produits/{term}
     defaults:
         _controller: PlateformeCatalogueBundle:Produit:resultats
+################################################################################
+# CATEGORIE
+################################################################################
+plateforme_catalogue_categories_index:
+    path:      /nos-produits
+    defaults:
+        _controller: PlateformeCatalogueBundle:Categorie:index
+plateforme_catalogue_categories_view:
+    path:      /categories/{slug}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Categorie:view
+plateforme_catalogue_categories_crud:
+    path:      /admin/categories
+    defaults:
+        _controller: PlateformeCatalogueBundle:Categorie:crud
+plateforme_catalogue_categories_enfants_crud:
+    path:      /admin/categories/enfants/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Categorie:crudEnfants
+    requirements:
+        id: \d*
+plateforme_catalogue_categories_add:
+    path:      /admin/categories/add
+    defaults:
+        _controller: PlateformeCatalogueBundle:Categorie:add
+plateforme_catalogue_categories_edit:
+    path:      /admin/categories/edit/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Categorie:edit
+    requirements:
+        id: \d*
+plateforme_catalogue_categories_clone:
+    path:      /admin/categories/clone/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Categorie:clone
+    requirements:
+        id: \d*
+plateforme_catalogue_categories_delete:
+    path:      /admin/categories/delete/{id}
+    defaults:
+        _controller: PlateformeCatalogueBundle:Categorie:delete
+    requirements:
+        id: \d*
 
 ################################################################################
 # MARQUES

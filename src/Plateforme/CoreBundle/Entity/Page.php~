@@ -91,6 +91,20 @@ abstract class Page {
   private $is_public;
 
   /**
+   * @var string
+   *
+   * @ORM\Column(name="xml_sitemap_priority", type="decimal", precision=10, scale=1, nullable=true)
+   */
+  private $xml_sitemap_priority;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="xml_sitemap_changefreq", type="string", length=255, nullable=true)
+   */
+  private $xml_sitemap_changefreq;
+
+  /**
    * Get id
    *
    * @return integer
@@ -281,6 +295,28 @@ abstract class Page {
    */
   public function updateDate() {
     $this->setUpdated(new \Datetime());
+  }
+
+  /**
+   * Set isPublic
+   *
+   * @param boolean $isPublic
+   *
+   * @return Page
+   */
+  public function setIsPublic($isPublic) {
+    $this->is_public = $isPublic;
+
+    return $this;
+  }
+
+  /**
+   * Get isPublic
+   *
+   * @return boolean
+   */
+  public function getIsPublic() {
+    return $this->is_public;
   }
 
 }

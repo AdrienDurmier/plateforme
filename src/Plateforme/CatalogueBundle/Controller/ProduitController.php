@@ -14,29 +14,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ProduitController extends Controller {
 
   /**
-   * Produits
-   */
-  public function indexAction(Request $request) {
-
-    $em = $this->getDoctrine()->getManager();
-    $produits = $em->getRepository('PlateformeCatalogueBundle:Produit')->findAll();
-
-    // permettra de retirer le bouton d'ajout si le produit est déjà ajouter
-    $session = $request->getSession();
-    if ($session->has('panier')) {
-      $panier = $session->get('panier');
-    }
-    else {
-      $panier = false;
-    }
-
-    return $this->render('PlateformeCatalogueBundle:Produit:index.html.twig', array(
-          'produits' => $produits,
-          'panier' => $panier,
-    ));
-  }
-
-  /**
    * Gestion des produits
    */
   public function crudAction() {

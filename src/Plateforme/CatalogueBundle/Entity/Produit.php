@@ -3,6 +3,7 @@
 namespace Plateforme\CatalogueBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Produit
@@ -11,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Plateforme\CatalogueBundle\Repository\ProduitRepository")
  */
 class Produit extends \Plateforme\CoreBundle\Entity\Page {
+
+  public function __construct() {
+    parent::__construct();
+    $this->categories = new ArrayCollection();
+  }
 
   /**
    * @var int
@@ -45,6 +51,12 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
    * @ORM\JoinColumn(nullable=false)
    */
   private $marque;
+
+  /**
+   * @ORM\ManyToMany(targetEntity="Plateforme\CatalogueBundle\Entity\Categorie", cascade={"persist"})
+   * @ORM\JoinTable(name="catalogue_produitcategorie")
+   */
+  private $categories;
 
   /**
    * @var int
@@ -173,4 +185,38 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
     return $this->stock;
   }
 
+
+    /**
+     * Add category
+     *
+     * @param \Plateforme\CatalogueBundle\Entity\Categorie $category
+     *
+     * @return Produit
+     */
+    public function addCategory(\Plateforme\CatalogueBundle\Entity\Categorie $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \Plateforme\CatalogueBundle\Entity\Categorie $category
+     */
+    public function removeCategory(\Plateforme\CatalogueBundle\Entity\Categorie $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
 }

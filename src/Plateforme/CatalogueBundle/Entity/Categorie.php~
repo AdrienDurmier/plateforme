@@ -27,26 +27,4 @@ class Categorie extends \Plateforme\CoreBundle\Entity\Page {
    */
   private $categorie;
 
-  /**
-   * Set categorie
-   *
-   * @param \Plateforme\CatalogueBundle\Entity\Categorie $categorie
-   *
-   * @return Categorie
-   */
-  public function setCategorie(\Plateforme\CatalogueBundle\Entity\Categorie $categorie = null) {
-    $this->categorie = $categorie;
-
-    return $this;
-  }
-
-  /**
-   * Get categorie
-   *
-   * @return \Plateforme\CatalogueBundle\Entity\Categorie
-   */
-  public function getCategorie() {
-    return $this->categorie;
-  }
-
 }

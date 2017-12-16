@@ -1,0 +1,44 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  {{ categorie.titre }} - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <div class="container">
+    <nav aria-label="breadcrumb" role="navigation">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('plateforme_catalogue_categories_index') }}">Nos produits</a></li>
+        <li class="breadcrumb-item active">{{ categorie.titre }}</li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="container">
+    
+    {% if categories_enfants|length != 0 %}
+      <div class="row">
+        {% for categorie_enfant in categories_enfants %}
+          <div class="col-sm-3">
+            <div class="card">
+              <a href="{{ path('plateforme_catalogue_categories_view', {'slug': categorie_enfant.slug}) }}">
+                <div class="card-header">
+                  TODO image d'une catégorie ?
+                </div>
+                <div class="card-body">
+                  <div class="card-title">{{ categorie_enfant.titre }}</div>
+                </div>
+              </a>
+            </div>
+
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      Aucune categorie
+    {% endif %}
+
+  </div>
+
+{% endblock %}

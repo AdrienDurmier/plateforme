@@ -1,23 +1,23 @@
 {% extends "PlateformeCoreBundle::backoffice.html.twig" %}
 
 {% block title %}
-  Création d'une fiche produit - {{ parent() }}
+  Création d'une fiche catégorie - {{ parent() }}
 {% endblock %}
 
 {% block body %}
 
-  <h1>Création d'un produit</h1>
+  <h1>Création d'une catégorie</h1>
 
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
-    <li class="breadcrumb-item"><a href="{{ path('plateforme_catalogue_produits_crud') }}">Produits</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_catalogue_categories_crud') }}">Catégories</a></li>
     <li class="breadcrumb-item active">Création</li>
   </ol>
 
   <hr>
 
-  <form action="{{ path('plateforme_catalogue_produits_add') }}" method="post">
+  <form action="{{ path('plateforme_catalogue_categories_add') }}" method="post">
 
     <div class="row">
       <div class="col-xs-12 col-sm-8">
@@ -34,34 +34,6 @@
             <textarea class="form-control form-control-sm" id="contenu" name="contenu" rows="3"></textarea>
           </div>
 
-          <div class="form-group">
-            <label for="marque">Marque</label>
-            <select class="form-control form-control-sm" id="marque" name="marque">
-              <option value="_none"> - Sélectionner une marque - </option>
-              {% for marque in marques %}
-                <option value="{{ marque.id }}">{{ marque }}</option>
-              {% endfor %}
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="prix">Prix</label>
-            <input type="number" step="0.01" class="form-control form-control-sm" id="prix" name="prix">
-          </div>
-
-          <div class="form-group">
-            <label for="marque">TVA</label>
-            <select class="form-control form-control-sm" id="tva" name="tva">
-              {% for tva in tvas %}
-                <option value="{{ tva.id }}">{{ tva }}</option>
-              {% endfor %}
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="poids">Poids en kg</label>
-            <input type="number" step="0.001" class="form-control form-control-sm" id="poids" name="poids">
-          </div>
         </div>
       </div>
 

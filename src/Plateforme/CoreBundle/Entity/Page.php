@@ -91,6 +91,20 @@ abstract class Page {
   private $is_public;
 
   /**
+   * @var string
+   *
+   * @ORM\Column(name="xml_sitemap_priority", type="decimal", precision=10, scale=1, nullable=true)
+   */
+  private $xml_sitemap_priority;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="xml_sitemap_changefreq", type="string", length=255, nullable=true)
+   */
+  private $xml_sitemap_changefreq;
+
+  /**
    * Get id
    *
    * @return integer
@@ -283,28 +297,74 @@ abstract class Page {
     $this->setUpdated(new \Datetime());
   }
 
+  /**
+   * Set isPublic
+   *
+   * @param boolean $isPublic
+   *
+   * @return Page
+   */
+  public function setIsPublic($isPublic) {
+    $this->is_public = $isPublic;
+
+    return $this;
+  }
+
+  /**
+   * Get isPublic
+   *
+   * @return boolean
+   */
+  public function getIsPublic() {
+    return $this->is_public;
+  }
+
 
     /**
-     * Set isPublic
+     * Set xmlSitemapPriority
      *
-     * @param boolean $isPublic
+     * @param string $xmlSitemapPriority
      *
      * @return Page
      */
-    public function setIsPublic($isPublic)
+    public function setXmlSitemapPriority($xmlSitemapPriority)
     {
-        $this->is_public = $isPublic;
+        $this->xml_sitemap_priority = $xmlSitemapPriority;
 
         return $this;
     }
 
     /**
-     * Get isPublic
+     * Get xmlSitemapPriority
      *
-     * @return boolean
+     * @return string
      */
-    public function getIsPublic()
+    public function getXmlSitemapPriority()
     {
-        return $this->is_public;
+        return $this->xml_sitemap_priority;
+    }
+
+    /**
+     * Set xmlSitemapChangefreq
+     *
+     * @param string $xmlSitemapChangefreq
+     *
+     * @return Page
+     */
+    public function setXmlSitemapChangefreq($xmlSitemapChangefreq)
+    {
+        $this->xml_sitemap_changefreq = $xmlSitemapChangefreq;
+
+        return $this;
+    }
+
+    /**
+     * Get xmlSitemapChangefreq
+     *
+     * @return string
+     */
+    public function getXmlSitemapChangefreq()
+    {
+        return $this->xml_sitemap_changefreq;
     }
 }
