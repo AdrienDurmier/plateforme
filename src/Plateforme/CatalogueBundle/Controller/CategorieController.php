@@ -33,9 +33,11 @@ class CategorieController extends Controller {
       throw new NotFoundHttpException("La catégorie ayant le slug " . $slug . " n'existe pas.");
     }
     $categories_enfants = $em->getRepository('PlateformeCatalogueBundle:Categorie')->findEnfants($categorie->getId());
+    $produits = $categorie->getProduits();
     return $this->render('PlateformeCatalogueBundle:Categorie:view.html.twig', array(
           'categorie' => $categorie,
           'categories_enfants' => $categories_enfants,
+          'produits' => $produits,
     ));
   }
 

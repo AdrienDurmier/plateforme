@@ -36,7 +36,7 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository {
       $qb->setParameter('term' . $i, '%' . $terme . '%');
       $i++;
     endforeach;
-    if($limit){
+    if ($limit) {
       $qb->setMaxResults($limit);
     }
     return $qb->getQuery()->getResult();

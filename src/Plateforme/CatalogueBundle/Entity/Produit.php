@@ -53,7 +53,7 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
   private $marque;
 
   /**
-   * @ORM\ManyToMany(targetEntity="Plateforme\CatalogueBundle\Entity\Categorie", cascade={"persist"})
+   * @ORM\ManyToMany(targetEntity="Plateforme\CatalogueBundle\Entity\Categorie", inversedBy="produits")
    * @ORM\JoinTable(name="catalogue_produitcategorie")
    */
   private $categories;
