@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-  
+
   <div class="container">
     <h1>Marques</h1>
 
@@ -14,17 +14,29 @@
     {% if marques|length != 0 %}
       <div class="row">
         {% for marque in marques %}
-          <div class="col-sm-3">
-            <a href="{{ path('plateforme_catalogue_marques_view', {'slug': marque.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
-              {{ marque.titre }}
-            </a>
+          <div class="col-sm-3 col-lg-2 mb-4">
+            <div class="card">
+              <a href="{{ path('plateforme_catalogue_marques_view', {'slug': marque.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+                <div class="card-header">
+                  <img
+                    itemprop="image"
+                    class="img-fluid"
+                    src="{{ asset(marque.logo.webPath) }}"
+                    alt="{{ marque.logo.alt }}"
+                    />
+                </div>
+                <div class="card-body">
+                  <div class="card-title text-center">{{ marque.titre }}</div>
+                </div>
+              </a>
+            </div>
           </div>
         {% endfor %}
       </div>
     {% else %}
       Aucun marque
     {% endif %}
-    
+
   </div>
-  
+
 {% endblock %}

@@ -21,4 +21,17 @@ class Marque extends \Plateforme\CoreBundle\Entity\Page {
    */
   protected $id;
 
+  /**
+   * @ORM\OneToOne(targetEntity="Plateforme\CatalogueBundle\Entity\MediaLogoMarque", cascade={"persist", "remove"})
+   */
+  private $logo;
+
+  public function setLogo(\Plateforme\CatalogueBundle\Entity\MediaLogoMarque $logo = null) {
+    $this->logo = $logo;
+  }
+
+  public function getLogo() {
+    return $this->logo;
+  }
+
 }

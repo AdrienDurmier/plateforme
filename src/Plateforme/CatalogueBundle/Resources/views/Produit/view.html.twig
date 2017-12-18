@@ -1,8 +1,7 @@
 {% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
 
-{% block title %}
-  {{ produit.titre }} - {{ parent() }}
-{% endblock %}
+{% block metadescription %}{{ produit.metadescription }} | {{ parent() }}{% endblock %}
+{% block title %}{{ produit.metatitle }} - {{ parent() }}{% endblock %}
 
 {% block body %}
 

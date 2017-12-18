@@ -19,7 +19,7 @@ class MarqueController extends Controller {
   public function indexAction(Request $request) {
 
     $em = $this->getDoctrine()->getManager();
-    $marques = $em->getRepository('PlateformeCatalogueBundle:Marque')->findAll();
+    $marques = $em->getRepository('PlateformeCatalogueBundle:Marque')->findBy(array(), array('titre' => 'ASC'));
 
     return $this->render('PlateformeCatalogueBundle:Marque:index.html.twig', array(
           'marques' => $marques,
