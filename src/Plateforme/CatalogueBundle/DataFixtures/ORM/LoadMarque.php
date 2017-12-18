@@ -65,6 +65,24 @@ class LoadMarque extends AbstractFixture implements OrderedFixtureInterface
     $marque9->setLogo($this->getReference('logo_levis'));
     $manager->persist($marque9);
     
+    $marque10 = new Marque();
+    $marque10->setTitre("Tann's");
+    $marque10->setContenu("<p>Le Tanneur, fondée en 1898 par un maroquinier et un tanneur, est une entreprise française spécialisée dans la maroquinerie, fabriquant un large choix de sacs à main, de portefeuilles et de bagages en cuir.</p>");
+    $marque10->setLogo($this->getReference('logo_tanns'));
+    $manager->persist($marque10);
+    
+    $marque11 = new Marque();
+    $marque11->setTitre("Dell");
+    $marque11->setContenu("<p>Dell, Inc était une entreprise américaine, actuellement remplacé par Dell Technologies et actuellement troisième plus grand constructeur d'ordinateurs au monde derrière Lenovo et Hewlett-Packard. Son siège est basé à Round Rock dans l'État du Texas.</p>");
+    $marque11->setLogo($this->getReference('logo_dell'));
+    $manager->persist($marque11);
+    
+    $marque12 = new Marque();
+    $marque12->setTitre("Tefal");
+    $marque12->setContenu("<p>Tefal S.A. est une entreprise française spécialisée dans les articles culinaires anti-adhésifs, appartenant au groupe SEB depuis 1968, dépositaire de 150 brevets à travers le monde.</p>");
+    $marque12->setLogo($this->getReference('logo_tefal'));
+    $manager->persist($marque12);
+    
     $manager->flush();
     
     $this->addReference('marque_1', $marque1);
@@ -76,6 +94,9 @@ class LoadMarque extends AbstractFixture implements OrderedFixtureInterface
     $this->addReference('marque_7', $marque7);
     $this->addReference('marque_8', $marque8);
     $this->addReference('marque_9', $marque9);
+    $this->addReference('marque_10', $marque10);
+    $this->addReference('marque_11', $marque11);
+    $this->addReference('marque_12', $marque12);
   }
   
   public function getOrder() {

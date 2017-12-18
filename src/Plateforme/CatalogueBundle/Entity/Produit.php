@@ -42,7 +42,7 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
   private $poids;
 
   /**
-   * @ORM\OneToOne(targetEntity="Plateforme\CoreBundle\Entity\Image", cascade={"persist", "remove"})
+   * @ORM\OneToOne(targetEntity="Plateforme\CatalogueBundle\Entity\MediaImageProduit", cascade={"persist", "remove"})
    */
   private $image;
 
@@ -115,7 +115,7 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
     return $this->poids;
   }
 
-  public function setImage(\Plateforme\CoreBundle\Entity\Image $image = null) {
+  public function setImage(\Plateforme\CatalogueBundle\Entity\MediaImageProduit $image = null) {
     $this->image = $image;
   }
 

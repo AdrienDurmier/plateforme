@@ -64,6 +64,24 @@ class LoadMediaLogoMarque extends AbstractFixture implements OrderedFixtureInter
     $logo9->setFilename("levis.jpeg");
     $manager->persist($logo9);
     
+    $logo10 = new MediaLogoMarque();
+    $logo10->setUrl('tanns.jpeg');
+    $logo10->setAlt("Tann's");
+    $logo10->setFilename("tanns.jpeg");
+    $manager->persist($logo10);
+    
+    $logo11 = new MediaLogoMarque();
+    $logo11->setUrl('dell.jpeg');
+    $logo11->setAlt("Dell");
+    $logo11->setFilename("dell.jpeg");
+    $manager->persist($logo11);
+    
+    $logo12 = new MediaLogoMarque();
+    $logo12->setUrl('tefal.jpg');
+    $logo12->setAlt("Tefal");
+    $logo12->setFilename("tefal.jpg");
+    $manager->persist($logo11);
+    
     $manager->flush();
     
     $this->addReference('logo_converse', $logo1);
@@ -75,6 +93,9 @@ class LoadMediaLogoMarque extends AbstractFixture implements OrderedFixtureInter
     $this->addReference('logo_kickers', $logo7);
     $this->addReference('logo_pullin', $logo8);
     $this->addReference('logo_levis', $logo9);
+    $this->addReference('logo_tanns', $logo10);
+    $this->addReference('logo_dell', $logo11);
+    $this->addReference('logo_tefal', $logo12);
   }
   
   public function getOrder() {

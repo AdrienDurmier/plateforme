@@ -55,12 +55,51 @@ class LoadProduit extends AbstractFixture implements OrderedFixtureInterface
     $produit4->setPoids(0.250);
     $manager->persist($produit4);
     
+    $produit5 = new Produit();
+    $produit5->setMarque($this->getReference('marque_3'));
+    $produit5->addCategory($this->getReference('categorie_basket'));
+    $produit5->setTitre('Converse Baskets montantes Chuck Taylor All Star Hi Core');
+    $produit5->setContenu("<p>Détails produit</p><ul><li>Baskets montantes</li><li>Usage sportswear</li><li>Talon plat</li><li>Fermeture : A lacets</li><li>Finition lisse</li></ul><p>Composition et Entretien</p><ul><li>Dessus/Tige 100% coton</li><li>Semelle intérieure 100% caoutchouc</li><li>Semelle extérieure 100% caoutchouc</li></ul>");
+    $produit5->setPrix('49.80');
+    $produit5->setImage($this->getReference('image_5'));
+    $produit5->setTva($this->getReference('tva2'));
+    $produit5->setStock(25);
+    $produit5->setPoids(0.350);
+    $manager->persist($produit5);
+    
+    $produit6 = new Produit();
+    $produit6->setMarque($this->getReference('marque_3'));
+    $produit6->addCategory($this->getReference('categorie_basket'));
+    $produit6->setTitre('Converse Chuck Taylor All Star 70s Hiker Slam Jam');
+    $produit6->setContenu("<p>Une fonctionnalité inspirée de l'art. Membrane GORE-TEX pour une imperméabilité optimale. L'empeigne fonctionnelle en patchwork arbore quatre empiècements distincts. Mantra Slam Jam x Cali DeWitt « Your Silence Gets You Nothing » (Ton silence ne t'apporte rien) imprimé sur la semelle de propreté. Inclut des lacets en coton à effet contrasté.");
+    $produit6->setPrix('150.00');
+    $produit6->setImage($this->getReference('image_6'));
+    $produit6->setTva($this->getReference('tva2'));
+    $produit6->setStock(85);
+    $produit6->setPoids(0.370);
+    $manager->persist($produit6);
+    
+    $produit7 = new Produit();
+    $produit7->setMarque($this->getReference('marque_4'));
+    $produit7->addCategory($this->getReference('categorie_basket'));
+    $produit7->setTitre('Adidas Chaussure Stan Smith');
+    $produit7->setContenu("<p>Créée en 1971 pour la star du tennis Stan Smith, cette chaussure à la silhouette épurée a profondément marqué l'histoire de la mode. Sa tige basse en cuir pleine fleur souple, ses 3 bandes perforées et sa semelle extérieure ton sur ton en ont fait une sneaker emblématique et adulée.");
+    $produit7->setPrix('94.95');
+    $produit7->setImage($this->getReference('image_7'));
+    $produit7->setTva($this->getReference('tva2'));
+    $produit7->setStock(18);
+    $produit7->setPoids(0.390);
+    $manager->persist($produit7);
+    
     $manager->flush();
     
     $this->addReference('produit_1', $produit1);
     $this->addReference('produit_2', $produit2);
     $this->addReference('produit_3', $produit3);
     $this->addReference('produit_4', $produit4);
+    $this->addReference('produit_5', $produit5);
+    $this->addReference('produit_6', $produit6);
+    $this->addReference('produit_7', $produit7);
   }
   
   public function getOrder() {

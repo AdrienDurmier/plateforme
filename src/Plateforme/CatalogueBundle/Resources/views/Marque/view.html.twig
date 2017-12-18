@@ -15,29 +15,29 @@
         {{ marque.contenu|raw }}
       </div>
 
-      <div class="table-responsive">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th>Produit</th>
-              <th>Prix</th>
-            </tr>
-          </thead>
+      {% if produits|length != 0 %}
+        <div class="row">
           {% for produit in produits %}
-            <tr>
-              <td>
+            <div class="col-sm-3">
+              <div class="card">
                 <a href="{{ path('plateforme_catalogue_produits_view', {'slug': produit.slug}) }}">
-                  {{ produit.titre }}
+                  <div class="card-body">
+                    <img
+                      itemprop="image"
+                      class="img-fluid"
+                      src="{{ asset(produit.image.webPath) }}"
+                      alt="{{ produit.image.alt }}"
+                      />
+                  </div>
+                  <div class="card-footer">
+                    {{ produit.titre }}
+                  </div>
                 </a>
-              </td>
-              <td>
-                  {{ produit.prix }}
-              </td>
-            </tr>
+              </div>
+            </div>
           {% endfor %}
-          </tbody>
-        </table>
-      </div>
+        </div>
+      {% endif %}
 
     </div>
 

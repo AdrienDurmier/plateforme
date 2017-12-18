@@ -14,7 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
- *  "media_logo_marque" = "\Plateforme\CatalogueBundle\Entity\MediaLogoMarque"
+ *  "media_logo_marque" = "\Plateforme\CatalogueBundle\Entity\MediaLogoMarque",
+ *  "media_image_produit" = "\Plateforme\CatalogueBundle\Entity\MediaImageProduit"
  * })
  * @ORM\HasLifecycleCallbacks()
  */
