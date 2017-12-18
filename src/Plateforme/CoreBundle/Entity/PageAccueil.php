@@ -13,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PageAccueil extends Page
 {
+  public function __construct() {
+    parent::__construct();
+    $this->xml_sitemap_priority = '1.0';
+  }
+  
   /**
    * @var int
    *

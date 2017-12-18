@@ -1,4 +1,11 @@
 ################################################################################
+# PAGE
+################################################################################
+plateforme_core_pages_publication:
+    path:      /admin/pages/publication
+    defaults: { _controller: PlateformeCoreBundle:Page:publication }
+    methods: [post]
+################################################################################
 # VARIABLES
 ################################################################################
 plateforme_core_variables_crud:

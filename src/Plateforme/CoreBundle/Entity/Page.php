@@ -25,6 +25,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 abstract class Page {
 
+  public function __construct() {
+    $this->created = new \Datetime();
+    $this->xml_sitemap_changefreq = 'always';
+    $this->xml_sitemap_priority = '0.5';
+  }
+
+  public function __toString() {
+    return $this->titre;
+  }
+
   /**
    * @var int
    *
@@ -95,14 +105,14 @@ abstract class Page {
    *
    * @ORM\Column(name="xml_sitemap_priority", type="decimal", precision=10, scale=1, nullable=true)
    */
-  private $xml_sitemap_priority;
+  protected $xml_sitemap_priority;
 
   /**
    * @var string
    *
    * @ORM\Column(name="xml_sitemap_changefreq", type="string", length=255, nullable=true)
    */
-  private $xml_sitemap_changefreq;
+  protected $xml_sitemap_changefreq;
 
   /**
    * Get id
@@ -111,14 +121,6 @@ abstract class Page {
    */
   public function getId() {
     return $this->id;
-  }
-
-  public function __construct() {
-    $this->created = new \Datetime();
-  }
-
-  public function __toString() {
-    return $this->titre;
   }
 
   /**
@@ -210,8 +212,11 @@ abstract class Page {
    * @return Page
    */
   public function setMetatitle($metatitle) {
-    $this->metatitle = $metatitle;
-
+    if (empty($metatitle)) {
+      $this->metatitle = $this->titre;
+    }else{
+      $this->metatitle = $metatitle;
+    }
     return $this;
   }
 
@@ -232,7 +237,11 @@ abstract class Page {
    * @return Page
    */
   public function setMetadescription($metadescription) {
-    $this->metadescription = $metadescription;
+    if (empty($metadescription)) {
+      $this->metadescription = $this->titre;
+    }else{
+      $this->metadescription = $metadescription;
+    }
 
     return $this;
   }
@@ -319,52 +328,48 @@ abstract class Page {
     return $this->is_public;
   }
 
+  /**
+   * Set xmlSitemapPriority
+   *
+   * @param string $xmlSitemapPriority
+   *
+   * @return Page
+   */
+  public function setXmlSitemapPriority($xmlSitemapPriority) {
+    $this->xml_sitemap_priority = $xmlSitemapPriority;
 
-    /**
-     * Set xmlSitemapPriority
-     *
-     * @param string $xmlSitemapPriority
-     *
-     * @return Page
-     */
-    public function setXmlSitemapPriority($xmlSitemapPriority)
-    {
-        $this->xml_sitemap_priority = $xmlSitemapPriority;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get xmlSitemapPriority
+   *
+   * @return string
+   */
+  public function getXmlSitemapPriority() {
+    return $this->xml_sitemap_priority;
+  }
 
-    /**
-     * Get xmlSitemapPriority
-     *
-     * @return string
-     */
-    public function getXmlSitemapPriority()
-    {
-        return $this->xml_sitemap_priority;
-    }
+  /**
+   * Set xmlSitemapChangefreq
+   *
+   * @param string $xmlSitemapChangefreq
+   *
+   * @return Page
+   */
+  public function setXmlSitemapChangefreq($xmlSitemapChangefreq) {
+    $this->xml_sitemap_changefreq = $xmlSitemapChangefreq;
 
-    /**
-     * Set xmlSitemapChangefreq
-     *
-     * @param string $xmlSitemapChangefreq
-     *
-     * @return Page
-     */
-    public function setXmlSitemapChangefreq($xmlSitemapChangefreq)
-    {
-        $this->xml_sitemap_changefreq = $xmlSitemapChangefreq;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get xmlSitemapChangefreq
+   *
+   * @return string
+   */
+  public function getXmlSitemapChangefreq() {
+    return $this->xml_sitemap_changefreq;
+  }
 
-    /**
-     * Get xmlSitemapChangefreq
-     *
-     * @return string
-     */
-    public function getXmlSitemapChangefreq()
-    {
-        return $this->xml_sitemap_changefreq;
-    }
 }

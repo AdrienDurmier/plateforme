@@ -13,13 +13,17 @@
     </div>
     <div class="col-3 text-right">
       <div class="btn-group btn-group-sm">
-        <a href="{{ path('plateforme_core_homepage') }}" class="btn {% if page.isPublic %}btn-success{% else %}btn-danger{% endif %} btn-sm">
-          {% if page.isPublic %}
-            <i class="fa fa-eye" aria-hidden="true"></i> Publié
-          {% else %}
-            <i class="fa fa-eye-slash" aria-hidden="true"></i> Non publié
-          {% endif %}
-        </a>
+        <form action="{{ path('plateforme_core_pages_publication') }}" method="post">
+          <input type="hidden" name="page_id" value="{{page.id}}">
+          <input type="hidden" name="page_is_public" value="{{page.isPublic}}">
+          <button type="submit" class="btn {% if page.isPublic %}btn-success{% else %}btn-danger{% endif %} btn-sm">
+            {% if page.isPublic %}
+              <i class="fa fa-eye" aria-hidden="true"></i> Publié
+            {% else %}
+              <i class="fa fa-eye-slash" aria-hidden="true"></i> Non publié
+            {% endif %}
+          </button>
+        </form>
         &nbsp;
         <a href="{{ path('plateforme_core_homepage') }}" class="btn btn-light btn-sm">
           <i class="fa fa-external-link" aria-hidden="true"></i> Voir cette page
