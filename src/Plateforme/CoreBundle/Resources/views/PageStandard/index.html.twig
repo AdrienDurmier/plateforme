@@ -1,0 +1,21 @@
+{% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
+
+{% block title %}
+  Pages - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  
+  <div class="container">
+    <h1>Actualités</h1>
+
+    {% for page in pages %}
+      <div class="col-xs-12 col-sm-6 col-lg-4">
+        <a href="{{ path('plateforme_core_page_pages_view', {'slug': page.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
+          {{ page.titre }}
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+  
+{% endblock %}

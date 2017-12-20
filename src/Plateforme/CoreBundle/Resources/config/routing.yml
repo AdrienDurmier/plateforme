@@ -51,6 +51,51 @@ plateforme_core_homepage_edit:
     path:      /admin/pages/accueil/edit
     defaults:
         _controller: PlateformeCoreBundle:PageAccueil:edit
+        
+        
+################################################################################
+# PAGES STANDARDD
+################################################################################
+plateforme_core_page_pages_index:
+    path:      /pages
+    defaults:
+        _controller: PlateformeCoreBundle:PageStandard:index
+        
+plateforme_core_page_pages_crud:
+    path:      /admin/pages/standards
+    defaults:
+        _controller: PlateformeCoreBundle:PageStandard:crud
+
+plateforme_core_page_pages_add:
+    path:      /admin/pages/standards/add
+    defaults:
+        _controller: PlateformeCoreBundle:PageStandard:add
+
+plateforme_core_page_pages_edit:
+    path:      /admin/pages/standards/edit/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:PageStandard:edit
+    requirements:
+        id: \d*
+
+plateforme_core_page_pages_clone:
+    path:      /admin/pages/pages/clone/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:PageStandard:clone
+    requirements:
+        id: \d*
+
+plateforme_core_page_pages_delete:
+    path:      /admin/pages/pages/delete/{id}
+    defaults:
+        _controller: PlateformeCoreBundle:PageStandard:delete
+    requirements:
+        id: \d*
+
+plateforme_core_page_pages_view:
+    path:      /pages/{slug}
+    defaults:
+        _controller: PlateformeCoreBundle:PageStandard:view
 
 ################################################################################
 # PAGE CONTACT

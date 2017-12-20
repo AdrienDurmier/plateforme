@@ -1,0 +1,119 @@
+{% extends "PlateformeCoreBundle::backoffice.html.twig" %}
+{% block title %}
+  Création d'une page - {{ parent() }}
+{% endblock %}
+{% block body %}
+
+  <h1>Création d'une page</h1>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_page_pages_crud') }}">Pages</a></li>
+    <li class="breadcrumb-item active">Création</li>
+  </ol>
+
+  <hr>
+
+  <form 
+    id="form_page"
+    action="{{ path('plateforme_core_page_pages_add') }}" 
+    method="post"
+    >
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-8">
+        <div class="p-2">
+          <h2>Contenu</h2>
+          <hr>
+          <div class="form-group">
+            <label for="titre">Titre</label>
+            <input type="text" class="form-control form-control-sm" id="titre" name="titre">
+          </div>
+
+          <div class="form-group">
+            <label for="contenu">Contenu</label>
+            <textarea class="form-control form-control-sm" id="contenu" name="contenu" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-4">
+        <div class="bg-light p-2">
+          <h2><i class="fa fa-globe" aria-hidden="true"></i> Référencement</h2>
+          <hr>
+
+          <div class="form-group">
+            <label for="metatitle">Meta title</label>
+            <input type="text" class="form-control form-control-sm" id="metatitle" name="metatitle">
+            <small id="metatitle_help" class="form-text text-muted"><i class="fa fa-info-circle" aria-hidden="true"></i> Sera une copie du titre si vide.</small>
+          </div>
+
+          <label for="metadescription">Meta description</label>
+          <div class="input-group input-group-sm">
+            <textarea class="form-control form-control-sm" id="metadescription" name="metadescription" rows="3"></textarea>
+            <span class="input-group-addon" id="metadescription_size"></span>
+          </div>
+          <small id="metadescription_help" class="form-text text-muted">
+            <i class="fa fa-info-circle" aria-hidden="true"></i> Ce texte apparait dans les résultats des moteurs de recherche. Il est conseillé d'avoir entre 130 et 165 caractères.
+          </small>
+
+          <div class="input-group input-group-sm">
+            <span class="input-group-addon" id="basic-addon1">Priorité Sitemap XML</span>
+            <select class="form-control" id="xmlSitemapPriority" name="xmlSitemapPriority">
+              <option value=null></option>
+              <option value="1.0">1.0</option>
+              <option value="0.9">0.9</option>
+              <option value="0.8">0.8</option>
+              <option value="0.7">0.7</option>
+              <option value="0.6">0.6</option>
+              <option value="0.5">0.5</option>
+              <option value="0.4">0.4</option>
+              <option value="0.3">0.3</option>
+              <option value="0.2">0.2</option>
+              <option value="0.1">0.1</option>
+              <option value="0.0">0.0</option>
+            </select>
+          </div>
+          <br/>
+          <div class="input-group input-group-sm">
+            <span class="input-group-addon" id="basic-addon1">Fréquence Sitemap XML</span>
+            <select class="form-control" id="xmlSitemapChangefreq" name="xmlSitemapChangefreq">
+              <option value=null></option>
+              <option value="always">always</option>
+              <option value="hourly">hourly</option>
+              <option value="daily">daily</option>
+              <option value="weekly">weekly</option>
+              <option value="monthly">monthly</option>
+              <option value="yearly">yearly</option>
+              <option value="never">never</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <hr>
+
+    <button type="submit" class="btn btn-success btn-sm">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
+    </button>
+
+  </form>
+
+
+{% endblock %}
+
+{% block javascripts %}
+  {# Récupération des scripts des parents #}
+  {{ parent() }}
+
+  <script>
+    // Permet de compter les caractères pour conseillez à l'utilisateur de saisir environ 165 caractères.
+    jQuery(document).on('change keyup', '#metadescription', function (event) {
+      var taille_metadescription = $(this).val().length;
+      $('#metadescription_size').text(taille_metadescription);
+    });
+  </script>
+{% endblock %}

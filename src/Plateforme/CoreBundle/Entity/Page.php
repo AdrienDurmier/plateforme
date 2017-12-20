@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
  *  "page_accueil" = "PageAccueil", 
+ *  "page_standard" = "PageStandard", 
  *  "page_contact" = "PageContact", 
  *  "page_faq" = "PageFAQ", 
  *  "page_actualite" = "PageActualite", 
