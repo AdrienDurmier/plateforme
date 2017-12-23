@@ -6,7 +6,7 @@
 
 {% block body %}
   
-  <h1>Gestion des actualités</h1>
+  <h1>Gestion des pages</h1>
   
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
@@ -36,9 +36,14 @@
             <td>{{ page.id }}</td>
             <td>{{ page.titre }}</td>
             <td>{{ page.slug }}</td>
+            <td>todo versions</td>
             <td>
-              <a href="{{ path('plateforme_core_page_pages_view', {'slug': page.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
-                <i class="fa fa-eye" aria-hidden="true"></i>
+              <a href="{{ path('plateforme_core_page_pages_view', {'slug': page.slug}) }}" data-toggle="tooltip" data-placement="top" title="Voir">
+                {% if page.isPublic %}
+                  <i class="fa fa-eye text-success" aria-hidden="true"></i>
+                {% else %}
+                  <i class="fa fa-eye text-danger" aria-hidden="true"></i>
+                {% endif %}
               </a>
               &nbsp;|&nbsp;
               <a href="{{ path('plateforme_core_page_pages_edit', {'id': page.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">

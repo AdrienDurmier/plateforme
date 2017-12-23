@@ -3,6 +3,7 @@
 namespace Plateforme\CoreBundle\Controller;
 
 use Plateforme\CoreBundle\Entity\PageStandard;
+use Plateforme\CoreBundle\Entity\Version;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -47,6 +48,14 @@ class PageStandardController extends Controller {
       }
       $em->persist($page);
       $em->flush();
+      if ($valeurs_recu['mode_page'] == 'mode_page_version') {
+        $version = new Version();
+        $version->setNumero(1);
+        $version->setPage($page);
+        $version->setIdGroupe($page->getId());
+        $em->persist($version);
+        $em->flush();
+      }
       $request->getSession()->getFlashBag()->add('success', "Page créée avec succès");
       return $this->redirectToRoute('plateforme_core_page_pages_crud');
     }
@@ -58,13 +67,25 @@ class PageStandardController extends Controller {
    */
   public function editAction($id, Request $request) {
     $em = $this->getDoctrine()->getManager();
-    $page = $em->getRepository('PlateformeCoreBundle:PageStandard')->find($id);
-    if (null === $page) {
+    $page_original = $em->getRepository('PlateformeCoreBundle:PageStandard')->find($id);
+    if (null === $page_original) {
       throw new NotFoundHttpException("La page ayant l'identifiant " . $id . " n'existe pas.");
+    }
+    $versions = null;
+    if($page_original->getVersion()){
+      $id_groupe = $page_original->getVersion()->getIdGroupe();
+      $versions = $em->getRepository('PlateformeCoreBundle:Version')->findByIdGroupe($id_groupe);
     }
 
     if ($request->isMethod('POST')) {
       $valeurs_recu = $request->request->all();
+      // Si c'est une nouvelle version
+      $page = new PageStandard();
+      $version = new Version();
+      $version->setNumero($page_original->getVersion()->getNumero() + 1);
+      $version->setPage($page);
+      $version->setIdGroupe($page_original->getId());
+      $em->persist($version);
       $page->setTitre($valeurs_recu['titre']);
       $page->setContenu($valeurs_recu['contenu']);
       if ($valeurs_recu['metatitle'] == null || $valeurs_recu['metatitle'] == '') {
@@ -86,7 +107,8 @@ class PageStandardController extends Controller {
     }
 
     return $this->render('PlateformeCoreBundle:PageStandard:edit.html.twig', array(
-          'page' => $page
+          'page' => $page_original,
+          'versions' => $versions,
     ));
   }
 

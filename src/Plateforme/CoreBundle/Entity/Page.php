@@ -102,6 +102,11 @@ abstract class Page {
   private $is_public;
 
   /**
+   * @ORM\OneToOne(targetEntity="Plateforme\CoreBundle\Entity\Version", mappedBy="page")
+   */
+  private $version;
+
+  /**
    * @var string
    *
    * @ORM\Column(name="xml_sitemap_priority", type="decimal", precision=10, scale=1, nullable=true)
@@ -215,7 +220,8 @@ abstract class Page {
   public function setMetatitle($metatitle) {
     if (empty($metatitle)) {
       $this->metatitle = $this->titre;
-    }else{
+    }
+    else {
       $this->metatitle = $metatitle;
     }
     return $this;
@@ -240,7 +246,8 @@ abstract class Page {
   public function setMetadescription($metadescription) {
     if (empty($metadescription)) {
       $this->metadescription = $this->titre;
-    }else{
+    }
+    else {
       $this->metadescription = $metadescription;
     }
 
@@ -373,4 +380,28 @@ abstract class Page {
     return $this->xml_sitemap_changefreq;
   }
 
+
+    /**
+     * Set version
+     *
+     * @param \Plateforme\CoreBundle\Entity\Version $version
+     *
+     * @return Page
+     */
+    public function setVersion(\Plateforme\CoreBundle\Entity\Version $version = null)
+    {
+        $this->version = $version;
+
+        return $this;
+    }
+
+    /**
+     * Get version
+     *
+     * @return \Plateforme\CoreBundle\Entity\Version
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
 }

@@ -7,44 +7,19 @@ use Doctrine\ORM\EntityRepository;
 /**
  * VersionRepository
  */
-class VersionRepository extends \Doctrine\ORM\EntityRepository
-{
-  
+class VersionRepository extends \Doctrine\ORM\EntityRepository {
+
   /**
-   * Recherche la version publiée
-   * @param type $id -> identifiant de la page
-   * @return type -> Page
+   * Renvoie la dernière version d'une page
    */
-  public function findPublish($id)
-  {
-    $qb = $this->createQueryBuilder('version');
-    $qb
-      ->where('version.publish = 1')
-      ->where('version.page = :id')
-      ->setParameter('id', $id)
-    ;
-    return $qb
-      ->getQuery()
-      ->getResult()
-    ;
+  public function getLastVersion($id_groupe) {
+    $qb = $this->createQueryBuilder('v');
+    $qb->where('v.id_groupe = :id_groupe');
+    $qb->orderBy('v.updated', 'DESC');
+    $qb->setMaxResults(1);
+    $qb->setParameter('id_groupe', $id_groupe);
+
+    return $qb->getQuery()->getOneOrNullResult();
   }
-  
-  /**
-   * Permet de rechercher toutes les versions d'une page
-   * @param type $id -> identifiant de la page
-   * @return type -> Page
-   */
-  public function findAllByPage($id)
-  {
-    $qb = $this->createQueryBuilder('version');
-    $qb
-      ->where('version.page = :id')
-      ->setParameter('id', $id)
-    ;
-    return $qb
-      ->getQuery()
-      ->getResult()
-    ;
-  }
-  
+
 }
