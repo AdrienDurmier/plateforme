@@ -17,7 +17,7 @@ class PageStandardController extends Controller {
    */
   public function crudAction() {
     $em = $this->getDoctrine()->getManager();
-    $pages = $em->getRepository('PlateformeCoreBundle:PageStandard')->findAll();
+    $pages = $em->getRepository('PlateformeCoreBundle:PageStandard')->getAllPages();
     return $this->render('PlateformeCoreBundle:PageStandard:crud.html.twig', array(
           'pages' => $pages,
     ));

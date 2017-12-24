@@ -12,6 +12,7 @@ h6 {font-size:1.15em;}
 .sidebar {padding-left:0;padding-right:0;}
 .sidebar .nav {margin-bottom:20px;}
 .sidebar .nav-item {width:100%;}
+.sidebar .nav-link {padding:.2rem 1rem;}
 .sidebar .nav-item + .nav-item {margin-left:0;}
 .sidebar .nav-link {border-radius:0;}
 .placeholders {padding-bottom:3rem;}

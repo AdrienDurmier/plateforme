@@ -11,4 +11,16 @@ namespace Plateforme\CoreBundle\Repository;
 class PageStandardRepository extends \Doctrine\ORM\EntityRepository
 {
   
+  /**
+   * Renvoie la dernière version d'une page
+   */
+  public function getAllPages() {
+    $qb = $this->createQueryBuilder('p');
+    $qb->leftJoin('p.version', 'v');
+    $qb->orderBy('p.updated', 'DESC');
+    $qb->addGroupBy('v.idGroupe');
+
+    return $qb->getQuery()->getResult();
+  }
+  
 }
