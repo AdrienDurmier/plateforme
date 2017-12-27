@@ -81,7 +81,7 @@
                   <thead>
                     <tr>
                       <th></th>
-                      <th>#</th>
+                      <th></th>
                       <th>Date</th>
                       <th>Action</th>
                     </tr>
@@ -90,18 +90,24 @@
                     {% for version in versions %}
                       <tr>
                         <td>
-                          {% if version.page.isPublic %}
+                          {% if version.id == page.id %}
+                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                          {% endif %}
+                        </td>
+                        <td>
+                          {% if version.isPublic %}
                             <i class="fa fa-eye text-success" aria-hidden="true"></i>
                           {% else %}
                             <i class="fa fa-eye-slash text-danger" aria-hidden="true"></i>
                           {% endif %}
                         </td>
-                        <td>{{ version.numero }}</td>
                         <td>{{ version.created|date('d/m/Y H:i:s') }}</td>
                         <td>
-                          <a href="{{ path('plateforme_core_page_pages_edit', {'id': version.page.id}) }}">
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                          </a>
+                          {% if version.id != page.id %}
+                            <a href="{{ path('plateforme_core_page_pages_edit', {'id': version.id}) }}">
+                              <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+                          {% endif %}
                         </td>
                       </tr>
                     {% endfor %}

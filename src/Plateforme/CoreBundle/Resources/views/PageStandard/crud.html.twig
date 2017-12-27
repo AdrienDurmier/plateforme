@@ -25,6 +25,7 @@
     <table class="table table-striped table-sm">
       <thead>
         <tr>
+          <th></th>
           <th>ID</th>
           <th>Titre</th>
           <th>Versions</th>
@@ -34,18 +35,21 @@
       </thead>
         {% for page in pages %}
           <tr>
+            <td>
+              {% if page.isPublic %}
+                <i class="fa fa-eye text-success" aria-hidden="true"></i>
+              {% else %}
+                <i class="fa fa-eye text-danger" aria-hidden="true"></i>
+              {% endif %}
+            </td>
             <td>{{ page.id }}</td>
             <td>{{ page.titre }}</td>
-            <td>{{ page.version.numero }}</td>
+            <td>todo</td>
             <td>{{ page.slug }}</td>
             <td>todo versions</td>
             <td>
               <a href="{{ path('plateforme_core_page_pages_view', {'slug': page.slug}) }}" data-toggle="tooltip" data-placement="top" title="Voir">
-                {% if page.isPublic %}
-                  <i class="fa fa-eye text-success" aria-hidden="true"></i>
-                {% else %}
-                  <i class="fa fa-eye text-danger" aria-hidden="true"></i>
-                {% endif %}
+                <i class="fa fa-external-link" aria-hidden="true"></i>
               </a>
               &nbsp;|&nbsp;
               <a href="{{ path('plateforme_core_page_pages_edit', {'id': page.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">

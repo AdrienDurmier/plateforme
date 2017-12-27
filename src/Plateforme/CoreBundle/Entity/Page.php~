@@ -102,11 +102,6 @@ abstract class Page {
   private $is_public;
 
   /**
-   * @ORM\OneToOne(targetEntity="Plateforme\CoreBundle\Entity\Version", mappedBy="page")
-   */
-  private $version;
-
-  /**
    * @var string
    *
    * @ORM\Column(name="xml_sitemap_priority", type="decimal", precision=10, scale=1, nullable=true)
@@ -119,6 +114,11 @@ abstract class Page {
    * @ORM\Column(name="xml_sitemap_changefreq", type="string", length=255, nullable=true)
    */
   protected $xml_sitemap_changefreq;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Groupe", inversedBy="page")
+   */
+  private $groupe;
 
   /**
    * Get id
@@ -378,6 +378,37 @@ abstract class Page {
    */
   public function getXmlSitemapChangefreq() {
     return $this->xml_sitemap_changefreq;
+  }
+
+  /**
+   * Add version
+   *
+   * @param \Plateforme\CoreBundle\Entity\Version $version
+   *
+   * @return Page
+   */
+  public function addVersion(\Plateforme\CoreBundle\Entity\Version $version) {
+    $this->versions[] = $version;
+
+    return $this;
+  }
+
+  /**
+   * Remove version
+   *
+   * @param \Plateforme\CoreBundle\Entity\Version $version
+   */
+  public function removeVersion(\Plateforme\CoreBundle\Entity\Version $version) {
+    $this->versions->removeElement($version);
+  }
+
+  /**
+   * Get versions
+   *
+   * @return \Doctrine\Common\Collections\Collection
+   */
+  public function getVersions() {
+    return $this->versions;
   }
 
 }

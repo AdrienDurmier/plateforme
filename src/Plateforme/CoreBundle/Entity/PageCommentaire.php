@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Sexe
  *
- * @ORM\Table(name="page_version_commentaire")
- * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\VersionCommentaireRepository")
+ * @ORM\Table(name="page_commentaire")
+ * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\PageCommentaireRepository")
  */
-class VersionCommentaire {
+class PageCommentaire {
 
   public function __construct() {
     $this->created = new \Datetime();
@@ -38,10 +38,10 @@ class VersionCommentaire {
   private $user;
 
   /**
-   * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Version", cascade={"persist"})
+   * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Page", cascade={"persist"})
    * @ORM\JoinColumn(nullable=false)
    */
-  private $version;
+  private $page;
 
   /**
    * @var string
@@ -64,7 +64,7 @@ class VersionCommentaire {
    *
    * @param \DateTime $created
    *
-   * @return VersionCommentaire
+   * @return PageCommentaire
    */
   public function setCreated($created) {
     $this->created = $created;
@@ -86,7 +86,7 @@ class VersionCommentaire {
    *
    * @param \Plateforme\UserBundle\Entity\User $user
    *
-   * @return VersionCommentaire
+   * @return PageCommentaire
    */
   public function setUser(\Plateforme\UserBundle\Entity\User $user = null) {
     $this->user = $user;
@@ -104,25 +104,25 @@ class VersionCommentaire {
   }
 
   /**
-   * Set version
+   * Set page
    *
-   * @param \Plateforme\CoreBundle\Entity\Version $version
+   * @param \Plateforme\CoreBundle\Entity\Page $page
    *
-   * @return VersionCommentaire
+   * @return PageCommentaire
    */
-  public function setVersion(\Plateforme\CoreBundle\Entity\Version $version) {
-    $this->version = $version;
+  public function setPage(\Plateforme\CoreBundle\Entity\Page $page) {
+    $this->page = $page;
 
     return $this;
   }
 
   /**
-   * Get version
+   * Get page
    *
-   * @return \Plateforme\CoreBundle\Entity\Version
+   * @return \Plateforme\CoreBundle\Entity\Page
    */
-  public function getVersion() {
-    return $this->version;
+  public function getPage() {
+    return $this->page;
   }
 
 
@@ -131,7 +131,7 @@ class VersionCommentaire {
      *
      * @param string $contenu
      *
-     * @return VersionCommentaire
+     * @return PageCommentaire
      */
     public function setContenu($contenu)
     {

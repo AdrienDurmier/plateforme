@@ -6,12 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Version
+ * Groupe
  *
- * @ORM\Table(name="page_version")
- * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\PageVersionsRepository")
+ * @ORM\Table(name="core_groupe")
+ * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\GroupeRepository")
  */
-class Version {
+class Groupe {
 
   public function __construct() {
     $this->pages = new ArrayCollection();
@@ -27,8 +27,7 @@ class Version {
   private $id;
 
   /**
-   * @ORM\ManyToMany(targetEntity="Plateforme\CoreBundle\Entity\Page", inversedBy="pages")
-   * @ORM\JoinTable(name="page_pagesversions")
+   * @ORM\OneToMany(targetEntity="Plateforme\CoreBundle\Entity\Page", mappedBy="groupe", cascade={"persist", "remove"})
    */
   private $pages;
 
@@ -126,6 +125,38 @@ class Version {
    */
   public function getApprobateurs() {
     return $this->approbateurs;
+  }
+
+  /**
+   * Add page
+   *
+   * @param \Plateforme\CoreBundle\Entity\Page $page
+   *
+   * @return Groupe
+   */
+  public function addPage(\Plateforme\CoreBundle\Entity\Page $page) {
+    $page->setGroupe($this); 
+    $this->pages[] = $page;
+
+    return $this;
+  }
+
+  /**
+   * Remove page
+   *
+   * @param \Plateforme\CoreBundle\Entity\Page $page
+   */
+  public function removePage(\Plateforme\CoreBundle\Entity\Page $page) {
+    $this->pages->removeElement($page);
+  }
+
+  /**
+   * Get pages
+   *
+   * @return \Doctrine\Common\Collections\Collection
+   */
+  public function getPages() {
+    return $this->pages;
   }
 
 }

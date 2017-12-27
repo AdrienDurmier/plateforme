@@ -102,11 +102,6 @@ abstract class Page {
   private $is_public;
 
   /**
-   * @ORM\OneToOne(targetEntity="Plateforme\CoreBundle\Entity\Version", mappedBy="page")
-   */
-  private $version;
-
-  /**
    * @var string
    *
    * @ORM\Column(name="xml_sitemap_priority", type="decimal", precision=10, scale=1, nullable=true)
@@ -119,6 +114,11 @@ abstract class Page {
    * @ORM\Column(name="xml_sitemap_changefreq", type="string", length=255, nullable=true)
    */
   protected $xml_sitemap_changefreq;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Groupe", inversedBy="page")
+   */
+  private $groupe;
 
   /**
    * Get id
@@ -380,28 +380,26 @@ abstract class Page {
     return $this->xml_sitemap_changefreq;
   }
 
+  /**
+   * Set groupe
+   *
+   * @param \Plateforme\CoreBundle\Entity\Groupe $groupe
+   *
+   * @return Page
+   */
+  public function setGroupe(\Plateforme\CoreBundle\Entity\Groupe $groupe = null) {
+    $this->groupe = $groupe;
 
-    /**
-     * Set version
-     *
-     * @param \Plateforme\CoreBundle\Entity\Version $version
-     *
-     * @return Page
-     */
-    public function setVersion(\Plateforme\CoreBundle\Entity\Version $version = null)
-    {
-        $this->version = $version;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get groupe
+   *
+   * @return \Plateforme\CoreBundle\Entity\Groupe
+   */
+  public function getGroupe() {
+    return $this->groupe;
+  }
 
-    /**
-     * Get version
-     *
-     * @return \Plateforme\CoreBundle\Entity\Version
-     */
-    public function getVersion()
-    {
-        return $this->version;
-    }
 }
