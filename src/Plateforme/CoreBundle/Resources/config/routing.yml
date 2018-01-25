@@ -41,6 +41,13 @@ plateforme_core_maintenance_index:
         _controller: PlateformeCoreBundle:Maintenance:index
 
 ################################################################################
+# PAGES
+################################################################################
+plateforme_core_contenu_crud:
+    path:     /admin/contenu
+    defaults: { _controller: PlateformeCoreBundle:Page:contenu}
+
+################################################################################
 # PAGE ACCUEIL
 ################################################################################
 plateforme_core_homepage:

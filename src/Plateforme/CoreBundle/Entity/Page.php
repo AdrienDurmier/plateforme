@@ -36,6 +36,11 @@ abstract class Page {
     return $this->titre;
   }
 
+  public function getType() {
+    $type = explode('\\', get_class($this));
+    return end($type);
+  }
+
   /**
    * @var int
    *
@@ -114,6 +119,11 @@ abstract class Page {
    * @ORM\Column(name="xml_sitemap_changefreq", type="string", length=255, nullable=true)
    */
   protected $xml_sitemap_changefreq;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\UserBundle\Entity\User")
+   */
+  private $auteur;
 
   /**
    * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Groupe", inversedBy="page")
@@ -378,6 +388,28 @@ abstract class Page {
    */
   public function getXmlSitemapChangefreq() {
     return $this->xml_sitemap_changefreq;
+  }
+
+  /**
+   * Set auteur
+   *
+   * @param \Plateforme\UserBundle\Entity\User $auteur
+   *
+   * @return Page
+   */
+  public function setAuteur(\Plateforme\UserBundle\Entity\User $auteur = null) {
+    $this->auteur = $auteur;
+
+    return $this;
+  }
+
+  /**
+   * Get auteur
+   *
+   * @return \Plateforme\UserBundle\Entity\User
+   */
+  public function getAuteur() {
+    return $this->auteur;
   }
 
   /**

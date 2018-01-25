@@ -36,6 +36,11 @@ abstract class Page {
     return $this->titre;
   }
 
+  public function getType() {
+    $type = explode('\\', get_class($this));
+    return end($type);
+  }
+
   /**
    * @var int
    *
@@ -114,6 +119,11 @@ abstract class Page {
    * @ORM\Column(name="xml_sitemap_changefreq", type="string", length=255, nullable=true)
    */
   protected $xml_sitemap_changefreq;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\UserBundle\Entity\User")
+   */
+  private $user;
 
   /**
    * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Groupe", inversedBy="page")
@@ -381,34 +391,49 @@ abstract class Page {
   }
 
   /**
-   * Add version
+   * Set groupe
    *
-   * @param \Plateforme\CoreBundle\Entity\Version $version
+   * @param \Plateforme\CoreBundle\Entity\Groupe $groupe
    *
    * @return Page
    */
-  public function addVersion(\Plateforme\CoreBundle\Entity\Version $version) {
-    $this->versions[] = $version;
+  public function setGroupe(\Plateforme\CoreBundle\Entity\Groupe $groupe = null) {
+    $this->groupe = $groupe;
 
     return $this;
   }
 
   /**
-   * Remove version
+   * Get groupe
    *
-   * @param \Plateforme\CoreBundle\Entity\Version $version
+   * @return \Plateforme\CoreBundle\Entity\Groupe
    */
-  public function removeVersion(\Plateforme\CoreBundle\Entity\Version $version) {
-    $this->versions->removeElement($version);
+  public function getGroupe() {
+    return $this->groupe;
   }
 
-  /**
-   * Get versions
-   *
-   * @return \Doctrine\Common\Collections\Collection
-   */
-  public function getVersions() {
-    return $this->versions;
-  }
 
+    /**
+     * Set user
+     *
+     * @param \Plateforme\UserBundle\Entity\User $user
+     *
+     * @return Page
+     */
+    public function setUser(\Plateforme\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Plateforme\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

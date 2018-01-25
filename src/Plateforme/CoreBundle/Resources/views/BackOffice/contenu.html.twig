@@ -5,39 +5,56 @@
 {% endblock %}
 
 {% block body %}
-  
+
   <h1>Gestion des pages</h1>
-  
+
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
-    <li class="breadcrumb-item active">Pages</li>
+    <li class="breadcrumb-item active">Contenu</li>
   </ol>
-  
+
   <hr>
-  
-  <a href="{{ path('plateforme_core_page_pages_add') }}" class="btn btn-success btn-sm">
-    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer une page
-  </a>
-        
-  <br>
-  
-  <p class="text-muted">{{ pages|length }} page{%if pages|length > 1%}s{%endif%}</p>
-  
-  <div class="table-responsive">
-    <table class="table table-striped table-sm">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Titre</th>
-          <th>Slug utilisé pour l'URL</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
+
+  <form action="" method="GET" class="form-inline">
+    <a href="{{ path('plateforme_core_page_pages_add') }}" class="btn btn-success btn-sm">
+      <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer une page
+    </a>
+    <button type="submit" class="btn btn-success btn-sm ml-1"><i class="fa fa-filter" aria-hidden="true"></i> Filtrer</button>
+    <a href="{{ path('plateforme_core_contenu_crud') }}" class="btn btn-default btn-sm ml-1">
+      <i class="fa fa-repeat" aria-hidden="true"></i>&nbsp;Reset
+    </a>
+
+    <div class="table-responsive">
+      <caption>{{ pages|length }} page{%if pages|length > 1%}s{%endif%}</caption>
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Date</th>
+            <th>
+              <div class="form-group">
+                <select class="form-control form-control-sm" id="content_type">
+                  <option value=null>- Type de contenu -</option>
+                </select>
+              </div></th>
+            <th>URL</th>
+            <th>Auteur</th>
+            <th>Versions</th>
+            <th>Contributeurs</th>
+            <th style="min-width:120px;">Actions</th>
+          </tr>
+        </thead>
         {% for page in pages %}
           <tr>
             <td>{{ page.id }}</td>
             <td>{{ page.titre }}</td>
-            <td>{{ page.slug }}</td>
+            <td>{{ page.updated|date('d/m/Y H:i') }}</td>
+            <td>{{ page.type }}</td>
+            <td><small>{{ page.slug }}</small></td>
+            <td>{{ page.auteur }}</td>
+            <td>X</td>
+            <td>X</td>
             <td>
               {% if page.isPublic %}
                 <a href="{{ path('plateforme_core_page_pages_view', {'slug': page.slug}) }}" data-toggle="tooltip" data-placement="top" title="Voir" target="_blank">
@@ -61,8 +78,10 @@
             </td>
           </tr>
         {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  
+        </tbody>
+      </table>
+    </div>
+
+  </form>
+
 {% endblock %}

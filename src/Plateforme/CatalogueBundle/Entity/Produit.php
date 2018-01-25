@@ -185,38 +185,35 @@ class Produit extends \Plateforme\CoreBundle\Entity\Page {
     return $this->stock;
   }
 
+  /**
+   * Add category
+   *
+   * @param \Plateforme\CatalogueBundle\Entity\Categorie $category
+   *
+   * @return Produit
+   */
+  public function addCategory(\Plateforme\CatalogueBundle\Entity\Categorie $category) {
+    $this->categories[] = $category;
 
-    /**
-     * Add category
-     *
-     * @param \Plateforme\CatalogueBundle\Entity\Categorie $category
-     *
-     * @return Produit
-     */
-    public function addCategory(\Plateforme\CatalogueBundle\Entity\Categorie $category)
-    {
-        $this->categories[] = $category;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Remove category
+   *
+   * @param \Plateforme\CatalogueBundle\Entity\Categorie $category
+   */
+  public function removeCategory(\Plateforme\CatalogueBundle\Entity\Categorie $category) {
+    $this->categories->removeElement($category);
+  }
 
-    /**
-     * Remove category
-     *
-     * @param \Plateforme\CatalogueBundle\Entity\Categorie $category
-     */
-    public function removeCategory(\Plateforme\CatalogueBundle\Entity\Categorie $category)
-    {
-        $this->categories->removeElement($category);
-    }
+  /**
+   * Get categories
+   *
+   * @return \Doctrine\Common\Collections\Collection
+   */
+  public function getCategories() {
+    return $this->categories;
+  }
 
-    /**
-     * Get categories
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
 }

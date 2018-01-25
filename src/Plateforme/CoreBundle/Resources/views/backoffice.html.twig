@@ -78,8 +78,13 @@
     <div class="container-fluid">
       <div class="row">
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
-          <b>&nbsp;Gestion de la vitrine</b>
+          <b>&nbsp;Contenus</b>
           <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('plateforme_core_contenu_crud') }}">
+                <i class="fa fa-list" aria-hidden="true"></i> Gérer les contenus
+              </a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ path('plateforme_core_homepage_edit') }}">
                 <i class="fa fa-home" aria-hidden="true"></i>&nbsp;Accueil
@@ -107,7 +112,7 @@
             </li>
           </ul>
           <hr>
-          <b>&nbsp;Gestion du catalogue</b>
+          <b>&nbsp;Catalogue</b>
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
               <a class="nav-link" href="{{ path('plateforme_catalogue_categories_crud') }}">
@@ -133,7 +138,7 @@
 
           <hr>
 
-          <b>&nbsp;Gestion du ecommerce</b>
+          <b>&nbsp;Ecommerce</b>
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
               <a class="nav-link" href="{{ path('plateforme_ecommerce_commandes_crud') }}">

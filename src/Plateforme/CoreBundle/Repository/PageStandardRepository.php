@@ -16,9 +16,9 @@ class PageStandardRepository extends \Doctrine\ORM\EntityRepository
    */
   public function getAllPages() {
     $qb = $this->createQueryBuilder('p');
-    $qb->leftJoin('p.version', 'v');
-    $qb->orderBy('p.updated', 'DESC');
-    $qb->addGroupBy('v.idGroupe');
+    //$qb->leftJoin('p.groupe', 'g');
+    //$qb->orderBy('p.updated', 'DESC');
+    //$qb->addGroupBy('g.id');
 
     return $qb->getQuery()->getResult();
   }

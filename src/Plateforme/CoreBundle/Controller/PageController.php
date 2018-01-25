@@ -9,6 +9,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PageController extends Controller {
 
   /**
+   * Gestion du contenu
+   */
+  public function contenuAction() {
+    $em = $this->getDoctrine()->getManager();
+    $pages = $em->getRepository('PlateformeCoreBundle:Page')->getAllPages();
+    return $this->render('PlateformeCoreBundle:BackOffice:contenu.html.twig', array(
+          'pages' => $pages,
+    ));
+  }
+  
+  /**
    * Publie ou dépublie une page
    */
   public function publicationAction(Request $request) {

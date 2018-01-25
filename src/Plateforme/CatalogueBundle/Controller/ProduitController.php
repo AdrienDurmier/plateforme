@@ -56,6 +56,10 @@ class ProduitController extends Controller {
       else {
         $produit->setMetadescription($valeurs_recu['metadescription']);
       }
+      // Versionnement
+      $service_versionner = $this->container->get('core_page');
+      $service_versionner->versionner($produit);
+
       $em->persist($produit);
       $em->flush();
       $request->getSession()->getFlashBag()->add('success', "Produit créé avec succès");
@@ -73,14 +77,15 @@ class ProduitController extends Controller {
    */
   public function editAction($id, Request $request) {
     $em = $this->getDoctrine()->getManager();
-    $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($id);
-    if (null === $produit) {
+    $produit_original = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($id);
+    if (null === $produit_original) {
       throw new NotFoundHttpException("Le produit ayant l'identifiant " . $id . " n'existe pas.");
     }
     $marques = $em->getRepository('PlateformeCatalogueBundle:Marque')->findAll();
     $tvas = $em->getRepository('PlateformeEcommerceBundle:Tva')->findAll();
 
     if ($request->isMethod('POST')) {
+      $produit = new Produit();
       $valeurs_recu = $request->request->all();
       $produit->setTitre($valeurs_recu['titre']);
       $produit->setContenu($valeurs_recu['contenu']);
@@ -103,6 +108,10 @@ class ProduitController extends Controller {
       else {
         $produit->setMetadescription($valeurs_recu['metadescription']);
       }
+      // Versionnement
+      $service_versionner = $this->container->get('core_page');
+      $service_versionner->versionner($produit_original, $produit);
+      
       $em->persist($produit);
       $em->flush();
       $request->getSession()->getFlashBag()->add('success', "Produit modifié avec succès");
@@ -110,7 +119,7 @@ class ProduitController extends Controller {
     }
 
     return $this->render('PlateformeCatalogueBundle:Produit:edit.html.twig', array(
-          'produit' => $produit,
+          'produit' => $produit_original,
           'marques' => $marques,
           'tvas' => $tvas,
     ));
@@ -403,7 +412,7 @@ class ProduitController extends Controller {
   /**
    * Ajout d'une liaison entre ce produit et une catégorie
    */
-  public function addCategorieAction($id_produit,$id_categorie, Request $request) {
+  public function addCategorieAction($id_produit, $id_categorie, Request $request) {
     $em = $this->getDoctrine()->getManager();
     $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($id_produit);
     if (null === $produit) {
@@ -419,11 +428,11 @@ class ProduitController extends Controller {
     $request->getSession()->getFlashBag()->add('success', "Liaison ajoutée avec succès.");
     return $this->redirectToRoute('plateforme_catalogue_produits_edit', array('id' => $id_produit));
   }
-  
+
   /**
    * Suppression d'une liaison entre ce produit et une catégorie
    */
-  public function removeCategorieAction($id_produit,$id_categorie, Request $request) {
+  public function removeCategorieAction($id_produit, $id_categorie, Request $request) {
     $em = $this->getDoctrine()->getManager();
     $produit = $em->getRepository('PlateformeCatalogueBundle:Produit')->find($id_produit);
     if (null === $produit) {

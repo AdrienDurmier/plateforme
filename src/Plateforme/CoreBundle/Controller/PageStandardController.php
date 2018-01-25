@@ -17,7 +17,7 @@ class PageStandardController extends Controller {
    */
   public function crudAction() {
     $em = $this->getDoctrine()->getManager();
-    $pages = $em->getRepository('PlateformeCoreBundle:PageStandard')->findAll();
+    $pages = $em->getRepository('PlateformeCoreBundle:PageStandard')->getAllPages();
     return $this->render('PlateformeCoreBundle:PageStandard:crud.html.twig', array(
           'pages' => $pages,
     ));
@@ -46,11 +46,11 @@ class PageStandardController extends Controller {
       else {
         $page->setMetadescription($valeurs_recu['metadescription']);
       }
-      if ($valeurs_recu['mode_page'] == 'mode_page_version') {
-        $groupe = new Groupe();
-        $groupe->addPage($page);
-        $em->persist($groupe);
-      }
+      // Création d'un groupe de page afin de préparer le versionning
+      $groupe = new Groupe();
+      $groupe->addPage($page);
+      $em->persist($groupe);
+      
       $em->persist($page);
       $em->flush();
       $request->getSession()->getFlashBag()->add('success', "Page créée avec succès");
