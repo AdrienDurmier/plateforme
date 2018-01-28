@@ -32,7 +32,32 @@ class PageService {
     else {
       $page_original->getGroupe()->addPage($page);
       $page->setAuteur($this->currentUser);
+      $page->setPageParent($page_original);
     }
+  }
+
+  public function afficherArborescence($parent, $niveau, $array) {
+    $html = "";
+    $niveau_precedent = 0;
+    if (!$niveau && !$niveau_precedent){
+      $html .= "<ul>";
+    }
+    foreach ($array AS $noeud) {
+      if ($parent == $noeud['parent']) {
+        if ($niveau_precedent < $niveau)
+          $html .= "<ul>";
+        $html .= "<li>" . $noeud['titre'];
+        $niveau_precedent = $niveau;
+        $html .= $this->afficherArborescence($noeud['id'], ($niveau + 1), $array);
+      }
+    }
+    if (($niveau_precedent == $niveau) && ($niveau_precedent != 0))
+      $html .= "</ul></li>";
+    else if ($niveau_precedent == $niveau)
+      $html .= "</ul>";
+    else
+      $html .= "</li>";
+    return $html;
   }
 
 }

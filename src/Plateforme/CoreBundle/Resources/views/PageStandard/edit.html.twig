@@ -37,94 +37,43 @@
 
   <hr>
 
-  <form 
-    id="form_page"
-    action="{{ path('plateforme_core_page_pages_edit', {'id': page.id}) }}" 
-    method="post"
-    >
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="onglet-contenu" data-toggle="tab" href="#content-contenu" role="tab" aria-controls="content-contenu" aria-selected="true">
+        <i class="fa fa-pencil" aria-hidden="true"></i> Contenu
+      </a>
+      <a class="nav-item nav-link" id="onglet-version" data-toggle="tab" href="#content-version" role="tab" aria-controls="content-version" aria-selected="false">
+        <i class="fa fa-code-fork" aria-hidden="true"></i> Versions
+      </a>
+    </div>
+  </nav>
 
-    <div class="row">
-      <div class="col-xs-12 col-sm-8">
-        <div class="p-2">
-          <h2>Contenu</h2>
-          <hr>
-          <div class="form-group">
-            <label for="titre">Titre</label>
-            <input type="text" class="form-control form-control-sm" id="titre" name="titre" value="{{ page.titre }}">
-          </div>
+  <div class="tab-content" id="onglets">
+    <div class="tab-pane fade show active" id="content-contenu" role="tabpanel" aria-labelledby="onglet-contenu">
+      <form 
+        id="form_page"
+        action="{{ path('plateforme_core_page_pages_edit', {'id': page.id}) }}" 
+        method="post"
+        >
 
-          <div class="form-group">
-            <label for="contenu">Contenu</label>
-            <textarea class="form-control form-control-sm" id="contenu" name="contenu" rows="3">{{ page.contenu|raw }}</textarea>
-          </div>
+        <div class="row">
+          <div class="col-12 col-md-8">
+            <div class="p-2">
+              <div class="form-group">
+                <label for="titre">Titre</label>
+                <input type="text" class="form-control form-control-sm" id="titre" name="titre" value="{{ page.titre }}">
+              </div>
 
-          <hr>
-
-          <button type="submit" class="btn btn-success btn-sm">
-            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
-          </button>
-        </div>
-      </div>
-
-      <div class="col-xs-12 col-sm-4">
-        <div id="accordion" role="tablist">
-          <div class="bg-light p-2">
-            <h2>
-              <a data-toggle="collapse" href="#collapseVersion" aria-expanded="true" aria-controls="collapseVersion">
-                <i class="fa fa-code-fork" aria-hidden="true"></i> Versions
-              </a>
-            </h2>
-            <div id="collapseVersion" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-              <br>
-              <div class="table-responsive">
-                <table class="table table-sm table-striped">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th></th>
-                      <th>Date</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for version in versions %}
-                      <tr>
-                        <td>
-                          {% if version.id == page.id %}
-                            <i class="fa fa-caret-right" aria-hidden="true"></i>
-                          {% endif %}
-                        </td>
-                        <td>
-                          {% if version.isPublic %}
-                            <i class="fa fa-eye text-success" aria-hidden="true"></i>
-                          {% else %}
-                            <i class="fa fa-eye-slash text-danger" aria-hidden="true"></i>
-                          {% endif %}
-                        </td>
-                        <td>{{ version.created|date('d/m/Y H:i:s') }}</td>
-                        <td>
-                          {% if version.id != page.id %}
-                            <a href="{{ path('plateforme_core_page_pages_edit', {'id': version.id}) }}">
-                              <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </a>
-                          {% endif %}
-                        </td>
-                      </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
+              <div class="form-group">
+                <label for="contenu">Contenu</label>
+                <textarea class="form-control form-control-sm" id="contenu" name="contenu" rows="3">{{ page.contenu|raw }}</textarea>
               </div>
             </div>
           </div>
 
-          <div class="bg-light p-2 mt-2">
-            <h2>
-              <a data-toggle="collapse" href="#collapseSEO" aria-expanded="true" aria-controls="collapseSEO">
-                <i class="fa fa-globe" aria-hidden="true"></i> SEO
-              </a>
-            </h2>
-            <div id="collapseSEO" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-              <hr>
+          <div class="col-12 col-md-4">
+            <div class="bg-light p-2 mt-2">
+              <h2><i class="fa fa-globe" aria-hidden="true"></i> SEO</h2>
               <div class="form-group">
                 <label for="metatitle">Meta title</label>
                 <input type="text" class="form-control form-control-sm" id="metatitle" name="metatitle" value="{{ page.metatitle }}">
@@ -174,12 +123,70 @@
             </div>
           </div>
         </div>
-      </div>
 
+        <hr>
+
+        <button type="submit" class="btn btn-success btn-sm">
+          <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
+        </button>
+      </form>
     </div>
 
-  </form>
+    <div class="tab-pane fade" id="content-version" role="tabpanel" aria-labelledby="onglet-version">
+      <div class="table-responsive">
+        <table class="table table-sm table-striped">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for version in versions %}
+              <tr>
+                <td>
+                  {% if version.id == page.id %}
+                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if version.isPublic %}
+                    <i class="fa fa-eye text-success" aria-hidden="true"></i>
+                  {% else %}
+                    <i class="fa fa-eye-slash text-danger" aria-hidden="true"></i>
+                  {% endif %}
+                </td>
+                <td>{{ version.created|date('d/m/Y H:i:s') }}</td>
+                <td>
+                  {% if version.id != page.id %}
+                    <a href="{{ path('plateforme_core_page_pages_edit', {'id': version.id}) }}">
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li>
+          <a class="btn btn-light btn-sm text-left" href="{{ path('plateforme_core_page_pages_edit', {'id': first_version.id}) }}">
+            <b>Version originale</b>
+            <small>
+              <br>{{first_version.created|date('d/m/Y H:i:s')}}
+              <br><i class="fa fa-user-o" aria-hidden="true"></i> {{first_version.auteur}}
+              <br><i class="fa fa-comment-o" aria-hidden="true"></i> todo
+            </small>
+          </a>
+          {{ html_versions|raw }}
+        <li>
+      </ul>
 
+    </div>
+  </div>
 
 {% endblock %}
 

@@ -123,12 +123,18 @@ abstract class Page {
   /**
    * @ORM\ManyToOne(targetEntity="Plateforme\UserBundle\Entity\User")
    */
-  private $user;
+  private $auteur;
 
   /**
    * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Groupe", inversedBy="page")
    */
   private $groupe;
+  
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Page", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+   */
+  private $pageParent;
 
   /**
    * Get id
@@ -391,6 +397,28 @@ abstract class Page {
   }
 
   /**
+   * Set auteur
+   *
+   * @param \Plateforme\UserBundle\Entity\User $auteur
+   *
+   * @return Page
+   */
+  public function setAuteur(\Plateforme\UserBundle\Entity\User $auteur = null) {
+    $this->auteur = $auteur;
+
+    return $this;
+  }
+
+  /**
+   * Get auteur
+   *
+   * @return \Plateforme\UserBundle\Entity\User
+   */
+  public function getAuteur() {
+    return $this->auteur;
+  }
+
+  /**
    * Set groupe
    *
    * @param \Plateforme\CoreBundle\Entity\Groupe $groupe
@@ -412,28 +440,4 @@ abstract class Page {
     return $this->groupe;
   }
 
-
-    /**
-     * Set user
-     *
-     * @param \Plateforme\UserBundle\Entity\User $user
-     *
-     * @return Page
-     */
-    public function setUser(\Plateforme\UserBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Plateforme\UserBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }

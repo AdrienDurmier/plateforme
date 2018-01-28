@@ -21,4 +21,33 @@ class PageRepository extends \Doctrine\ORM\EntityRepository {
     return $qb->getQuery()->getResult();
   }
 
+  /**
+   * Renvoie la version originale
+   */
+  public function getFirstVersion($groupe) {
+    $qb = $this->createQueryBuilder('p');
+    $qb->Where('p.groupe = :groupe');
+    $qb->setParameter('groupe', $groupe);
+    $qb->orderBy('p.id', 'ASC');
+    $qb->setMaxResults(1);
+
+    return $qb->getQuery()->getOneOrNullResult();
+  }
+  
+  /**
+   * Toutes les versions d'une page
+   */
+  public function getAllVersions($groupe) {
+    $fields = array('p.id', 'pa.id as parent', 'p.titre', 'p.slug');
+    $qb = $this->createQueryBuilder('p');
+    $qb->select($fields);
+    // en cas d'erreur, executer dans phpmyadmin: SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+    $qb->Where('p.groupe = :groupe');
+    $qb->setParameter('groupe', $groupe);
+    $qb->join('p.pageParent', 'pa');
+    $qb->orderBy('p.id', 'ASC');
+
+    return $qb->getQuery()->getResult();
+  }
+
 }

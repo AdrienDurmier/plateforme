@@ -129,6 +129,12 @@ abstract class Page {
    * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Groupe", inversedBy="page")
    */
   private $groupe;
+  
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Page", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+   */
+  private $pageParent;
 
   /**
    * Get id
@@ -434,4 +440,28 @@ abstract class Page {
     return $this->groupe;
   }
 
+
+    /**
+     * Set pageParent
+     *
+     * @param \Plateforme\CoreBundle\Entity\Page $pageParent
+     *
+     * @return Page
+     */
+    public function setPageParent(\Plateforme\CoreBundle\Entity\Page $pageParent = null)
+    {
+        $this->pageParent = $pageParent;
+
+        return $this;
+    }
+
+    /**
+     * Get pageParent
+     *
+     * @return \Plateforme\CoreBundle\Entity\Page
+     */
+    public function getPageParent()
+    {
+        return $this->pageParent;
+    }
 }

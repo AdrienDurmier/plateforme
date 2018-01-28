@@ -46,10 +46,9 @@ class PageStandardController extends Controller {
       else {
         $page->setMetadescription($valeurs_recu['metadescription']);
       }
-      // Création d'un groupe de page afin de préparer le versionning
-      $groupe = new Groupe();
-      $groupe->addPage($page);
-      $em->persist($groupe);
+      // Versionnement
+      $service_versionner = $this->container->get('core_page');
+      $service_versionner->versionner($page);
       
       $em->persist($page);
       $em->flush();
@@ -68,6 +67,7 @@ class PageStandardController extends Controller {
     if (null === $page_original) {
       throw new NotFoundHttpException("La page ayant l'identifiant " . $id . " n'existe pas.");
     }
+    $versions = $page_original->getGroupe()->getPages();
 
     if ($request->isMethod('POST')) {
       $valeurs_recu = $request->request->all();
@@ -87,16 +87,27 @@ class PageStandardController extends Controller {
       else {
         $page->setMetadescription($valeurs_recu['metadescription']);
       }
-      $page_original->getGroupe()->addPage($page);
+      // Versionnement
+      $service_versionner = $this->container->get('core_page');
+      $service_versionner->versionner($page_original, $page);
+      
       $em->persist($page);
       $em->flush();
       $request->getSession()->getFlashBag()->add('info', "Page modifiée avec succès");
       return $this->redirectToRoute('plateforme_core_page_pages_crud');
     }
+    // Affichage des versions
+    $first_version = $em->getRepository('PlateformeCoreBundle:Page')->getFirstVersion($page_original->getGroupe());
+    $versions_groupe = $em->getRepository('PlateformeCoreBundle:Page')->getAllVersions($page_original->getGroupe());
+    //var_dump($versions_groupe);die();
+    $service_versionner = $this->container->get('core_page');
+    $html_versions = $service_versionner->afficherArborescence($first_version->getId(),0, $versions_groupe);
 
     return $this->render('PlateformeCoreBundle:PageStandard:edit.html.twig', array(
           'page' => $page_original,
-          'versions' => $page_original->getGroupe()->getPages(),
+          'html_versions' => $html_versions,
+          'first_version' => $first_version,
+          'versions' => $versions,
     ));
   }
 
