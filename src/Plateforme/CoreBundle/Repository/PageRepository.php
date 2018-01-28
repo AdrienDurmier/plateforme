@@ -38,13 +38,14 @@ class PageRepository extends \Doctrine\ORM\EntityRepository {
    * Toutes les versions d'une page
    */
   public function getAllVersions($groupe) {
-    $fields = array('p.id', 'pa.id as parent', 'p.titre', 'p.slug');
+    $fields = array('p.id', 'pa.id as parent', 'p.titre', 'p.created', 'p.slug', 'u.username');
     $qb = $this->createQueryBuilder('p');
     $qb->select($fields);
     // en cas d'erreur, executer dans phpmyadmin: SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
     $qb->Where('p.groupe = :groupe');
     $qb->setParameter('groupe', $groupe);
     $qb->join('p.pageParent', 'pa');
+    $qb->join('p.auteur', 'u');
     $qb->orderBy('p.id', 'ASC');
 
     return $qb->getQuery()->getResult();

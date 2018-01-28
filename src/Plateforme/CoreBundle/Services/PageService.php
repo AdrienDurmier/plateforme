@@ -46,7 +46,14 @@ class PageService {
       if ($parent == $noeud['parent']) {
         if ($niveau_precedent < $niveau)
           $html .= "<ul>";
-        $html .= "<li>" . $noeud['titre'];
+        $html .= '<a class="btn btn-light btn-sm text-left" href="">';
+          $html .= "<b>".$noeud['titre']."</b>";
+          $html .= "<small>";
+          $html .= "<br>".date_format($noeud['created'], 'd/m/Y H:i:s');
+          $html .= '<br><i class="fa fa-user-o" aria-hidden="true"></i> '.$noeud['username'];
+          $html .= '<br><br><i class="fa fa-comment-o" aria-hidden="true"></i> todo';
+          $html .= "</small>";
+        $html .= "</a>";
         $niveau_precedent = $niveau;
         $html .= $this->afficherArborescence($noeud['id'], ($niveau + 1), $array);
       }
