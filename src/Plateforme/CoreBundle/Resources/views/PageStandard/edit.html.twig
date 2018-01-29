@@ -126,63 +126,30 @@
 
         <hr>
 
-        <button type="submit" class="btn btn-success btn-sm">
-          <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
-        </button>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <button class="btn btn-success" type="submit">
+              <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
+            </button>
+          </div>
+          <input type="text" class="form-control" name="commentaire_version" placeholder="Laisser un commentaire sur vos modifications..." required>
+        </div>
       </form>
     </div>
 
     <div class="tab-pane fade" id="content-version" role="tabpanel" aria-labelledby="onglet-version">
-      <div class="table-responsive">
-        <table class="table table-sm table-striped">
-          <thead>
-            <tr>
-              <th></th>
-              <th></th>
-              <th>Date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for version in versions %}
-              <tr>
-                <td>
-                  {% if version.id == page.id %}
-                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                  {% endif %}
-                </td>
-                <td>
-                  {% if version.isPublic %}
-                    <i class="fa fa-eye text-success" aria-hidden="true"></i>
-                  {% else %}
-                    <i class="fa fa-eye-slash text-danger" aria-hidden="true"></i>
-                  {% endif %}
-                </td>
-                <td>{{ version.created|date('d/m/Y H:i:s') }}</td>
-                <td>
-                  {% if version.id != page.id %}
-                    <a href="{{ path('plateforme_core_page_pages_edit', {'id': version.id}) }}">
-                      <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </a>
-                  {% endif %}
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-      <ul>
+
+      <ul id="tree" class="tree">
         <li>
-          <a class="btn btn-light btn-sm text-left" href="{{ path('plateforme_core_page_pages_edit', {'id': first_version.id}) }}">
-            <b>Version originale</b>
+          <a class="btn btn-light btn-sm text-left border m-1" href="{{ path('plateforme_core_page_pages_edit', {'id': first_version.id}) }}">
             <small>
-              <br>{{first_version.created|date('d/m/Y H:i:s')}}
-              <br><i class="fa fa-user-o" aria-hidden="true"></i> {{first_version.auteur}}
-              <br><i class="fa fa-comment-o" aria-hidden="true"></i> todo
+              <b>Version originale</b>
+              <br>par {{first_version.auteur}}
+              <br>le {{first_version.created|date('d/m/Y H:i:s')}}
             </small>
           </a>
           {{ html_versions|raw }}
-        <li>
+        </li>
       </ul>
 
     </div>

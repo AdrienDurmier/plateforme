@@ -4,3 +4,4 @@ services:
         arguments: 
             - "@doctrine.orm.entity_manager"
             - "@=service('security.token_storage').getToken().getUser()"
+            - "@router"

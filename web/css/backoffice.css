@@ -25,3 +25,9 @@ h6 {font-size:1.15em;}
 .autocomplete_results_area {position:absolute;z-index:1;left:0;right:0;}
 .autocomplete_result {border-bottom:1px solid #eee;padding:3px 10px;}
 .autocomplete_all_results {text-align:right;padding:5px 10px;}
+
+/* Versionning */
+ul.tree, ul.tree ul {list-style-type:none;background-image:url(../img/version_line.png);background-repeat:repeat-y;background-position:8px 0;margin:0;padding:0;}
+ul.tree ul {margin-left:10px;}
+ul.tree li {margin:0;padding:0 12px; line-height: 20px;background-image:url(../img/version_node.png);background-repeat:no-repeat;background-position:8px 13px;color:#369;font-weight:bold;}
+ul.tree li:last-child {background: #fff url(../img/version_last.png) no-repeat;background-position:8px 0;} 

@@ -61,7 +61,7 @@ plateforme_core_homepage_edit:
         
         
 ################################################################################
-# PAGES STANDARDD
+# PAGES STANDARD
 ################################################################################
 plateforme_core_page_pages_index:
     path:      /pages

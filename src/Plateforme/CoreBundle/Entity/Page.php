@@ -74,6 +74,13 @@ abstract class Page {
   /**
    * @var string
    *
+   * @ORM\Column(name="commentaire_version", type="string", length=255, nullable=true)
+   */
+  private $commentaireVersion;
+
+  /**
+   * @var string
+   *
    * @ORM\Column(name="metatitle", type="string", length=255, nullable=true)
    */
   private $metatitle;
@@ -129,7 +136,7 @@ abstract class Page {
    * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Groupe", inversedBy="page")
    */
   private $groupe;
-  
+
   /**
    * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Page", cascade={"persist"})
    * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
@@ -224,6 +231,28 @@ abstract class Page {
     $texte = strtolower($texte);
     $texte = preg_replace('#[^-\w]+#', '', $texte);
     return $texte;
+  }
+
+  /**
+   * Set commentaireVersion
+   *
+   * @param string $commentaireVersion
+   *
+   * @return Page
+   */
+  public function setCommentaireVersion($commentaireVersion) {
+    $this->commentaireVersion = $commentaireVersion;
+
+    return $this;
+  }
+
+  /**
+   * Get commentaireVersion
+   *
+   * @return string
+   */
+  public function getCommentaireVersion() {
+    return $this->commentaireVersion;
   }
 
   /**
@@ -440,28 +469,26 @@ abstract class Page {
     return $this->groupe;
   }
 
+  /**
+   * Set pageParent
+   *
+   * @param \Plateforme\CoreBundle\Entity\Page $pageParent
+   *
+   * @return Page
+   */
+  public function setPageParent(\Plateforme\CoreBundle\Entity\Page $pageParent = null) {
+    $this->pageParent = $pageParent;
 
-    /**
-     * Set pageParent
-     *
-     * @param \Plateforme\CoreBundle\Entity\Page $pageParent
-     *
-     * @return Page
-     */
-    public function setPageParent(\Plateforme\CoreBundle\Entity\Page $pageParent = null)
-    {
-        $this->pageParent = $pageParent;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get pageParent
+   *
+   * @return \Plateforme\CoreBundle\Entity\Page
+   */
+  public function getPageParent() {
+    return $this->pageParent;
+  }
 
-    /**
-     * Get pageParent
-     *
-     * @return \Plateforme\CoreBundle\Entity\Page
-     */
-    public function getPageParent()
-    {
-        return $this->pageParent;
-    }
 }

@@ -8,10 +8,12 @@ class PageService {
 
   private $em;
   protected $currentUser;
+  private $router;
 
-  public function __construct(\Doctrine\ORM\EntityManager $entityManager, $user) {
+  public function __construct(\Doctrine\ORM\EntityManager $entityManager, $user, $router) {
     $this->em = $entityManager;
     $this->currentUser = $user;
+    $this->router = $router;
   }
 
   /**
@@ -36,26 +38,36 @@ class PageService {
     }
   }
 
-  public function afficherArborescence($parent, $niveau, $array) {
+  /**
+   * Renvoie en html l'arborescence des versions dans le style de github
+   * @param type $parent => id de la version originale puis des parents
+   * @param type $niveau => niveau de profondeur en cours dans fonction
+   * @param type $array => tableau contenant toutes les versions
+   * @param type $route_name => nom de la route de ce type de contenu
+   * @return string
+   */
+  public function afficherArborescence($parent, $niveau, $array, $route_name) {
     $html = "";
     $niveau_precedent = 0;
-    if (!$niveau && !$niveau_precedent){
+    if (!$niveau && !$niveau_precedent) {
       $html .= "<ul>";
     }
     foreach ($array AS $noeud) {
       if ($parent == $noeud['parent']) {
-        if ($niveau_precedent < $niveau)
+        if ($niveau_precedent < $niveau) {
           $html .= "<ul>";
-        $html .= '<a class="btn btn-light btn-sm text-left" href="">';
-          $html .= "<b>".$noeud['titre']."</b>";
-          $html .= "<small>";
-          $html .= "<br>".date_format($noeud['created'], 'd/m/Y H:i:s');
-          $html .= '<br><i class="fa fa-user-o" aria-hidden="true"></i> '.$noeud['username'];
-          $html .= '<br><br><i class="fa fa-comment-o" aria-hidden="true"></i> todo';
-          $html .= "</small>";
+        }
+        $url = $this->router->generate($route_name, array('id' => $noeud['id']));
+        $html .= "<li>";
+        $html .= '<a class="btn btn-light btn-sm text-left border m-1" href="' . $url . '">';
+        $html .= "<small>";
+        $html .= '<b>'.$noeud['commentaireVersion'].'</b>';
+        $html .= '<br>par ' . $noeud['username'];
+        $html .= '<br>le '.date_format($noeud['created'], 'd/m/Y H:i:s');
+        $html .= "</small>";
         $html .= "</a>";
         $niveau_precedent = $niveau;
-        $html .= $this->afficherArborescence($noeud['id'], ($niveau + 1), $array);
+        $html .= $this->afficherArborescence($noeud['id'], ($niveau + 1), $array, $route_name);
       }
     }
     if (($niveau_precedent == $niveau) && ($niveau_precedent != 0))
