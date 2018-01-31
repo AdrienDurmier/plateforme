@@ -5,6 +5,14 @@ plateforme_core_pages_publication:
     path:      /admin/pages/publication
     defaults: { _controller: PlateformeCoreBundle:Page:publication }
     methods: [post]
+plateforme_core_pages_version_comment_add:
+    path:      /admin/pages/versions/add
+    defaults: { _controller: PlateformeCoreBundle:Page:addVersionComment }
+    methods: [post]
+plateforme_core_pages_version_comment_get:
+    path:  /admin/pages/versions/get
+    defaults: { _controller: PlateformeCoreBundle:Page:getVersionComments }
+    methods: [post]
 ################################################################################
 # VARIABLES
 ################################################################################
