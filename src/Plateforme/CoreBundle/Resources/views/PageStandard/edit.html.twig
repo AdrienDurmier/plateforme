@@ -177,16 +177,16 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="{{ path('plateforme_core_pages_version_comment_add') }}" method="post">
+        <form id="form_version_comments" method="post">
           <div class="modal-body">
-            <div id="comments_area"></div>
+            <div id="comments_area" style="overflow-y:scroll;max-height:350px;"></div>
           </div>
           <div class="modal-footer">
             <div class="input-group">
               <input type="hidden" id="version_id" name="version_id" value="">
-              <input type="text" class="form-control form-control-sm" name="version_comment">
+              <input type="text" class="form-control form-control-sm" id="version_comment" name="version_comment">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">
+                <button id="sendContribution" class="btn btn-outline-secondary" type="button">
                   <i class="fa fa-paper-plane" aria-hidden="true"></i>
                 </button>
                 <button id="refreshContributions" class="btn btn-outline-secondary" type="button">
@@ -222,8 +222,29 @@
       var version_id = jQuery("#version_id").val();
       getContributions(version_id);
     });
-    
-    function getContributions(version_id){
+    jQuery("#sendContribution").click(function () {
+      var version_id = jQuery("#version_id").val();
+      sendContribution(version_id);
+    });
+
+    function sendContribution(version_id) {
+      var version_comment = jQuery('#version_comment').val();
+      var parametres = {
+        version_id: version_id,
+        version_comment: version_comment
+      };
+      jQuery.ajax({
+        url: "{{ path('plateforme_core_pages_version_comment_add') }}",
+        type: 'post',
+        dataType: 'json',
+        success: function (data) {
+          getContributions(version_id);
+        },
+        data: parametres
+      });
+    }
+
+    function getContributions(version_id) {
       jQuery("#version_id").val(version_id);
       var parametres = {
         version_id: version_id
@@ -233,28 +254,42 @@
         type: 'post',
         dataType: 'json',
         beforeSend: function () {
-          $('#comments_area').html('<i class="fa fa-spinner fa-pulse fa-fw"></i> Chargement des messages');
+          jQuery('#comments_area').html('<i class="fa fa-spinner fa-pulse fa-fw"></i> Chargement des messages');
         },
         success: function (data) {
           var results_html = '';
           if (data.data.contributions.length > 0) {
-            $.each(data.data.contributions, function (index, element) {
+            jQuery.each(data.data.contributions, function (index, element) {
               results_html = results_html + '<blockquote class="blockquote bg-light p-2">';
-                results_html = results_html + '<p class="mb-0">';
-                  results_html = results_html + element.comment;
-                results_html = results_html + '</p>';
-                results_html = results_html + '<footer class="blockquote-footer">';
-                  results_html = results_html + 'de ' + element.user + ' le ' + element.date;
-                results_html = results_html + '</footer>';
+              results_html = results_html + '<p class="mb-0">';
+              results_html = results_html + element.comment;
+              results_html = results_html + '</p>';
+              results_html = results_html + '<footer class="blockquote-footer">';
+              results_html = results_html + 'de ' + element.user + ' le ' + element.date;
+              results_html = results_html + '</footer>';
               results_html = results_html + '</blockquote>';
             });
           } else {
             results_html = results_html + 'Aucun commentaire';
           }
-          $('#comments_area').html(results_html);
+          jQuery('#comments_area').html(results_html);
+          jQuery("#version_comment").val('');
+          jQuery("#comments_area").scrollTop($("#comments_area")[0].scrollHeight);
         },
         data: parametres
       });
     }
+
+    // Permet de mettre à jour les commentaires directement si l'utilisateur fait Entrer
+    $('#form_version_comments').submit(function (e) {
+      var version_id = jQuery("#version_id").val();
+      sendContribution(version_id);
+      e.preventDefault();
+    });
+
+    // Mets le focus sur la saisie de commentaire au chargement de la fenêtre
+    $('#versionCommentModal').on('shown.bs.modal', function () {
+      $('#version_comment').focus();
+    });
   </script>
 {% endblock %}

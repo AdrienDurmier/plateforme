@@ -13,6 +13,10 @@ plateforme_core_pages_version_comment_get:
     path:  /admin/pages/versions/get
     defaults: { _controller: PlateformeCoreBundle:Page:getVersionComments }
     methods: [post]
+plateforme_core_pages_version_comment_add:
+    path:  /admin/pages/versions/add-comment
+    defaults: { _controller: PlateformeCoreBundle:Page:addVersionComment }
+    methods: [post]
 ################################################################################
 # VARIABLES
 ################################################################################

@@ -48,6 +48,7 @@ class PageController extends Controller {
    * Ajoute un commentaire à une version
    */
   public function addVersionCommentAction(Request $request) {
+    $status = true;
     $em = $this->getDoctrine()->getManager();
     $valeurs_recu = $request->request->all();
     $page = $em->getRepository('PlateformeCoreBundle:Page')->find($valeurs_recu['version_id']);
@@ -60,8 +61,17 @@ class PageController extends Controller {
     $contribution->setComment($valeurs_recu['version_comment']);
     $em->persist($contribution);
     $em->flush();
-
-    return $this->redirect($request->server->get('HTTP_REFERER'));
+    
+    $response = array(
+      'success' => $status,
+      'data' => array(
+        'id' => $contribution->getId(),
+        'user' => $contribution->getUser()->getUsername(),
+        'comment' => $contribution->getComment(),
+        'date' => date_format($contribution->getCreated(),"d/m/Y \à H:i:s"),
+      )
+    );
+    return new JsonResponse($response);
   }
 
   /**
