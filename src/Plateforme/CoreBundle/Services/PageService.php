@@ -68,7 +68,7 @@ class PageService {
           $html .= "</small>";
           $html .= "</a>";
           $html .= '<a class="btn btn-primary add_comment_link" href="#" data-version-id="' . $noeud['id'] . '" data-toggle="modal" data-target="#versionCommentModal">';
-            $html .= '<i class="fa fa-comments-o" aria-hidden="true"></i>';
+            $html .= '<i class="far fa-comments"></i>';
           $html .= '</a>';
         $html .= "</span>";
         $niveau_precedent = $niveau;

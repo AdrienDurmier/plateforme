@@ -38,11 +38,11 @@
             <td>{{ actualite.slug }}</td>
             <td>
               <a href="{{ path('plateforme_core_page_actualites_view', {'slug': actualite.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
-                <i class="fa fa-eye" aria-hidden="true"></i>
+                <i class="fas fa-eye"></i>
               </a>
               &nbsp;|&nbsp;
               <a href="{{ path('plateforme_core_page_actualites_edit', {'id': actualite.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
-                <i class="fa fa-pencil" aria-hidden="true"></i>
+                <i class="fas fa-pencil-alt"></i>
               </a>
               &nbsp;|&nbsp;
               <a href="{{ path('plateforme_core_page_actualites_clone', {'id': actualite.id}) }}" data-toggle="tooltip" data-placement="top" title="Cloner">

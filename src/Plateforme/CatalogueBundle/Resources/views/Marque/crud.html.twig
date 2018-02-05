@@ -39,11 +39,11 @@
           <td>{{ marque.slug }}</td>
           <td>
             <a href="{{ path('plateforme_catalogue_marques_view', {'slug': marque.slug}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
-              <i class="fa fa-eye" aria-hidden="true"></i>
+              <i class="fas fa-eye"></i>
             </a>
             &nbsp;|&nbsp;
             <a href="{{ path('plateforme_catalogue_marques_edit', {'id': marque.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
-              <i class="fa fa-pencil" aria-hidden="true"></i>
+              <i class="fas fa-pencil-alt"></i>
             </a>
             &nbsp;|&nbsp;
             <a href="{{ path('plateforme_catalogue_marques_clone', {'id': marque.id}) }}" data-toggle="tooltip" data-placement="top" title="Cloner">

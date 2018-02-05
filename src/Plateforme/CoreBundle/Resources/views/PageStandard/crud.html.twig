@@ -41,14 +41,14 @@
             <td>
               {% if page.isPublic %}
                 <a href="{{ path('plateforme_core_page_pages_view', {'slug': page.slug}) }}" data-toggle="tooltip" data-placement="top" title="Voir" target="_blank">
-                  <i class="fa fa-eye text-success" aria-hidden="true"></i>
+                  <i class="fas fa-eye text-success" aria-hidden="true"></i>
                 </a>
               {% else %}
-                <i class="fa fa-eye text-danger" aria-hidden="true"></i>
+                <i class="fas fa-eye text-danger"></i>
               {% endif %}
               &nbsp;|&nbsp;
               <a href="{{ path('plateforme_core_page_pages_edit', {'id': page.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
-                <i class="fa fa-pencil" aria-hidden="true"></i>
+                <i class="fas fa-pencil-alt"></i>
               </a>
               &nbsp;|&nbsp;
               <a href="{{ path('plateforme_core_page_pages_clone', {'id': page.id}) }}" data-toggle="tooltip" data-placement="top" title="Cloner">

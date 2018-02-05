@@ -16,8 +16,7 @@
     <meta name="msapplication-config" content="{{ asset('browserconfig.xml') }}">
     <meta name="theme-color" content="#ffffff">
     {% block stylesheets %}
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
       <link href="{{ asset('css/frontoffice.css') }}" rel="stylesheet">
     {% endblock %}
   </head>
@@ -37,23 +36,23 @@
               <b>Utilisez un réseau social</b>
               <br>
               <a href="http://www.facebook.com/share.php?u={{ app.request.uri }}&amp;title={{ site_name }}" target="_blank">
-                <i class="fa fa-facebook-square fa-2x"></i>
+                <i class="fab fa-facebook-square fa-2x"></i>
               </a>
               &nbsp;
               <a class="icon" href="http://twitter.com/home?status={{ app.request.uri }}" target="_blank">
-                <i class="fa fa-twitter-square  fa-2x"></i>
+                <i class="fab fa-twitter-square  fa-2x"></i>
               </a>
               &nbsp;
               <a class="icon" href="https://plus.google.com/share?url={{ app.request.uri }}l" target="_blank">
-                <i class="fa fa-google-plus-square  fa-2x"></i>
+                <i class="fab fa-google-plus-square  fa-2x"></i>
               </a>
               &nbsp;
               <a class="icon" href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ app.request.uri }}&amp;title={{ site_name }}&amp;source={{ app.request.uri }}" target="_blank">
-                <i class="fa fa-linkedin-square  fa-2x"></i>
+                <i class="fab fa-linkedin  fa-2x"></i>
               </a>
               &nbsp;
               <a class="icon" href="http://www.viadeo.com/shareit/share/?url={{ app.request.uri }}&amp;title={{ site_name }}&amp;source={{ app.request.uri }}" target="_blank">
-                <i class="fa fa-viadeo-square  fa-2x"></i>
+                <i class="fab fa-viadeo-square  fa-2x"></i>
               </a>
               <hr>
               <b>Ou écrivez à un proche</b>
@@ -77,7 +76,7 @@
                 <i class="fa fa-times" aria-hidden="true"></i> Annuler
               </button>
               <button type="submit" class="btn btn-success btn-sm">
-                <i class="fa fa-send-o" aria-hidden="true"></i>&nbsp;Partager
+                <i class="fas fa-bullhorn"></i>&nbsp;Partager
               </button>
             </div>
           </form>
@@ -123,17 +122,17 @@
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
               <li class="nav-item dropdown">
                 <a class="btn btn-default" href="#" id="menuUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <i class="fas fa-user"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuUser">
                   {% if is_granted('ROLE_CLIENT') and is_granted('ROLE_EMPLOYE') == false %}
                     <a class="dropdown-item" href="{{ path('fos_user_profile_show') }}">
-                      <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Mon Compte
+                      <i class="fas fa-user"></i>&nbsp;Mon Compte
                     </a>
                   {% endif %}
                   {% if is_granted('ROLE_EMPLOYE') %}
                     <a class="dropdown-item" href="{{ path('plateforme_core_bo_homepage') }}">
-                      <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Espace Pro
+                      <i class="fas fa-user"></i>&nbsp;Espace Pro
                     </a>
                   {% endif %}
                   <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">
@@ -144,7 +143,7 @@
             {% else %}
               <li class="nav-item">
                 <a href="{{ path('plateforme_user_login') }}" class="btn btn-default">
-                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <i class="fas fa-user"></i>
                 </a>
               </li>
             {% endif %}
@@ -209,8 +208,9 @@
 
     {% block javascripts %}
       <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
       <script>
         // Lance la recherche si l'utilisateur n'a pas saisie depuis 500ms
         $('#search_engine').keyup(function () {

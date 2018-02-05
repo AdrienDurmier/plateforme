@@ -16,7 +16,7 @@
   <div class="row">
     <div class="col-9">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+        <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fas fa-tachometer-alt"></i></a></li>
         <li class="breadcrumb-item"><a href="{{ path('plateforme_core_page_pages_crud') }}">Pages</a></li>
         <li class="breadcrumb-item active">Édition</li>
       </ol>
@@ -28,7 +28,7 @@
           <input type="hidden" name="page_is_public" value="{{page.isPublic}}">
           <button type="submit" class="btn {% if page.isPublic %}btn-success{% else %}btn-danger{% endif %} btn-sm">
             {% if page.isPublic %}
-              <i class="fa fa-eye" aria-hidden="true"></i> Publié
+              <i class="fas fa-eye"></i> Publié
             {% else %}
               <i class="fa fa-eye-slash" aria-hidden="true"></i> Non publié
             {% endif %}
@@ -36,7 +36,7 @@
         </form>
         &nbsp;
         <a href="{{ path('plateforme_core_page_pages_view', {'slug': page.slug}) }}" class="btn btn-light btn-sm">
-          <i class="fa fa-external-link" aria-hidden="true"></i> Voir cette page
+          <i class="fas fa-external-link-alt"></i> Voir cette page
         </a>
       </div>
     </div>
@@ -47,10 +47,10 @@
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <a class="nav-item nav-link active" id="onglet-contenu" data-toggle="tab" href="#content-contenu" role="tab" aria-controls="content-contenu" aria-selected="true">
-        <i class="fa fa-pencil" aria-hidden="true"></i> Contenu
+        <i class="fas fa-pencil-alt"></i> Contenu
       </a>
       <a class="nav-item nav-link" id="onglet-version" data-toggle="tab" href="#content-version" role="tab" aria-controls="content-version" aria-selected="false">
-        <i class="fa fa-code-fork" aria-hidden="true"></i> Versions
+        <i class="fas fa-code-branch"></i> Versions
       </a>
     </div>
   </nav>
@@ -157,7 +157,7 @@
               </small>
             </a>
             <a class="btn btn-primary add_comment_link" href="#" data-version-id="{{first_version.id}}" data-toggle="modal" data-target="#versionCommentModal">
-              <i class="fa fa-comments-o" aria-hidden="true"></i>
+              <i class="far fa-comments"></i>
             </a>
           </span>
           {{ html_versions|raw }}
@@ -190,7 +190,7 @@
                   <i class="fa fa-paper-plane" aria-hidden="true"></i>
                 </button>
                 <button id="refreshContributions" class="btn btn-outline-secondary" type="button">
-                  <i class="fa fa-refresh" aria-hidden="true"></i>
+                  <i class="fas fa-sync-alt"></i>
                 </button>
               </div>
             </div>

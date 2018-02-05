@@ -41,11 +41,11 @@
           <td>{{ categorie.type }}</td>
           <td>
             <a href="{{ path('plateforme_catalogue_attributs_categories_categorie', {'id': categorie.id}) }}" data-toggle="tooltip" data-placement="top" title="Voir ses attributs">
-              <i class="fa fa-eye" aria-hidden="true"></i>
+              <i class="fas fa-eye"></i>
             </a>
             &nbsp;|&nbsp;
             <a href="{{ path('plateforme_catalogue_attributs_categories_edit', {'id': categorie.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier">
-              <i class="fa fa-pencil" aria-hidden="true"></i>
+              <i class="fas fa-pencil-alt"></i>
             </a>
             &nbsp;|&nbsp;
             <a href="{{ path('plateforme_catalogue_attributs_categories_delete', {'id': categorie.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer" onclick="return confirm('Êtes-vous sûr ?');">
