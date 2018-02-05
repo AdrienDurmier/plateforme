@@ -59,13 +59,18 @@ class PageService {
         }
         $url = $this->router->generate($route_name, array('id' => $noeud['id']));
         $html .= "<li>";
-        $html .= '<a class="btn btn-light btn-sm text-left border m-1" href="' . $url . '">';
-        $html .= "<small>";
-        $html .= '<b>'.$noeud['commentaireVersion'].'</b>';
-        $html .= '<br>par ' . $noeud['username'];
-        $html .= '<br>le '.date_format($noeud['created'], 'd/m/Y H:i:s');
-        $html .= "</small>";
-        $html .= "</a>";
+        $html .= '<span class="btn-group m-1" role="group" aria-label="First group">';
+          $html .= '<a class="btn btn-light btn-sm text-left border" href="' . $url . '">';
+          $html .= "<small>";
+            $html .= '<b>' . $noeud['commentaireVersion'] . '</b>';
+            $html .= '<br>par ' . $noeud['username'];
+            $html .= '<br>le ' . date_format($noeud['created'], 'd/m/Y H:i:s');
+          $html .= "</small>";
+          $html .= "</a>";
+          $html .= '<a class="btn btn-primary add_comment_link" href="#" data-version-id="' . $noeud['id'] . '" data-toggle="modal" data-target="#versionCommentModal">';
+            $html .= '<i class="fa fa-comments-o" aria-hidden="true"></i>';
+          $html .= '</a>';
+        $html .= "</span>";
         $niveau_precedent = $niveau;
         $html .= $this->afficherArborescence($noeud['id'], ($niveau + 1), $array, $route_name);
       }
