@@ -80,24 +80,28 @@
 
           <div class="col-12 col-md-4">
             <div class="bg-light p-2 mt-2">
-              <h2><i class="fa fa-globe" aria-hidden="true"></i> SEO</h2>
+              <h2><i class="fas fa-globe"></i> SEO</h2>
               <div class="form-group">
                 <label for="metatitle">Meta title</label>
-                <input type="text" class="form-control form-control-sm" id="metatitle" name="metatitle" value="{{ page.metatitle }}">
+                <input type="text" class="form-control form-control-sm" id="metatitle" name="metatitle" value="{{ page.metatitle }}" />
                 <small id="metatitle_help" class="form-text text-muted"><i class="fa fa-info-circle" aria-hidden="true"></i> Sera une copie du titre si vide.</small>
               </div>
 
               <label for="metadescription">Meta description</label>
               <div class="input-group input-group-sm">
                 <textarea class="form-control form-control-sm" id="metadescription" name="metadescription" rows="3">{{ page.metadescription|raw }}</textarea>
-                <span class="input-group-addon" id="metadescription_size">{{ page.metadescription|length }}</span>
+                <div class="input-group-append">
+                  <span id="metadescription_size" class="input-group-text">{{ page.metadescription|length }}</span>
+                </div>
               </div>
               <small id="metadescription_help" class="form-text text-muted">
                 <i class="fa fa-info-circle" aria-hidden="true"></i> Ce texte apparait dans les résultats des moteurs de recherche. Il est conseillé d'avoir entre 130 et 165 caractères.
               </small>
 
               <div class="input-group input-group-sm">
-                <span class="input-group-addon" id="basic-addon1">Priorité Sitemap XML</span>
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Priorité Sitemap XML</span>
+                </div>
                 <select class="form-control" id="xmlSitemapPriority" name="xmlSitemapPriority">
                   <option value=null {% if page.xmlSitemapPriority is null %} selected="selected" {% endif %}></option>
                   <option value="1.0" {% if page.xmlSitemapPriority == "1.0" %} selected="selected" {% endif %}>1.0</option>
@@ -115,7 +119,9 @@
               </div>
               <br/>
               <div class="input-group input-group-sm">
-                <span class="input-group-addon" id="basic-addon1">Fréquence Sitemap XML</span>
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Fréquence Sitemap XML</span>
+                </div>
                 <select class="form-control" id="xmlSitemapChangefreq" name="xmlSitemapChangefreq">
                   <option value=null {% if page.xmlSitemapChangefreq is null %} selected="selected" {% endif %}></option>
                   <option value="always" {% if page.xmlSitemapChangefreq == "always" %} selected="selected" {% endif %}>always</option>
@@ -136,160 +142,17 @@
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <button class="btn btn-success" type="submit">
-              <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer
+              <i class="far fa-save"></i>&nbsp;Enregistrer
             </button>
           </div>
-          <input type="text" class="form-control" name="commentaire_version" placeholder="Laisser un commentaire sur vos modifications..." required>
+          <input type="text" class="form-control" name="commentaire_version" placeholder="Laisser un commentaire sur vos modifications..." required />
         </div>
       </form>
     </div>
 
     <div class="tab-pane fade" id="content-version" role="tabpanel" aria-labelledby="onglet-version">
-
-      <ul id="tree" class="tree">
-        <li>
-          <span class="btn-group m-1" role="group" aria-label="First group">
-            <a class="btn btn-light btn-sm text-left border" href="{{ path('plateforme_core_page_pages_edit', {'id': first_version.id}) }}">
-              <small>
-                <b>Version originale</b>
-                <br>par {{first_version.auteur}}
-                <br>le {{first_version.created|date('d/m/Y H:i:s')}}
-              </small>
-            </a>
-            <a class="btn btn-primary add_comment_link" href="#" data-version-id="{{first_version.id}}" data-toggle="modal" data-target="#versionCommentModal">
-              <i class="far fa-comments"></i>
-            </a>
-          </span>
-          {{ html_versions|raw }}
-        </li>
-      </ul>
-
+      {{ render(controller("PlateformeCoreBundle:Page:showVersions", {'id': first_version.id })) }}
     </div>
   </div>
 
-  {# Formulaire d'ajout de commentaire de version #}
-  <div class="modal fade" id="versionCommentModal" tabindex="-1" role="dialog" aria-labelledby="versionCommentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="versionCommentModalLabel">Commentaires sur cette version</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form id="form_version_comments" method="post">
-          <div class="modal-body">
-            <div id="comments_area" style="overflow-y:scroll;max-height:350px;"></div>
-          </div>
-          <div class="modal-footer">
-            <div class="input-group">
-              <input type="hidden" id="version_id" name="version_id" value="">
-              <input type="text" class="form-control form-control-sm" id="version_comment" name="version_comment">
-              <div class="input-group-append">
-                <button id="sendContribution" class="btn btn-outline-secondary" type="button">
-                  <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                </button>
-                <button id="refreshContributions" class="btn btn-outline-secondary" type="button">
-                  <i class="fas fa-sync-alt"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-{% endblock %}
-
-{% block javascripts %}
-  {# Récupération des scripts des parents #}
-  {{ parent() }}
-
-  <script>
-    // Permet de compter les caractères pour conseillez à l'utilisateur de saisir environ 165 caractères.
-    jQuery(document).on('change keyup', '#metadescription', function (event) {
-      var taille_metadescription = $(this).val().length;
-      jQuery('#metadescription_size').text(taille_metadescription);
-    });
-
-    // Renvoie l'identifiant de la version sélectionnée au formulaire d'ajout de commentaire de version
-    jQuery(".add_comment_link").click(function () {
-      var version_id = jQuery(this).data('version-id');
-      getContributions(version_id);
-    });
-    jQuery("#refreshContributions").click(function () {
-      var version_id = jQuery("#version_id").val();
-      getContributions(version_id);
-    });
-    jQuery("#sendContribution").click(function () {
-      var version_id = jQuery("#version_id").val();
-      sendContribution(version_id);
-    });
-
-    function sendContribution(version_id) {
-      var version_comment = jQuery('#version_comment').val();
-      var parametres = {
-        version_id: version_id,
-        version_comment: version_comment
-      };
-      jQuery.ajax({
-        url: "{{ path('plateforme_core_pages_version_comment_add') }}",
-        type: 'post',
-        dataType: 'json',
-        success: function (data) {
-          getContributions(version_id);
-        },
-        data: parametres
-      });
-    }
-
-    function getContributions(version_id) {
-      jQuery("#version_id").val(version_id);
-      var parametres = {
-        version_id: version_id
-      };
-      jQuery.ajax({
-        url: "{{ path('plateforme_core_pages_version_comment_get') }}",
-        type: 'post',
-        dataType: 'json',
-        beforeSend: function () {
-          jQuery('#comments_area').html('<i class="fa fa-spinner fa-pulse fa-fw"></i> Chargement des messages');
-        },
-        success: function (data) {
-          var results_html = '';
-          if (data.data.contributions.length > 0) {
-            jQuery.each(data.data.contributions, function (index, element) {
-              results_html = results_html + '<blockquote class="blockquote bg-light p-2">';
-              results_html = results_html + '<p class="mb-0">';
-              results_html = results_html + element.comment;
-              results_html = results_html + '</p>';
-              results_html = results_html + '<footer class="blockquote-footer">';
-              results_html = results_html + 'de ' + element.user + ' le ' + element.date;
-              results_html = results_html + '</footer>';
-              results_html = results_html + '</blockquote>';
-            });
-          } else {
-            results_html = results_html + 'Aucun commentaire';
-          }
-          jQuery('#comments_area').html(results_html);
-          jQuery("#version_comment").val('');
-          jQuery("#comments_area").scrollTop($("#comments_area")[0].scrollHeight);
-        },
-        data: parametres
-      });
-    }
-
-    // Permet de mettre à jour les commentaires directement si l'utilisateur fait Entrer
-    $('#form_version_comments').submit(function (e) {
-      var version_id = jQuery("#version_id").val();
-      sendContribution(version_id);
-      e.preventDefault();
-    });
-
-    // Mets le focus sur la saisie de commentaire au chargement de la fenêtre
-    $('#versionCommentModal').on('shown.bs.modal', function () {
-      $('#version_comment').focus();
-    });
-  </script>
 {% endblock %}

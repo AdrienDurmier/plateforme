@@ -99,15 +99,10 @@ class PageStandardController extends Controller {
     }
     // Affichage des versions
     $first_version = $em->getRepository('PlateformeCoreBundle:Page')->getFirstVersion($page_original->getGroupe());
-    $versions_groupe = $em->getRepository('PlateformeCoreBundle:Page')->getAllVersions($page_original->getGroupe());
-    $service_versionner = $this->container->get('core_page');
-    $html_versions = $service_versionner->afficherArborescence($first_version->getId(),0, $versions_groupe, 'plateforme_core_page_pages_edit');
 
     return $this->render('PlateformeCoreBundle:PageStandard:edit.html.twig', array(
           'page' => $page_original,
-          'html_versions' => $html_versions,
           'first_version' => $first_version,
-          'versions' => $versions,
     ));
   }
 
