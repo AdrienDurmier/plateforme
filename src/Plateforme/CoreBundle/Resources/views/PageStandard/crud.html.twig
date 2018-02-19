@@ -9,14 +9,14 @@
   <h1>Gestion des pages</h1>
   
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fas fa-tachometer-alt"></i></a></li>
     <li class="breadcrumb-item active">Pages</li>
   </ol>
   
   <hr>
   
   <a href="{{ path('plateforme_core_page_pages_add') }}" class="btn btn-success btn-sm">
-    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Créer une page
+    <i class="fas fa-plus"></i>&nbsp;Créer une page
   </a>
         
   <br>
@@ -52,11 +52,11 @@
               </a>
               &nbsp;|&nbsp;
               <a href="{{ path('plateforme_core_page_pages_clone', {'id': page.id}) }}" data-toggle="tooltip" data-placement="top" title="Cloner">
-                <i class="fa fa-clone" aria-hidden="true"></i>
+                <i class="far fa-clone"></i>
               </a>
               &nbsp;|&nbsp;
               <a href="{{ path('plateforme_core_page_pages_delete', {'id': page.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer" onclick="return confirm('Êtes-vous sûr ?');">
-                <i class="fa fa-trash" aria-hidden="true"></i>
+                <i class="far fa-trash-alt"></i>
               </a>
             </td>
           </tr>

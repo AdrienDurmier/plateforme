@@ -1,7 +1,7 @@
 <ul id="tree" class="tree">
   <li>
     <span class="btn-group m-1" role="group" aria-label="First group">
-      <a class="btn btn-light btn-sm text-left border" href="{{ path('plateforme_core_page_pages_edit', {'id': first_version.id}) }}">
+      <a class="btn btn-light btn-sm text-left border" href="{{ path(route, {'id': first_version.id}) }}">
         <small>
           <b>Version originale</b>
           <br>par {{first_version.auteur}}

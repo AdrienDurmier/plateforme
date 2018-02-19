@@ -47,9 +47,9 @@ class PageController extends Controller {
   /**
    * Affiche les versions d'une page
    */
-  public function showVersionsAction($id, Request $request) {
+  public function showVersionsAction($id, $route, Request $request) {
     $em = $this->getDoctrine()->getManager();
-    $page_original = $em->getRepository('PlateformeCoreBundle:PageStandard')->find($id);
+    $page_original = $em->getRepository('PlateformeCoreBundle:Page')->find($id);
     if (null === $page_original) {
       throw new NotFoundHttpException("La page ayant l'identifiant " . $id . " n'existe pas.");
     }
@@ -63,6 +63,7 @@ class PageController extends Controller {
     return $this->render('PlateformeCoreBundle:Page:versions.html.twig', array(
           'html_versions' => $html_versions,
           'first_version' => $first_version,
+          'route' => $route,
           'versions' => $versions,
     ));
   }

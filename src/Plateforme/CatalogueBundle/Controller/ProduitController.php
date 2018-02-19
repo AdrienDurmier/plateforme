@@ -40,6 +40,7 @@ class ProduitController extends Controller {
       $produit->setContenu($valeurs_recu['contenu']);
       $marque = $em->getRepository('PlateformeCatalogueBundle:Marque')->find($valeurs_recu['marque']);
       $produit->setMarque($marque);
+      $produit->setStock($valeurs_recu['stock']);
       $produit->setPrix($valeurs_recu['prix']);
       $tva = $em->getRepository('PlateformeEcommerceBundle:Tva')->find($valeurs_recu['tva']);
       $produit->setTva($tva);
@@ -117,11 +118,15 @@ class ProduitController extends Controller {
       $request->getSession()->getFlashBag()->add('success', "Produit modifié avec succès");
       return $this->redirectToRoute('plateforme_catalogue_produits_crud');
     }
+    
+    // Affichage des versions
+    $first_version = $em->getRepository('PlateformeCoreBundle:Page')->getFirstVersion($produit_original->getGroupe());
 
     return $this->render('PlateformeCatalogueBundle:Produit:edit.html.twig', array(
           'produit' => $produit_original,
           'marques' => $marques,
           'tvas' => $tvas,
+          'first_version' => $first_version,
     ));
   }
 

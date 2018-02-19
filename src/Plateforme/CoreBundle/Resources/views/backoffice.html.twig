@@ -114,22 +114,22 @@
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
               <a class="nav-link" href="{{ path('plateforme_catalogue_categories_crud') }}">
-                <i class="fa fa-tags" aria-hidden="true"></i>&nbsp;Catégories
+                <i class="fas fa-tags"></i>&nbsp;Catégories
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ path('plateforme_catalogue_marques_crud') }}">
-                <i class="fa fa-folder" aria-hidden="true"></i>&nbsp;Marques
+                <i class="fas fa-folder"></i>&nbsp;Marques
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ path('plateforme_catalogue_produits_crud') }}">
-                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;Produits
+                <i class="fab fa-product-hunt"></i>&nbsp;Produits
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ path('plateforme_catalogue_attributs_categories_crud') }}">
-                <i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;Attributs
+                <i class="fas fa-list-alt"></i>&nbsp;Attributs
               </a>
             </li>
           </ul>
@@ -140,17 +140,17 @@
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
               <a class="nav-link" href="{{ path('plateforme_ecommerce_commandes_crud') }}">
-                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;Commandes
+                <i class="far fa-file-alt"></i>&nbsp;Commandes
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ path('plateforme_ecommerce_etatspaiement_crud') }}">
-                <i class="fa fa-euro" aria-hidden="true"></i>&nbsp;État de paiement
+                <i class="fas fa-euro-sign"></i>&nbsp;État de paiement
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ path('plateforme_ecommerce_etatslivraison_crud') }}">
-                <i class="fa fa-truck" aria-hidden="true"></i>&nbsp;État de livraison
+                <i class="fas fa-truck"></i>&nbsp;État de livraison
               </a>
             </li>
           </ul>
@@ -200,11 +200,22 @@
       <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
       <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
       <script>
-        // Permet de compter les caractères pour conseillez à l'utilisateur de saisir environ 165 caractères.
+        /***********************************************************************
+         * SEO
+         **********************************************************************/
+        // Permet de compter les caractères
+        jQuery(document).on('change keyup', '#metatitle', function (event) {
+          var taille_metatitle = $(this).val().length;
+          jQuery('#metatitle_size').text(taille_metatitle);
+        });
         jQuery(document).on('change keyup', '#metadescription', function (event) {
           var taille_metadescription = $(this).val().length;
           jQuery('#metadescription_size').text(taille_metadescription);
         });
+        
+        /***********************************************************************
+         * PARTIE VERSIONNING
+         **********************************************************************/
         // Renvoie l'identifiant de la version sélectionnée au formulaire d'ajout de commentaire de version
         jQuery(".add_comment_link").click(function () {
           var version_id = jQuery(this).data('version-id');
@@ -218,7 +229,6 @@
           var version_id = jQuery("#version_id").val();
           sendContribution(version_id);
         });
-
         function sendContribution(version_id) {
           var version_comment = jQuery('#version_comment').val();
           var parametres = {
@@ -235,7 +245,6 @@
             data: parametres
           });
         }
-
         function getContributions(version_id) {
           jQuery("#version_id").val(version_id);
           var parametres = {
@@ -271,14 +280,12 @@
             data: parametres
           });
         }
-
         // Permet de mettre à jour les commentaires directement si l'utilisateur fait Entrer
         $('#form_version_comments').submit(function (e) {
           var version_id = jQuery("#version_id").val();
           sendContribution(version_id);
           e.preventDefault();
         });
-
         // Mets le focus sur la saisie de commentaire au chargement de la fenêtre
         $('#versionCommentModal').on('shown.bs.modal', function () {
           $('#version_comment').focus();

@@ -1,0 +1,60 @@
+<div class="bg-light p-2 mt-2">
+  <h2><i class="fas fa-globe"></i> SEO</h2>
+  <div class="form-group">
+    <label for="metatitle">Meta title</label>
+    <div class="input-group input-group-sm">
+      <input type="text" class="form-control form-control-sm" id="metatitle" name="metatitle" />
+      <div class="input-group-append">
+        <span id="metatitle_size" class="input-group-text"></span>
+      </div>
+    </div>
+    <small id="metatitle_help" class="form-text text-muted"><i class="fa fa-info-circle" aria-hidden="true"></i> Sera une copie du titre si vide.</small>
+  </div>
+
+  <label for="metadescription">Meta description</label>
+  <div class="input-group input-group-sm">
+    <textarea class="form-control form-control-sm" id="metadescription" name="metadescription" rows="3"></textarea>
+    <div class="input-group-append">
+      <span id="metadescription_size" class="input-group-text"></span>
+    </div>
+  </div>
+  <small id="metadescription_help" class="form-text text-muted">
+    <i class="fa fa-info-circle" aria-hidden="true"></i> Ce texte apparait dans les résultats des moteurs de recherche. Il est conseillé d'avoir entre 130 et 165 caractères.
+  </small>
+
+  <div class="input-group input-group-sm">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Priorité Sitemap XML</span>
+    </div>
+    <select class="form-control" id="xmlSitemapPriority" name="xmlSitemapPriority">
+      <option value=null></option>
+      <option value="1.0">1.0</option>
+      <option value="0.9">0.9</option>
+      <option value="0.8">0.8</option>
+      <option value="0.7">0.7</option>
+      <option value="0.6">0.6</option>
+      <option value="0.5">0.5</option>
+      <option value="0.4">0.4</option>
+      <option value="0.3">0.3</option>
+      <option value="0.2">0.2</option>
+      <option value="0.1">0.1</option>
+      <option value="0.0">0.0</option>
+    </select>
+  </div>
+  <br/>
+  <div class="input-group input-group-sm">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Fréquence Sitemap XML</span>
+    </div>
+    <select class="form-control" id="xmlSitemapChangefreq" name="xmlSitemapChangefreq">
+      <option value=null></option>
+      <option value="always">always</option>
+      <option value="hourly">hourly</option>
+      <option value="daily">daily</option>
+      <option value="weekly">weekly</option>
+      <option value="monthly">monthly</option>
+      <option value="yearly">yearly</option>
+      <option value="never">never</option>
+    </select>
+  </div>
+</div>

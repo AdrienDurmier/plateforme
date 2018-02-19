@@ -111,7 +111,9 @@
           <form id="form-search-engine" name="form-search-engine" class="my-2 my-md-0" style="position:relative;">
             <div class="input-group">
               <input id="search_engine" class="form-control" name="search[query]" placeholder="Rechercher" type="search">
-              <span id="search_engine_picto" class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+              <div class="input-group-append">
+                <span id="search_engine_picto" class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+              </div>
             </div>
             <div id="header_search_results" style="display:none;">
               <div id="header_search_produits"></div>
@@ -164,7 +166,7 @@
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <i class="fa fa-check-circle" aria-hidden="true"></i> {{ message }}
+          <i class="far fa-check-circle"></i> {{ message }}
         </div>
       </div>
     {% endfor %} 
@@ -174,7 +176,7 @@
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <i class="fa fa-info-circle" aria-hidden="true"></i> {{ message }}
+          <i class="fas fa-info-circle"></i> {{ message }}
         </div>
       </div>
     {% endfor %} 
@@ -184,7 +186,7 @@
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{ message }}
+          <i class="fas fa-exclamation-circle"></i> {{ message }}
         </div>
       </div>
     {% endfor %} 
@@ -194,7 +196,7 @@
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <i class="fa fa-times-circle" aria-hidden="true"></i> {{ message }}
+          <i class="fas fa-times-circle"></i> {{ message }}
         </div>
       </div>
     {% endfor %} 

@@ -9,7 +9,7 @@
   <h1>Gestion des categories</h1>
   
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
+    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fas fa-tachometer-alt"></i></a></li>
     <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
     <li class="breadcrumb-item active">Catégories</li>
   </ol>
@@ -51,7 +51,7 @@
               </a>
               &nbsp;|&nbsp;
               <a href="{{ path('plateforme_catalogue_categories_clone', {'id': categorie.id}) }}" data-toggle="tooltip" data-placement="top" title="Cloner">
-                <i class="fa fa-clone" aria-hidden="true"></i>
+                <i class="far fa-clone"></i>
               </a>
               &nbsp;|&nbsp;
               <a href="{{ path('plateforme_catalogue_categories_delete', {'id': categorie.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer" onclick="return confirm('Êtes-vous sûr ?');">

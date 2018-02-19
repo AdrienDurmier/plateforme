@@ -8,122 +8,153 @@
 
   <h1>Édition d'un produit</h1>
 
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fa fa-dashboard" aria-hidden="true"></i></a></li>
-    <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
-    <li class="breadcrumb-item"><a href="{{ path('plateforme_catalogue_produits_crud') }}">Produits</a></li>
-    <li class="breadcrumb-item active">Édition</li>
-  </ol>
+  <div class="row">
+    <div class="col-9">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_homepage') }}"><i class="fas fa-tachometer-alt"></i></a></li>
+        <li class="breadcrumb-item"><a href="{{ path('plateforme_core_bo_catalogue') }}">Catalogue</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('plateforme_catalogue_produits_crud') }}">Produits</a></li>
+        <li class="breadcrumb-item active">Édition</li>
+      </ol>
+    </div>
+    <div class="col-3 text-right">
+      <div class="btn-group btn-group-sm">
+        <form action="{{ path('plateforme_core_pages_publication') }}" method="post">
+          <input type="hidden" name="page_id" value="{{produit.id}}">
+          <input type="hidden" name="page_is_public" value="{{produit.isPublic}}">
+          <button type="submit" class="btn {% if produit.isPublic %}btn-success{% else %}btn-danger{% endif %} btn-sm">
+            {% if produit.isPublic %}
+              <i class="fas fa-eye"></i> Publié
+            {% else %}
+              <i class="fa fa-eye-slash" aria-hidden="true"></i> Non publié
+            {% endif %}
+          </button>
+        </form>
+        &nbsp;
+        <a href="{{ path('plateforme_catalogue_produits_view', {'slug': produit.slug}) }}" class="btn btn-light btn-sm" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Voir cette page
+        </a>
+      </div>
+    </div>
+  </div>
 
   <hr>
 
-  <div class="row">
-    <div class="col-12 col-lg-3">
-      <div class="bg-light p-2">
-        <h2><i class="fa fa-tags" aria-hidden="true"></i> Catégories</h2>
-        <hr>
-        <div style="position:relative;">
-          <div class="input-group input-group-sm">
-            <input id="search_categorie" class="form-control" name="search_categorie" placeholder="Rechercher" type="search">
-            <span id="search_categorie_picto" class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
-          </div>
-          <div id="search_categorie_results" class="autocomplete_results_area" style="display:none;">
-            <div id="search_categories"></div>
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="onglet-contenu" data-toggle="tab" href="#content-contenu" role="tab" aria-controls="content-contenu" aria-selected="true">
+        <i class="fas fa-pencil-alt"></i> Contenu
+      </a>
+      <a class="nav-item nav-link" id="onglet-version" data-toggle="tab" href="#content-version" role="tab" aria-controls="content-version" aria-selected="false">
+        <i class="fas fa-code-branch"></i> Versions
+      </a>
+    </div>
+  </nav>
+
+  <div class="tab-content" id="onglets">
+    <div class="tab-pane fade show active" id="content-contenu" role="tabpanel" aria-labelledby="onglet-contenu">
+
+      <div class="row">
+        <div class="col-12 col-lg-3">
+          <div class="bg-light p-2">
+            <h2><i class="fas fa-tags"></i> Catégories</h2>
+            <div style="position:relative;">
+              <div class="input-group input-group-sm">
+                <input id="search_categorie" class="form-control" name="search_categorie" placeholder="Rechercher" type="search">
+                <div class="input-group-append">
+                  <span id="search_categorie_picto" class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
+              </div>
+              <div id="search_categorie_results" class="autocomplete_results_area" style="display:none;">
+                <div id="search_categories"></div>
+              </div>
+            </div>
+            {% for categorie in produit.getCategories %}
+              <div class="btn btn-secondary btn-sm m-1">
+                <a href="{{ path('plateforme_catalogue_categories_edit', {'id': categorie.id}) }}" class="text-light">
+                  {{ categorie.titre }}
+                </a>
+                <a href="{{ path('plateforme_catalogue_produits_removecategorie', {'id_produit': produit.id, 'id_categorie': categorie.id}) }}" class="text-dark">
+                  <span class="badge badge-light">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </span>
+                </a>
+              </div>
+            {% endfor %}
           </div>
         </div>
-        {% for categorie in produit.getCategories %}
-          <div class="btn btn-secondary btn-sm m-1">
-            <a href="{{ path('plateforme_catalogue_categories_edit', {'id': categorie.id}) }}" class="text-light">
-              {{ categorie.titre }}
-            </a>
-            <a href="{{ path('plateforme_catalogue_produits_removecategorie', {'id_produit': produit.id, 'id_categorie': categorie.id}) }}" class="text-dark">
-              <span class="badge badge-light">
-                <i class="fa fa-times" aria-hidden="true"></i>
-              </span>
-            </a>
-          </div>
-        {% endfor %}
+
+        <div class="col-12 col-lg-9">
+          <form action="{{ path('plateforme_catalogue_produits_edit', {'id': produit.id}) }}" method="post">
+            <div class="row">
+              <div class="col-12 col-lg-8">
+                <div class="p-2">
+                  <div class="form-group">
+                    <label for="titre">Titre</label>
+                    <input type="text" class="form-control form-control-sm" id="titre" name="titre" value="{{ produit.titre }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="contenu">Contenu</label>
+                    <textarea class="form-control form-control-sm" id="contenu" name="contenu" rows="3">{{ produit.contenu|raw }}</textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="marque">Marque</label>
+                    <select class="form-control form-control-sm" id="marque" name="marque">
+                      <option value="_none"> - Sélectionner une marque - </option>
+                      {% for marque in marques %}
+                        <option value="{{ marque.id }}" {% if marque.id == produit.marque.id %}selected{% endif %}>{{ marque }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="prix">Stock</label>
+                    <input type="number" class="form-control form-control-sm" id="stock" name="stock" value="{{ produit.stock }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="prix">Prix</label>
+                    <input type="number" step="0.01" class="form-control form-control-sm" id="prix" name="prix" value="{{ produit.prix }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="marque">TVA</label>
+                    <select class="form-control form-control-sm" id="tva" name="tva">
+                      {% for tva in tvas %}
+                        <option value="{{ tva.id }} {% if tva.id == produit.tva.id %}selected{% endif %}">{{ tva }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="poids">Poids en kg</label>
+                    <input type="number" step="0.001" class="form-control form-control-sm" id="poids" name="poids" value="{{ produit.poids }}">
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-4">
+                {{ render(controller("PlateformeCoreBundle:SEO:edit", {'id': produit.id })) }}
+              </div>
+            </div>
+            <hr>
+
+            <div class="input-group input-group-sm mb-3">
+              <div class="input-group-prepend">
+                <button class="btn btn-success" type="submit">
+                  <i class="far fa-save"></i>&nbsp;Enregistrer
+                </button>
+              </div>
+              <input type="text" class="form-control form-control-sm" name="commentaire_version" placeholder="Laisser un commentaire sur vos modifications..." required />
+            </div>
+        </div>
       </div>
     </div>
 
-    <div class="col-12 col-lg-9">
-      <form action="{{ path('plateforme_catalogue_produits_edit', {'id': produit.id}) }}" method="post">
-        <div class="row">
-          <div class="col-12 col-lg-8">
-            <div class="p-2">
-              <h2><i class="fa fa-file-text" aria-hidden="true"></i> Contenu</h2>
-              <hr>
-              <div class="form-group">
-                <label for="titre">Titre</label>
-                <input type="text" class="form-control form-control-sm" id="titre" name="titre" value="{{ produit.titre }}">
-              </div>
-
-              <div class="form-group">
-                <label for="contenu">Contenu</label>
-                <textarea class="form-control form-control-sm" id="contenu" name="contenu" rows="3">{{ produit.contenu|raw }}</textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="marque">Marque</label>
-                <select class="form-control form-control-sm" id="marque" name="marque">
-                  <option value="_none"> - Sélectionner une marque - </option>
-                  {% for marque in marques %}
-                    <option value="{{ marque.id }}" {% if marque.id == produit.marque.id %}selected{% endif %}>{{ marque }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="prix">Stock</label>
-                <input type="number" class="form-control form-control-sm" id="stock" name="stock" value="{{ produit.stock }}">
-              </div>
-
-              <div class="form-group">
-                <label for="prix">Prix</label>
-                <input type="number" step="0.01" class="form-control form-control-sm" id="prix" name="prix" value="{{ produit.prix }}">
-              </div>
-
-              <div class="form-group">
-                <label for="marque">TVA</label>
-                <select class="form-control form-control-sm" id="tva" name="tva">
-                  {% for tva in tvas %}
-                    <option value="{{ tva.id }} {% if tva.id == produit.tva.id %}selected{% endif %}">{{ tva }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="poids">Poids en kg</label>
-                <input type="number" step="0.001" class="form-control form-control-sm" id="poids" name="poids" value="{{ produit.poids }}">
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-lg-4">
-            <div class="bg-light p-2">
-              <h2><i class="fa fa-globe" aria-hidden="true"></i> Référencement</h2>
-              <hr>
-              <div class="form-group">
-                <label for="metatitle">Meta title</label>
-                <input type="text" class="form-control form-control-sm" id="metatitle" name="metatitle" value="{{ produit.metatitle }}">
-                <small id="metatitle_help" class="form-text text-muted"><i class="fa fa-info-circle" aria-hidden="true"></i> Sera une copie du titre si vide.</small>
-              </div>
-              <label for="metadescription">Meta description</label>
-              <div class="input-group input-group-sm">
-                <textarea class="form-control form-control-sm" id="metadescription" name="metadescription" rows="3">{{ produit.metadescription }}</textarea>
-                <span class="input-group-addon" id="metadescription_size"></span>
-              </div>
-              <small id="metadescription_help" class="form-text text-muted">
-                <i class="fa fa-info-circle" aria-hidden="true"></i> Ce texte apparait dans les résultats des moteurs de recherche. Il est conseillé d'avoir entre 130 et 165 caractères.
-              </small>
-            </div>
-          </div>
-        </div>
-        <hr>
-        <button type="submit" class="btn btn-success btn-sm">
-          <i class="far fa-save"></i>&nbsp;Enregistrer
-        </button>
+    <div class="tab-pane fade" id="content-version" role="tabpanel" aria-labelledby="onglet-version">
+      {{ render(controller("PlateformeCoreBundle:Page:showVersions", {'id': first_version.id, 'route': 'plateforme_catalogue_produits_edit' })) }}
     </div>
-
   </div>
 
 </form>
@@ -164,14 +195,14 @@
             if (data.data.produit.length > 0) {
               $.each(data.data.produit, function (index, element) {
                 results_html = results_html + '<div class="autocomplete_result bg-light">';
-                  results_html = results_html + '<a href="{{ path('plateforme_core_homepage') }}admin/produits/add-categorie/{{produit.id}}/' + element.id + '">';
-                    results_html = results_html + '<i class="fa fa-plus" aria-hidden="true"></i> '+element.titre;
-                  results_html = results_html + '</a>';
+                results_html = results_html + '<a href="{{ path('plateforme_core_homepage') }}admin/produits/add-categorie/{{produit.id}}/' + element.id + '">';
+                results_html = results_html + '<i class="fa fa-plus" aria-hidden="true"></i> ' + element.titre;
+                results_html = results_html + '</a>';
                 results_html = results_html + '</div>';
               });
             } else {
               results_html = results_html + '<div class="autocomplete_result bg-light">';
-                results_html = results_html + '<i class="fa fa-frown-o" aria-hidden="true"></i> Aucun résultat';
+              results_html = results_html + '<i class="fa fa-frown-o" aria-hidden="true"></i> Aucun résultat';
               results_html = results_html + '</div>';
             }
             $('#search_categories').html(results_html);
