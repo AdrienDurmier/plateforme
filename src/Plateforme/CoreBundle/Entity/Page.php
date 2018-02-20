@@ -28,8 +28,6 @@ abstract class Page {
 
   public function __construct() {
     $this->created = new \Datetime();
-    $this->xml_sitemap_changefreq = 'always';
-    $this->xml_sitemap_priority = '0.5';
   }
 
   public function __toString() {
@@ -67,30 +65,9 @@ abstract class Page {
   /**
    * @var string
    *
-   * @ORM\Column(name="slug", type="string", length=255)
-   */
-  private $slug;
-
-  /**
-   * @var string
-   *
    * @ORM\Column(name="commentaire_version", type="string", length=255, nullable=true)
    */
   private $commentaireVersion;
-
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="metatitle", type="string", length=255, nullable=true)
-   */
-  private $metatitle;
-
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="metadescription", type="string", length=255, nullable=true)
-   */
-  private $metadescription;
 
   /**
    * @var \DateTime
@@ -112,20 +89,6 @@ abstract class Page {
    * @ORM\Column(name="is_public", type="boolean", nullable=true)
    */
   private $is_public;
-
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="xml_sitemap_priority", type="decimal", precision=10, scale=1, nullable=true)
-   */
-  protected $xml_sitemap_priority;
-
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="xml_sitemap_changefreq", type="string", length=255, nullable=true)
-   */
-  protected $xml_sitemap_changefreq;
 
   /**
    * @ORM\ManyToOne(targetEntity="Plateforme\UserBundle\Entity\User")
@@ -161,7 +124,6 @@ abstract class Page {
    */
   public function setTitre($titre) {
     $this->titre = $titre;
-    $this->setSlug($this->titre);
     return $this;
   }
 
@@ -196,44 +158,6 @@ abstract class Page {
   }
 
   /**
-   * Set slug
-   *
-   * @param string $slug
-   *
-   * @return Page
-   */
-  public function setSlug($slug) {
-    if (empty($slug)) {
-      $this->slug = $this->slugify($this->titre);
-    }
-    else {
-      $this->slug = $this->slugify($slug);
-    }
-
-    return $this;
-  }
-
-  /**
-   * Get slug
-   *
-   * @return string
-   */
-  public function getSlug() {
-    return $this->slug;
-  }
-
-  public function slugify($texte) {
-    $texte = preg_replace('#[^\\pL\d]+#u', '-', $texte);
-    $texte = trim($texte, '-');
-    if (function_exists('iconv')) {
-      $texte = iconv('utf-8', 'us-ascii//TRANSLIT', $texte);
-    }
-    $texte = strtolower($texte);
-    $texte = preg_replace('#[^-\w]+#', '', $texte);
-    return $texte;
-  }
-
-  /**
    * Set commentaireVersion
    *
    * @param string $commentaireVersion
@@ -253,59 +177,6 @@ abstract class Page {
    */
   public function getCommentaireVersion() {
     return $this->commentaireVersion;
-  }
-
-  /**
-   * Set metatitle
-   *
-   * @param string $metatitle
-   *
-   * @return Page
-   */
-  public function setMetatitle($metatitle) {
-    if (empty($metatitle)) {
-      $this->metatitle = $this->titre;
-    }
-    else {
-      $this->metatitle = $metatitle;
-    }
-    return $this;
-  }
-
-  /**
-   * Get metatitle
-   *
-   * @return string
-   */
-  public function getMetatitle() {
-    return $this->metatitle;
-  }
-
-  /**
-   * Set metadescription
-   *
-   * @param string $metadescription
-   *
-   * @return Page
-   */
-  public function setMetadescription($metadescription) {
-    if (empty($metadescription)) {
-      $this->metadescription = $this->titre;
-    }
-    else {
-      $this->metadescription = $metadescription;
-    }
-
-    return $this;
-  }
-
-  /**
-   * Get metadescription
-   *
-   * @return string
-   */
-  public function getMetadescription() {
-    return $this->metadescription;
   }
 
   /**
@@ -379,50 +250,6 @@ abstract class Page {
    */
   public function getIsPublic() {
     return $this->is_public;
-  }
-
-  /**
-   * Set xmlSitemapPriority
-   *
-   * @param string $xmlSitemapPriority
-   *
-   * @return Page
-   */
-  public function setXmlSitemapPriority($xmlSitemapPriority) {
-    $this->xml_sitemap_priority = $xmlSitemapPriority;
-
-    return $this;
-  }
-
-  /**
-   * Get xmlSitemapPriority
-   *
-   * @return string
-   */
-  public function getXmlSitemapPriority() {
-    return $this->xml_sitemap_priority;
-  }
-
-  /**
-   * Set xmlSitemapChangefreq
-   *
-   * @param string $xmlSitemapChangefreq
-   *
-   * @return Page
-   */
-  public function setXmlSitemapChangefreq($xmlSitemapChangefreq) {
-    $this->xml_sitemap_changefreq = $xmlSitemapChangefreq;
-
-    return $this;
-  }
-
-  /**
-   * Get xmlSitemapChangefreq
-   *
-   * @return string
-   */
-  public function getXmlSitemapChangefreq() {
-    return $this->xml_sitemap_changefreq;
   }
 
   /**

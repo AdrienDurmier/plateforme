@@ -1,6 +1,9 @@
 <ul id="tree" class="tree">
   <li>
     <span class="btn-group m-1" role="group" aria-label="First group">
+      <a class="btn btn-primary contributeurs_link d-flex align-items-center" href="#" data-version-id="{{first_version.id}}" data-toggle="modal" data-target="#contributeursModal">
+        <i class="fas fa-users"></i>
+      </a>
       <a class="btn btn-light btn-sm text-left border" href="{{ path(route, {'id': first_version.id}) }}">
         <small>
           <b>Version originale</b>
@@ -8,7 +11,7 @@
           <br>le {{first_version.created|date('d/m/Y H:i:s')}}
         </small>
       </a>
-      <a class="btn btn-primary add_comment_link" href="#" data-version-id="{{first_version.id}}" data-toggle="modal" data-target="#versionCommentModal">
+      <a class="btn btn-primary add_comment_link d-flex align-items-center" href="#" data-version-id="{{first_version.id}}" data-toggle="modal" data-target="#versionCommentModal">
         <i class="far fa-comments"></i>
       </a>
     </span>

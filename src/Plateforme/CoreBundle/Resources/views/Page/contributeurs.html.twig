@@ -1,0 +1,92 @@
+{# #############################################################################
+  Gestion des contributeurs pour ce groupe de page
+############################################################################# #}
+
+<br/>
+
+{# Ajout d'un contributeur #}
+<form method="POST" id="form-search-engine" name="form-search-engine" action="{{ path('plateforme_core_pages_contributeurs_add') }}" style="position:relative;">
+  <div class="input-group input-group-sm">
+    <div class="input-group-prepend">
+      <span id="search_engine_picto" class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+    </div>
+    <input id="search_engine" class="form-control" name="contributeur_search" placeholder="Rechercher un utilisateur" type="search" />
+    <input id="search_engine_groupe" name="contributeur_groupe" type="hidden" value="{{ groupe.id }}"/>
+    <input id="search_engine_choice" name="contributeur_choice" type="hidden" />
+    <div class="input-group-append">
+      <div class="input-group-text">
+        <input name="contributeur_redacteur" type="checkbox" aria-label="Rédacteur">&nbsp;Rédacteur 
+      </div>
+    </div>
+    <div class="input-group-append">
+      <div class="input-group-text">
+        <input name="contributeur_verificateur" type="checkbox" aria-label="Vérificateur">&nbsp;Vérificateur 
+      </div>
+    </div>
+    <div class="input-group-append">
+      <div class="input-group-text">
+        <input name="contributeur_approbateur" type="checkbox" aria-label="Approbateur">&nbsp;Approbateur 
+      </div>
+    </div>
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="submit">
+        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Ajouter un contributeur
+      </button>
+    </div>
+  </div>
+  <div id="header_search_results" style="display:none;">
+    <div class="header_search_results_area" id="header_search_contributeurs"></div>
+  </div>
+</form>
+
+<br/>
+
+<div class="table-responsive">
+  <table class="table table-sm table-striped">
+    <thead>
+      <tr>
+        <th>Contributeur</th>
+        <th>Rédacteur</th>
+        <th>Vérificateur</th>
+        <th>Approbateur</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    {% for contribution in groupe_contributeurs %}
+      <tr>
+        <td>{{ contribution.contributeur.prenom }} {{ contribution.contributeur.nom }}</td>
+        <td>
+          {% if contribution.redacteur == 1%}
+            <i class="fas fa-check"></i>
+          {% else %}
+            <i class="fas fa-times"></i>
+          {% endif %}
+        </td>
+        <td>
+          {% if contribution.verificateur == 1%}
+            <i class="fas fa-check"></i>
+          {% else %}
+            <i class="fas fa-times"></i>
+          {% endif %}
+        </td>
+        <td>
+          {% if contribution.approbateur == 1%}
+            <i class="fas fa-check"></i>
+          {% else %}
+            <i class="fas fa-times"></i>
+          {% endif %}
+        </td>
+        <td>
+          <a href="#" data-toggle="tooltip" data-placement="top" title="Modifier">
+            <i class="fas fa-pencil-alt"></i>
+          </a>
+          &nbsp;|&nbsp;
+          <a href="#" data-toggle="tooltip" data-placement="top" title="Supprimer">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>

@@ -34,18 +34,6 @@ class PageStandardController extends Controller {
       $valeurs_recu = $request->request->all();
       $page->setTitre($valeurs_recu['titre']);
       $page->setContenu($valeurs_recu['contenu']);
-      if ($valeurs_recu['metatitle'] == null || $valeurs_recu['metatitle'] == '') {
-        $page->setMetatitle($valeurs_recu['titre']);
-      }
-      else {
-        $page->setMetatitle($valeurs_recu['metatitle']);
-      }
-      if ($valeurs_recu['metadescription'] == null || $valeurs_recu['metadescription'] == '') {
-        $page->setMetadescription(substr($valeurs_recu['contenu'], 0, 165));
-      }
-      else {
-        $page->setMetadescription($valeurs_recu['metadescription']);
-      }
       // Versionnement
       $service_versionner = $this->container->get('core_page');
       $service_versionner->versionner($page);
@@ -75,18 +63,6 @@ class PageStandardController extends Controller {
       $page = new PageStandard();
       $page->setTitre($valeurs_recu['titre']);
       $page->setContenu($valeurs_recu['contenu']);
-      if ($valeurs_recu['metatitle'] == null || $valeurs_recu['metatitle'] == '') {
-        $page->setMetatitle($valeurs_recu['titre']);
-      }
-      else {
-        $page->setMetatitle($valeurs_recu['metatitle']);
-      }
-      if ($valeurs_recu['metadescription'] == null || $valeurs_recu['metadescription'] == '') {
-        $page->setMetadescription(substr($valeurs_recu['contenu'], 0, 165));
-      }
-      else {
-        $page->setMetadescription($valeurs_recu['metadescription']);
-      }
       // Versionnement
       $page->setCommentaireVersion($valeurs_recu['commentaire_version']);
       $service_versionner = $this->container->get('core_page');
@@ -118,8 +94,6 @@ class PageStandardController extends Controller {
     $page_clone = new PageStandard();
     $page_clone->setTitre("[CLONE] " . $page->getTitre());
     $page_clone->setContenu($page->getContenu());
-    $page_clone->setMetatitle($page->getMetatitle());
-    $page_clone->setMetadescription($page->getMetadescription());
     $em->persist($page_clone);
     $em->flush();
     $request->getSession()->getFlashBag()->add('success', "Page clonée avec succès");

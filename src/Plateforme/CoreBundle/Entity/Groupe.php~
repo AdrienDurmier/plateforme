@@ -27,30 +27,39 @@ class Groupe {
   private $id;
 
   /**
-   * @ORM\OneToMany(targetEntity="Plateforme\CoreBundle\Entity\Page", mappedBy="groupe", cascade={"persist", "remove"})
+   * @var string
+   *
+   * @ORM\Column(name="slug", type="string", length=255)
    */
-  private $pages;
+  private $slug;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="redacteurs", type="array", nullable=true)
+   * @ORM\Column(name="metatitle", type="string", length=255, nullable=true)
    */
-  private $redacteurs;
+  private $metatitle;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="correcteurs", type="array", nullable=true)
+   * @ORM\Column(name="metadescription", type="string", length=255, nullable=true)
    */
-  private $correcteurs;
+  private $metadescription;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="approbateurs", type="array", nullable=true)
+   * @ORM\Column(name="xml_sitemap_priority", type="decimal", precision=10, scale=1, nullable=true)
    */
-  private $approbateurs;
+  protected $xml_sitemap_priority;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="xml_sitemap_changefreq", type="string", length=255, nullable=true)
+   */
+  protected $xml_sitemap_changefreq;
 
   /**
    * Get id
@@ -62,100 +71,138 @@ class Groupe {
   }
 
   /**
-   * Set redacteurs
+   * Set slug
    *
-   * @param array $redacteurs
+   * @param string $slug
    *
-   * @return PagePages
+   * @return Page
    */
-  public function setRedacteurs($redacteurs) {
-    $this->redacteurs = $redacteurs;
+  public function setSlug($slug) {
+    if (empty($slug)) {
+      $this->slug = $this->slugify($this->titre);
+    }
+    else {
+      $this->slug = $this->slugify($slug);
+    }
 
     return $this;
   }
 
   /**
-   * Get redacteurs
+   * Get slug
    *
-   * @return array
+   * @return string
    */
-  public function getRedacteurs() {
-    return $this->redacteurs;
+  public function getSlug() {
+    return $this->slug;
+  }
+
+  public function slugify($texte) {
+    $texte = preg_replace('#[^\\pL\d]+#u', '-', $texte);
+    $texte = trim($texte, '-');
+    if (function_exists('iconv')) {
+      $texte = iconv('utf-8', 'us-ascii//TRANSLIT', $texte);
+    }
+    $texte = strtolower($texte);
+    $texte = preg_replace('#[^-\w]+#', '', $texte);
+    return $texte;
   }
 
   /**
-   * Set correcteurs
+   * Set metatitle
    *
-   * @param array $correcteurs
+   * @param string $metatitle
    *
-   * @return PagePages
+   * @return Page
    */
-  public function setCorrecteurs($correcteurs) {
-    $this->correcteurs = $correcteurs;
+  public function setMetatitle($metatitle) {
+    if (empty($metatitle)) {
+      $this->metatitle = $this->titre;
+    }
+    else {
+      $this->metatitle = $metatitle;
+    }
+    return $this;
+  }
+
+  /**
+   * Get metatitle
+   *
+   * @return string
+   */
+  public function getMetatitle() {
+    return $this->metatitle;
+  }
+
+  /**
+   * Set metadescription
+   *
+   * @param string $metadescription
+   *
+   * @return Page
+   */
+  public function setMetadescription($metadescription) {
+    if (empty($metadescription)) {
+      $this->metadescription = $this->titre;
+    }
+    else {
+      $this->metadescription = $metadescription;
+    }
 
     return $this;
   }
 
   /**
-   * Get correcteurs
+   * Get metadescription
    *
-   * @return array
+   * @return string
    */
-  public function getCorrecteurs() {
-    return $this->correcteurs;
+  public function getMetadescription() {
+    return $this->metadescription;
   }
 
   /**
-   * Set approbateurs
+   * Set xmlSitemapPriority
    *
-   * @param array $approbateurs
+   * @param string $xmlSitemapPriority
    *
-   * @return PagePages
+   * @return Page
    */
-  public function setApprobateurs($approbateurs) {
-    $this->approbateurs = $approbateurs;
+  public function setXmlSitemapPriority($xmlSitemapPriority) {
+    $this->xml_sitemap_priority = $xmlSitemapPriority;
 
     return $this;
   }
 
   /**
-   * Get approbateurs
+   * Get xmlSitemapPriority
    *
-   * @return array
+   * @return string
    */
-  public function getApprobateurs() {
-    return $this->approbateurs;
+  public function getXmlSitemapPriority() {
+    return $this->xml_sitemap_priority;
   }
 
   /**
-   * Add page
+   * Set xmlSitemapChangefreq
    *
-   * @param \Plateforme\CoreBundle\Entity\Page $page
+   * @param string $xmlSitemapChangefreq
    *
-   * @return Groupe
+   * @return Page
    */
-  public function addPage(\Plateforme\CoreBundle\Entity\Page $page) {
-    $this->pages[] = $page;
+  public function setXmlSitemapChangefreq($xmlSitemapChangefreq) {
+    $this->xml_sitemap_changefreq = $xmlSitemapChangefreq;
 
     return $this;
   }
 
   /**
-   * Remove page
+   * Get xmlSitemapChangefreq
    *
-   * @param \Plateforme\CoreBundle\Entity\Page $page
+   * @return string
    */
-  public function removePage(\Plateforme\CoreBundle\Entity\Page $page) {
-    $this->pages->removeElement($page);
-  }
-
-  /**
-   * Get pages
-   *
-   * @return \Doctrine\Common\Collections\Collection
-   */
-  public function getPages() {
-    return $this->pages;
+  public function getXmlSitemapChangefreq() {
+    return $this->xml_sitemap_changefreq;
   }
 
 }

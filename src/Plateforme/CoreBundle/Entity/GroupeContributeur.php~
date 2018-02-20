@@ -1,0 +1,65 @@
+<?php
+
+namespace Plateforme\CoreBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * GroupeContributeur
+ *
+ * @ORM\Table(name="page_groupe")
+ * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\GroupeContributeurRepository")
+ */
+class GroupeContributeur {
+
+  /**
+   * @ORM\Column(name="id", type="integer")
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="AUTO")
+   */
+  private $id;
+
+  /**
+   * @var boolean
+   *
+   * @ORM\Column(name="redacteur", type="boolean", nullable=true)
+   */
+  private $redacteur;
+
+  /**
+   * @var boolean
+   *
+   * @ORM\Column(name="verificateur", type="boolean", nullable=true)
+   */
+  private $verificateur;
+
+  /**
+   * @var boolean
+   *
+   * @ORM\Column(name="approbateur", type="boolean", nullable=true)
+   */
+  private $approbateur;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Groupe")
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $groupe;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\UserBundle\Entity\Employe")
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $contributeur;
+
+  /**
+   * Get id
+   *
+   * @return integer
+   */
+  public function getId() {
+    return $this->id;
+  }
+
+}

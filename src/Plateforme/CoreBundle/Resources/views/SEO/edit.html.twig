@@ -3,9 +3,9 @@
   <div class="form-group">
     <label for="metatitle">Meta title</label>
     <div class="input-group input-group-sm">
-      <input type="text" class="form-control form-control-sm" id="metatitle" name="metatitle" value="{{ page.metatitle }}" />
+      <input type="text" class="form-control form-control-sm" id="metatitle" name="metatitle" value="{{ page.groupe.metatitle }}" />
       <div class="input-group-append">
-        <span id="metatitle_size" class="input-group-text">{{ page.metatitle|length }}</span>
+        <span id="metatitle_size" class="input-group-text">{{ page.groupe.metatitle|length }}</span>
       </div>
     </div>
     <small id="metatitle_help" class="form-text text-muted"><i class="fa fa-info-circle" aria-hidden="true"></i> Sera une copie du titre si vide.</small>
@@ -13,9 +13,9 @@
 
   <label for="metadescription">Meta description</label>
   <div class="input-group input-group-sm">
-    <textarea class="form-control form-control-sm" id="metadescription" name="metadescription" rows="3">{{ page.metadescription|raw }}</textarea>
+    <textarea class="form-control form-control-sm" id="metadescription" name="metadescription" rows="3">{{ page.groupe.metadescription|raw }}</textarea>
     <div class="input-group-append">
-      <span id="metadescription_size" class="input-group-text">{{ page.metadescription|length }}</span>
+      <span id="metadescription_size" class="input-group-text">{{ page.groupe.metadescription|length }}</span>
     </div>
   </div>
   <small id="metadescription_help" class="form-text text-muted">
@@ -27,18 +27,18 @@
       <span class="input-group-text">Priorité Sitemap XML</span>
     </div>
     <select class="form-control" id="xmlSitemapPriority" name="xmlSitemapPriority">
-      <option value=null {% if page.xmlSitemapPriority is null %} selected="selected" {% endif %}></option>
-      <option value="1.0" {% if page.xmlSitemapPriority == "1.0" %} selected="selected" {% endif %}>1.0</option>
-      <option value="0.9" {% if page.xmlSitemapPriority == "0.9" %} selected="selected" {% endif %}>0.9</option>
-      <option value="0.8" {% if page.xmlSitemapPriority == "0.8" %} selected="selected" {% endif %}>0.8</option>
-      <option value="0.7" {% if page.xmlSitemapPriority == "0.7" %} selected="selected" {% endif %}>0.7</option>
-      <option value="0.6" {% if page.xmlSitemapPriority == "0.6" %} selected="selected" {% endif %}>0.6</option>
-      <option value="0.5" {% if page.xmlSitemapPriority == "0.5" %} selected="selected" {% endif %}>0.5</option>
-      <option value="0.4" {% if page.xmlSitemapPriority == "0.4" %} selected="selected" {% endif %}>0.4</option>
-      <option value="0.3" {% if page.xmlSitemapPriority == "0.3" %} selected="selected" {% endif %}>0.3</option>
-      <option value="0.2" {% if page.xmlSitemapPriority == "0.2" %} selected="selected" {% endif %}>0.2</option>
-      <option value="0.1" {% if page.xmlSitemapPriority == "0.1" %} selected="selected" {% endif %}>0.1</option>
-      <option value="0.0" {% if page.xmlSitemapPriority == "0.0" %} selected="selected" {% endif %}>0.0</option>
+      <option value=null {% if page.groupe.xmlSitemapPriority is null %} selected="selected" {% endif %}></option>
+      <option value="1.0" {% if page.groupe.xmlSitemapPriority == "1.0" %} selected="selected" {% endif %}>1.0</option>
+      <option value="0.9" {% if page.groupe.xmlSitemapPriority == "0.9" %} selected="selected" {% endif %}>0.9</option>
+      <option value="0.8" {% if page.groupe.xmlSitemapPriority == "0.8" %} selected="selected" {% endif %}>0.8</option>
+      <option value="0.7" {% if page.groupe.xmlSitemapPriority == "0.7" %} selected="selected" {% endif %}>0.7</option>
+      <option value="0.6" {% if page.groupe.xmlSitemapPriority == "0.6" %} selected="selected" {% endif %}>0.6</option>
+      <option value="0.5" {% if page.groupe.xmlSitemapPriority == "0.5" %} selected="selected" {% endif %}>0.5</option>
+      <option value="0.4" {% if page.groupe.xmlSitemapPriority == "0.4" %} selected="selected" {% endif %}>0.4</option>
+      <option value="0.3" {% if page.groupe.xmlSitemapPriority == "0.3" %} selected="selected" {% endif %}>0.3</option>
+      <option value="0.2" {% if page.groupe.xmlSitemapPriority == "0.2" %} selected="selected" {% endif %}>0.2</option>
+      <option value="0.1" {% if page.groupe.xmlSitemapPriority == "0.1" %} selected="selected" {% endif %}>0.1</option>
+      <option value="0.0" {% if page.groupe.xmlSitemapPriority == "0.0" %} selected="selected" {% endif %}>0.0</option>
     </select>
   </div>
   <br/>
@@ -47,14 +47,14 @@
       <span class="input-group-text">Fréquence Sitemap XML</span>
     </div>
     <select class="form-control" id="xmlSitemapChangefreq" name="xmlSitemapChangefreq">
-      <option value=null {% if page.xmlSitemapChangefreq is null %} selected="selected" {% endif %}></option>
-      <option value="always" {% if page.xmlSitemapChangefreq == "always" %} selected="selected" {% endif %}>always</option>
-      <option value="hourly" {% if page.xmlSitemapChangefreq == "hourly" %} selected="selected" {% endif %}>hourly</option>
-      <option value="daily" {% if page.xmlSitemapChangefreq == "daily" %} selected="selected" {% endif %}>daily</option>
-      <option value="weekly" {% if page.xmlSitemapChangefreq == "weekly" %} selected="selected" {% endif %}>weekly</option>
-      <option value="monthly" {% if page.xmlSitemapChangefreq == "monthly" %} selected="selected" {% endif %}>monthly</option>
-      <option value="yearly" {% if page.xmlSitemapChangefreq == "yearly" %} selected="selected" {% endif %}>yearly</option>
-      <option value="never" {% if page.xmlSitemapChangefreq == "never" %} selected="selected" {% endif %}>never</option>
+      <option value=null {% if page.groupe.xmlSitemapChangefreq is null %} selected="selected" {% endif %}></option>
+      <option value="always" {% if page.groupe.xmlSitemapChangefreq == "always" %} selected="selected" {% endif %}>always</option>
+      <option value="hourly" {% if page.groupe.xmlSitemapChangefreq == "hourly" %} selected="selected" {% endif %}>hourly</option>
+      <option value="daily" {% if page.groupe.xmlSitemapChangefreq == "daily" %} selected="selected" {% endif %}>daily</option>
+      <option value="weekly" {% if page.groupe.xmlSitemapChangefreq == "weekly" %} selected="selected" {% endif %}>weekly</option>
+      <option value="monthly" {% if page.groupe.xmlSitemapChangefreq == "monthly" %} selected="selected" {% endif %}>monthly</option>
+      <option value="yearly" {% if page.groupe.xmlSitemapChangefreq == "yearly" %} selected="selected" {% endif %}>yearly</option>
+      <option value="never" {% if page.groupe.xmlSitemapChangefreq == "never" %} selected="selected" {% endif %}>never</option>
     </select>
   </div>
 </div>

@@ -28,8 +28,6 @@ abstract class Page {
 
   public function __construct() {
     $this->created = new \Datetime();
-    $this->xml_sitemap_changefreq = 'always';
-    $this->xml_sitemap_priority = '0.5';
   }
 
   public function __toString() {
@@ -67,30 +65,9 @@ abstract class Page {
   /**
    * @var string
    *
-   * @ORM\Column(name="slug", type="string", length=255)
-   */
-  private $slug;
-  
-  /**
-   * @var string
-   *
    * @ORM\Column(name="commentaire_version", type="string", length=255, nullable=true)
    */
   private $commentaireVersion;
-
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="metatitle", type="string", length=255, nullable=true)
-   */
-  private $metatitle;
-
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="metadescription", type="string", length=255, nullable=true)
-   */
-  private $metadescription;
 
   /**
    * @var \DateTime
@@ -114,20 +91,6 @@ abstract class Page {
   private $is_public;
 
   /**
-   * @var string
-   *
-   * @ORM\Column(name="xml_sitemap_priority", type="decimal", precision=10, scale=1, nullable=true)
-   */
-  protected $xml_sitemap_priority;
-
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="xml_sitemap_changefreq", type="string", length=255, nullable=true)
-   */
-  protected $xml_sitemap_changefreq;
-
-  /**
    * @ORM\ManyToOne(targetEntity="Plateforme\UserBundle\Entity\User")
    */
   private $auteur;
@@ -136,7 +99,7 @@ abstract class Page {
    * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Groupe", inversedBy="page")
    */
   private $groupe;
-  
+
   /**
    * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Page", cascade={"persist"})
    * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
@@ -161,7 +124,6 @@ abstract class Page {
    */
   public function setTitre($titre) {
     $this->titre = $titre;
-    $this->setSlug($this->titre);
     return $this;
   }
 
@@ -196,94 +158,25 @@ abstract class Page {
   }
 
   /**
-   * Set slug
+   * Set commentaireVersion
    *
-   * @param string $slug
+   * @param string $commentaireVersion
    *
    * @return Page
    */
-  public function setSlug($slug) {
-    if (empty($slug)) {
-      $this->slug = $this->slugify($this->titre);
-    }
-    else {
-      $this->slug = $this->slugify($slug);
-    }
+  public function setCommentaireVersion($commentaireVersion) {
+    $this->commentaireVersion = $commentaireVersion;
 
     return $this;
   }
 
   /**
-   * Get slug
+   * Get commentaireVersion
    *
    * @return string
    */
-  public function getSlug() {
-    return $this->slug;
-  }
-
-  public function slugify($texte) {
-    $texte = preg_replace('#[^\\pL\d]+#u', '-', $texte);
-    $texte = trim($texte, '-');
-    if (function_exists('iconv')) {
-      $texte = iconv('utf-8', 'us-ascii//TRANSLIT', $texte);
-    }
-    $texte = strtolower($texte);
-    $texte = preg_replace('#[^-\w]+#', '', $texte);
-    return $texte;
-  }
-
-  /**
-   * Set metatitle
-   *
-   * @param string $metatitle
-   *
-   * @return Page
-   */
-  public function setMetatitle($metatitle) {
-    if (empty($metatitle)) {
-      $this->metatitle = $this->titre;
-    }
-    else {
-      $this->metatitle = $metatitle;
-    }
-    return $this;
-  }
-
-  /**
-   * Get metatitle
-   *
-   * @return string
-   */
-  public function getMetatitle() {
-    return $this->metatitle;
-  }
-
-  /**
-   * Set metadescription
-   *
-   * @param string $metadescription
-   *
-   * @return Page
-   */
-  public function setMetadescription($metadescription) {
-    if (empty($metadescription)) {
-      $this->metadescription = $this->titre;
-    }
-    else {
-      $this->metadescription = $metadescription;
-    }
-
-    return $this;
-  }
-
-  /**
-   * Get metadescription
-   *
-   * @return string
-   */
-  public function getMetadescription() {
-    return $this->metadescription;
+  public function getCommentaireVersion() {
+    return $this->commentaireVersion;
   }
 
   /**
@@ -360,50 +253,6 @@ abstract class Page {
   }
 
   /**
-   * Set xmlSitemapPriority
-   *
-   * @param string $xmlSitemapPriority
-   *
-   * @return Page
-   */
-  public function setXmlSitemapPriority($xmlSitemapPriority) {
-    $this->xml_sitemap_priority = $xmlSitemapPriority;
-
-    return $this;
-  }
-
-  /**
-   * Get xmlSitemapPriority
-   *
-   * @return string
-   */
-  public function getXmlSitemapPriority() {
-    return $this->xml_sitemap_priority;
-  }
-
-  /**
-   * Set xmlSitemapChangefreq
-   *
-   * @param string $xmlSitemapChangefreq
-   *
-   * @return Page
-   */
-  public function setXmlSitemapChangefreq($xmlSitemapChangefreq) {
-    $this->xml_sitemap_changefreq = $xmlSitemapChangefreq;
-
-    return $this;
-  }
-
-  /**
-   * Get xmlSitemapChangefreq
-   *
-   * @return string
-   */
-  public function getXmlSitemapChangefreq() {
-    return $this->xml_sitemap_changefreq;
-  }
-
-  /**
    * Set auteur
    *
    * @param \Plateforme\UserBundle\Entity\User $auteur
@@ -447,28 +296,26 @@ abstract class Page {
     return $this->groupe;
   }
 
+  /**
+   * Set pageParent
+   *
+   * @param \Plateforme\CoreBundle\Entity\Page $pageParent
+   *
+   * @return Page
+   */
+  public function setPageParent(\Plateforme\CoreBundle\Entity\Page $pageParent = null) {
+    $this->pageParent = $pageParent;
 
-    /**
-     * Set pageParent
-     *
-     * @param \Plateforme\CoreBundle\Entity\Page $pageParent
-     *
-     * @return Page
-     */
-    public function setPageParent(\Plateforme\CoreBundle\Entity\Page $pageParent = null)
-    {
-        $this->pageParent = $pageParent;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get pageParent
+   *
+   * @return \Plateforme\CoreBundle\Entity\Page
+   */
+  public function getPageParent() {
+    return $this->pageParent;
+  }
 
-    /**
-     * Get pageParent
-     *
-     * @return \Plateforme\CoreBundle\Entity\Page
-     */
-    public function getPageParent()
-    {
-        return $this->pageParent;
-    }
 }

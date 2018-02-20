@@ -34,23 +34,37 @@ class Groupe {
   /**
    * @var string
    *
-   * @ORM\Column(name="redacteurs", type="array", nullable=true)
+   * @ORM\Column(name="slug", type="string", length=255)
    */
-  private $redacteurs;
+  private $slug;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="correcteurs", type="array", nullable=true)
+   * @ORM\Column(name="metatitle", type="string", length=255, nullable=true)
    */
-  private $correcteurs;
+  private $metatitle;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="approbateurs", type="array", nullable=true)
+   * @ORM\Column(name="metadescription", type="string", length=255, nullable=true)
    */
-  private $approbateurs;
+  private $metadescription;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="xml_sitemap_priority", type="decimal", precision=10, scale=1, nullable=true)
+   */
+  protected $xml_sitemap_priority;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="xml_sitemap_changefreq", type="string", length=255, nullable=true)
+   */
+  protected $xml_sitemap_changefreq;
 
   /**
    * Get id
@@ -62,72 +76,6 @@ class Groupe {
   }
 
   /**
-   * Set redacteurs
-   *
-   * @param array $redacteurs
-   *
-   * @return PagePages
-   */
-  public function setRedacteurs($redacteurs) {
-    $this->redacteurs = $redacteurs;
-
-    return $this;
-  }
-
-  /**
-   * Get redacteurs
-   *
-   * @return array
-   */
-  public function getRedacteurs() {
-    return $this->redacteurs;
-  }
-
-  /**
-   * Set correcteurs
-   *
-   * @param array $correcteurs
-   *
-   * @return PagePages
-   */
-  public function setCorrecteurs($correcteurs) {
-    $this->correcteurs = $correcteurs;
-
-    return $this;
-  }
-
-  /**
-   * Get correcteurs
-   *
-   * @return array
-   */
-  public function getCorrecteurs() {
-    return $this->correcteurs;
-  }
-
-  /**
-   * Set approbateurs
-   *
-   * @param array $approbateurs
-   *
-   * @return PagePages
-   */
-  public function setApprobateurs($approbateurs) {
-    $this->approbateurs = $approbateurs;
-
-    return $this;
-  }
-
-  /**
-   * Get approbateurs
-   *
-   * @return array
-   */
-  public function getApprobateurs() {
-    return $this->approbateurs;
-  }
-
-  /**
    * Add page
    *
    * @param \Plateforme\CoreBundle\Entity\Page $page
@@ -135,7 +83,7 @@ class Groupe {
    * @return Groupe
    */
   public function addPage(\Plateforme\CoreBundle\Entity\Page $page) {
-    $page->setGroupe($this); 
+    $page->setGroupe($this);
     $this->pages[] = $page;
 
     return $this;
@@ -157,6 +105,141 @@ class Groupe {
    */
   public function getPages() {
     return $this->pages;
+  }
+
+  /**
+   * Set slug
+   *
+   * @param string $slug
+   *
+   * @return Page
+   */
+  public function setSlug($slug) {
+    if (empty($slug)) {
+      $this->slug = $this->slugify($this->titre);
+    }
+    else {
+      $this->slug = $this->slugify($slug);
+    }
+
+    return $this;
+  }
+
+  /**
+   * Get slug
+   *
+   * @return string
+   */
+  public function getSlug() {
+    return $this->slug;
+  }
+
+  public function slugify($texte) {
+    $texte = preg_replace('#[^\\pL\d]+#u', '-', $texte);
+    $texte = trim($texte, '-');
+    if (function_exists('iconv')) {
+      $texte = iconv('utf-8', 'us-ascii//TRANSLIT', $texte);
+    }
+    $texte = strtolower($texte);
+    $texte = preg_replace('#[^-\w]+#', '', $texte);
+    return $texte;
+  }
+
+  /**
+   * Set metatitle
+   *
+   * @param string $metatitle
+   *
+   * @return Page
+   */
+  public function setMetatitle($metatitle) {
+    if (empty($metatitle)) {
+      $this->metatitle = $this->titre;
+    }
+    else {
+      $this->metatitle = $metatitle;
+    }
+    return $this;
+  }
+
+  /**
+   * Get metatitle
+   *
+   * @return string
+   */
+  public function getMetatitle() {
+    return $this->metatitle;
+  }
+
+  /**
+   * Set metadescription
+   *
+   * @param string $metadescription
+   *
+   * @return Page
+   */
+  public function setMetadescription($metadescription) {
+    if (empty($metadescription)) {
+      $this->metadescription = $this->titre;
+    }
+    else {
+      $this->metadescription = $metadescription;
+    }
+
+    return $this;
+  }
+
+  /**
+   * Get metadescription
+   *
+   * @return string
+   */
+  public function getMetadescription() {
+    return $this->metadescription;
+  }
+
+  /**
+   * Set xmlSitemapPriority
+   *
+   * @param string $xmlSitemapPriority
+   *
+   * @return Page
+   */
+  public function setXmlSitemapPriority($xmlSitemapPriority) {
+    $this->xml_sitemap_priority = $xmlSitemapPriority;
+
+    return $this;
+  }
+
+  /**
+   * Get xmlSitemapPriority
+   *
+   * @return string
+   */
+  public function getXmlSitemapPriority() {
+    return $this->xml_sitemap_priority;
+  }
+
+  /**
+   * Set xmlSitemapChangefreq
+   *
+   * @param string $xmlSitemapChangefreq
+   *
+   * @return Page
+   */
+  public function setXmlSitemapChangefreq($xmlSitemapChangefreq) {
+    $this->xml_sitemap_changefreq = $xmlSitemapChangefreq;
+
+    return $this;
+  }
+
+  /**
+   * Get xmlSitemapChangefreq
+   *
+   * @return string
+   */
+  public function getXmlSitemapChangefreq() {
+    return $this->xml_sitemap_changefreq;
   }
 
 }

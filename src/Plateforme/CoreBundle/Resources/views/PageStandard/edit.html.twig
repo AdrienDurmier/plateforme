@@ -29,9 +29,9 @@
           </button>
         </form>
         &nbsp;
-        <a href="{{ path('plateforme_core_page_pages_view', {'slug': page.slug}) }}" class="btn btn-light btn-sm">
+        {#<a href="{{ path('plateforme_core_page_pages_view', {'slug': page.groupe.slug}) }}" class="btn btn-light btn-sm">
           <i class="fas fa-external-link-alt"></i> Voir cette page
-        </a>
+        </a>#}
       </div>
     </div>
   </div>
@@ -45,6 +45,9 @@
       </a>
       <a class="nav-item nav-link" id="onglet-version" data-toggle="tab" href="#content-version" role="tab" aria-controls="content-version" aria-selected="false">
         <i class="fas fa-code-branch"></i> Versions
+      </a>
+      <a class="nav-item nav-link" id="onglet-contributeurs" data-toggle="tab" href="#content-contributeurs" role="tab" aria-controls="content-contributeurs" aria-selected="false">
+        <i class="fas fa-users"></i> Contributeurs
       </a>
     </div>
   </nav>
@@ -92,6 +95,10 @@
 
     <div class="tab-pane fade" id="content-version" role="tabpanel" aria-labelledby="onglet-version">
       {{ render(controller("PlateformeCoreBundle:Page:showVersions", {'id': first_version.id, 'route': 'plateforme_core_page_pages_edit' })) }}
+    </div>
+
+    <div class="tab-pane fade" id="content-contributeurs" role="tabpanel" aria-labelledby="onglet-contributeurs">
+      {{ render(controller("PlateformeCoreBundle:Page:showContributeurs", {'id': page.groupe.id })) }}
     </div>
   </div>
 

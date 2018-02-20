@@ -1,0 +1,153 @@
+<?php
+
+namespace Plateforme\CoreBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * PageContributeur
+ *
+ * @ORM\Table(name="page_groupe")
+ * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\PageContributeurRepository")
+ */
+class PageContributeur {
+
+  /**
+   * @ORM\Column(name="id", type="integer")
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="AUTO")
+   */
+  private $id;
+
+  /**
+   * @var boolean
+   *
+   * @ORM\Column(name="redacteur", type="boolean", nullable=true)
+   */
+  private $redacteur;
+
+  /**
+   * @var boolean
+   *
+   * @ORM\Column(name="verificateur", type="boolean", nullable=true)
+   */
+  private $verificateur;
+
+  /**
+   * @var boolean
+   *
+   * @ORM\Column(name="approbateur", type="boolean", nullable=true)
+   */
+  private $approbateur;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\UserBundle\Entity\Employe")
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $contributeur;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Contributeur")
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $groupe;
+
+  /**
+   * Get id
+   *
+   * @return integer
+   */
+  public function getId() {
+    return $this->id;
+  }
+
+  /**
+   * Set redacteur
+   *
+   * @param boolean $redacteur
+   *
+   * @return PageContributeur
+   */
+  public function setRedacteur($redacteur) {
+    $this->redacteur = $redacteur;
+
+    return $this;
+  }
+
+  /**
+   * Get redacteur
+   *
+   * @return boolean
+   */
+  public function getRedacteur() {
+    return $this->redacteur;
+  }
+
+  /**
+   * Set verificateur
+   *
+   * @param boolean $verificateur
+   *
+   * @return PageContributeur
+   */
+  public function setVerificateur($verificateur) {
+    $this->verificateur = $verificateur;
+
+    return $this;
+  }
+
+  /**
+   * Get verificateur
+   *
+   * @return boolean
+   */
+  public function getVerificateur() {
+    return $this->verificateur;
+  }
+
+  /**
+   * Set approbateur
+   *
+   * @param boolean $approbateur
+   *
+   * @return PageContributeur
+   */
+  public function setApprobateur($approbateur) {
+    $this->approbateur = $approbateur;
+
+    return $this;
+  }
+
+  /**
+   * Get approbateur
+   *
+   * @return boolean
+   */
+  public function getApprobateur() {
+    return $this->approbateur;
+  }
+
+  /**
+   * Set groupe
+   *
+   * @param \Plateforme\CoreBundle\Entity\Contributeur $groupe
+   *
+   * @return PageContributeur
+   */
+  public function setContributeur(\Plateforme\CoreBundle\Entity\Contributeur $groupe) {
+    $this->groupe = $groupe;
+
+    return $this;
+  }
+
+  /**
+   * Get groupe
+   *
+   * @return \Plateforme\CoreBundle\Entity\Contributeur
+   */
+  public function getContributeur() {
+    return $this->groupe;
+  }
+
+}

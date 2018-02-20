@@ -13,6 +13,13 @@ plateforme_core_pages_version_comment_add:
     path:  /admin/pages/versions/add-comment
     defaults: { _controller: PlateformeCoreBundle:Page:addVersionComment }
     methods: [post]
+plateforme_core_pages_contributeurs_add:
+    path:  /admin/pages/contributeurs/add
+    defaults: { _controller: PlateformeCoreBundle:Page:addContributeurs }
+plateforme_core_pages_contributeurs_search:
+    path:      /admin/pages/contributeurs/search
+    defaults:
+        _controller: PlateformeCoreBundle:Page:searchContributeurs
 ################################################################################
 # VARIABLES
 ################################################################################
