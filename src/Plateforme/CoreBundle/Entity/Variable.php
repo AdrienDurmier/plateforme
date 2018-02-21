@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Variable
  *
- * @ORM\Table(name="variable")
+ * @ORM\Table(name="core_variable")
  * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\VariableRepository")
  */
 class Variable

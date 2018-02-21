@@ -27,6 +27,17 @@ class Groupe {
   private $id;
 
   /**
+   * @ORM\OneToMany(targetEntity="Plateforme\CoreBundle\Entity\Page", mappedBy="groupe", cascade={"persist", "remove"})
+   */
+  private $pages;
+
+  /**
+   * @ORM\OneToOne(targetEntity="Plateforme\CoreBundle\Entity\Page", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $pageActive;
+
+  /**
    * @var string
    *
    * @ORM\Column(name="slug", type="string", length=255)
@@ -68,6 +79,38 @@ class Groupe {
    */
   public function getId() {
     return $this->id;
+  }
+
+  /**
+   * Add page
+   *
+   * @param \Plateforme\CoreBundle\Entity\Page $page
+   *
+   * @return Groupe
+   */
+  public function addPage(\Plateforme\CoreBundle\Entity\Page $page) {
+    $page->setGroupe($this);
+    $this->pages[] = $page;
+
+    return $this;
+  }
+
+  /**
+   * Remove page
+   *
+   * @param \Plateforme\CoreBundle\Entity\Page $page
+   */
+  public function removePage(\Plateforme\CoreBundle\Entity\Page $page) {
+    $this->pages->removeElement($page);
+  }
+
+  /**
+   * Get pages
+   *
+   * @return \Doctrine\Common\Collections\Collection
+   */
+  public function getPages() {
+    return $this->pages;
   }
 
   /**

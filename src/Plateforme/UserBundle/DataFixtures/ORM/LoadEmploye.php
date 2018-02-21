@@ -12,7 +12,6 @@ class LoadEmploye extends AbstractFixture implements OrderedFixtureInterface
 {
   public function load(ObjectManager $manager)
   {
-    // Employe
     $employe1 = new Employe();
     $employe1->setCivilite($this->getReference('monsieur'));
     $employe1->setNom('Durmier');
@@ -24,9 +23,33 @@ class LoadEmploye extends AbstractFixture implements OrderedFixtureInterface
     $employe1->setRoles(array('ROLE_ADMIN'));
     $manager->persist($employe1);
     
+    $employe2 = new Employe();
+    $employe2->setCivilite($this->getReference('monsieur'));
+    $employe2->setNom('Durmier');
+    $employe2->setPrenom('Achille');
+    $employe2->setUsername('Achille Durmier');
+    $employe2->setEmail('achille.durmier@gmail.com');
+    $employe2->setPlainPassword('achille');
+    $employe2->setEnabled(true);
+    $employe2->setRoles(array('ROLE_ADMIN'));
+    $manager->persist($employe2);
+    
+    $employe3 = new Employe();
+    $employe3->setCivilite($this->getReference('madame'));
+    $employe3->setNom('Herpelinck');
+    $employe3->setPrenom('Kathy');
+    $employe3->setUsername('Kathy Herpelinck');
+    $employe3->setEmail('k.herpelinck.com');
+    $employe3->setPlainPassword('kathy');
+    $employe3->setEnabled(true);
+    $employe3->setRoles(array('ROLE_ADMIN'));
+    $manager->persist($employe3);
+    
     $manager->flush();
     
     $this->addReference('admin', $employe1);
+    $this->addReference('admin2', $employe2);
+    $this->addReference('admin3', $employe3);
     
   }
   

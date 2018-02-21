@@ -31,11 +31,6 @@ class Contribution {
   private $page;
 
   /**
-   * @ORM\ManyToOne(targetEntity="Plateforme\UserBundle\Entity\User")
-   */
-  private $user;
-
-  /**
    * @var \DateTime
    *
    * @ORM\Column(name="created", type="datetimetz")
@@ -43,18 +38,25 @@ class Contribution {
   private $created;
 
   /**
-   * @var string
+   * @var int
    *
-   * @ORM\Column(name="comment", type="string", length=255)
+   * @ORM\Column(name="etat_redaction", type="integer", nullable=true)
    */
-  private $comment;
+  private $etatRedaction;
 
   /**
    * @var int
    *
-   * @ORM\Column(name="status", type="integer", nullable=true)
+   * @ORM\Column(name="etat_verification", type="integer", nullable=true)
    */
-  private $status;
+  private $etatVerification;
+
+  /**
+   * @var int
+   *
+   * @ORM\Column(name="etat_approbation", type="integer", nullable=true)
+   */
+  private $etatApprobation;
 
   /**
    * Get id
@@ -65,124 +67,180 @@ class Contribution {
     return $this->id;
   }
 
+  /**
+   * Set created
+   *
+   * @param \DateTime $created
+   *
+   * @return Contribution
+   */
+  public function setCreated($created) {
+    $this->created = $created;
 
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     *
-     * @return Contribution
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get created
+   *
+   * @return \DateTime
+   */
+  public function getCreated() {
+    return $this->created;
+  }
 
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
+  /**
+   * Set comment
+   *
+   * @param string $comment
+   *
+   * @return Contribution
+   */
+  public function setComment($comment) {
+    $this->comment = $comment;
 
-    /**
-     * Set comment
-     *
-     * @param string $comment
-     *
-     * @return Contribution
-     */
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get comment
+   *
+   * @return string
+   */
+  public function getComment() {
+    return $this->comment;
+  }
 
-    /**
-     * Get comment
-     *
-     * @return string
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
+  /**
+   * Set status
+   *
+   * @param integer $status
+   *
+   * @return Contribution
+   */
+  public function setStatus($status) {
+    $this->status = $status;
 
-    /**
-     * Set status
-     *
-     * @param integer $status
-     *
-     * @return Contribution
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get status
+   *
+   * @return integer
+   */
+  public function getStatus() {
+    return $this->status;
+  }
 
-    /**
-     * Get status
-     *
-     * @return integer
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
+  /**
+   * Set page
+   *
+   * @param \Plateforme\CoreBundle\Entity\Page $page
+   *
+   * @return Contribution
+   */
+  public function setPage(\Plateforme\CoreBundle\Entity\Page $page = null) {
+    $this->page = $page;
 
-    /**
-     * Set page
-     *
-     * @param \Plateforme\CoreBundle\Entity\Page $page
-     *
-     * @return Contribution
-     */
-    public function setPage(\Plateforme\CoreBundle\Entity\Page $page = null)
-    {
-        $this->page = $page;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get page
+   *
+   * @return \Plateforme\CoreBundle\Entity\Page
+   */
+  public function getPage() {
+    return $this->page;
+  }
 
-    /**
-     * Get page
-     *
-     * @return \Plateforme\CoreBundle\Entity\Page
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
+  /**
+   * Set user
+   *
+   * @param \Plateforme\UserBundle\Entity\User $user
+   *
+   * @return Contribution
+   */
+  public function setUser(\Plateforme\UserBundle\Entity\User $user = null) {
+    $this->user = $user;
 
-    /**
-     * Set user
-     *
-     * @param \Plateforme\UserBundle\Entity\User $user
-     *
-     * @return Contribution
-     */
-    public function setUser(\Plateforme\UserBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get user
+   *
+   * @return \Plateforme\UserBundle\Entity\User
+   */
+  public function getUser() {
+    return $this->user;
+  }
 
-    /**
-     * Get user
-     *
-     * @return \Plateforme\UserBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
+  /**
+   * Set etatRedaction
+   *
+   * @param integer $etatRedaction
+   *
+   * @return Contribution
+   */
+  public function setEtatRedaction($etatRedaction) {
+    $this->etatRedaction = $etatRedaction;
+
+    return $this;
+  }
+
+  /**
+   * Get etatRedaction
+   *
+   * @return integer
+   */
+  public function getEtatRedaction() {
+    return $this->etatRedaction;
+  }
+
+  /**
+   * Set etatVerification
+   *
+   * @param integer $etatVerification
+   *
+   * @return Contribution
+   */
+  public function setEtatVerification($etatVerification) {
+    $this->etatVerification = $etatVerification;
+
+    return $this;
+  }
+
+  /**
+   * Get etatVerification
+   *
+   * @return integer
+   */
+  public function getEtatVerification() {
+    return $this->etatVerification;
+  }
+
+  /**
+   * Set etatApprobation
+   *
+   * @param integer $etatApprobation
+   *
+   * @return Contribution
+   */
+  public function setEtatApprobation($etatApprobation) {
+    $this->etatApprobation = $etatApprobation;
+
+    return $this;
+  }
+
+  /**
+   * Get etatApprobation
+   *
+   * @return integer
+   */
+  public function getEtatApprobation() {
+    return $this->etatApprobation;
+  }
+
 }

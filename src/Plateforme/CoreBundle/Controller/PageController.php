@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Plateforme\CoreBundle\Entity\Contribution;
+use Plateforme\CoreBundle\Entity\PageCommentaire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Plateforme\CoreBundle\Entity\GroupeContributeur;
 
@@ -73,18 +74,30 @@ class PageController extends Controller {
     $groupe_contributeur = new GroupeContributeur();
     $groupe_contributeur->setGroupe($groupe);
     $groupe_contributeur->setContributeur($user);
-    if(isset($valeurs_recu['contributeur_redacteur'])){
+    if (isset($valeurs_recu['contributeur_redacteur'])) {
       $groupe_contributeur->setRedacteur(1);
     }
-    if(isset($valeurs_recu['contributeur_verificateur'])){
+    if (isset($valeurs_recu['contributeur_verificateur'])) {
       $groupe_contributeur->setVerificateur(1);
     }
-    if(isset($valeurs_recu['contributeur_approbateur'])){
+    if (isset($valeurs_recu['contributeur_approbateur'])) {
       $groupe_contributeur->setApprobateur(1);
     }
     $em->persist($groupe_contributeur);
     $em->flush();
     $request->getSession()->getFlashBag()->add('success', "Contributeur ajouté avec succès.");
+    return $this->redirect($request->server->get('HTTP_REFERER'));
+  }
+
+  /**
+   * Supprime un contributeur à un groupe de page
+   */
+  public function deleteContributeursAction($id, Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $contributeur = $em->getRepository('PlateformeCoreBundle:GroupeContributeur')->find($id);
+    $em->remove($contributeur);
+    $em->flush();
+    $request->getSession()->getFlashBag()->add('success', "Contributeur retiré avec succès");
     return $this->redirect($request->server->get('HTTP_REFERER'));
   }
 
@@ -146,9 +159,9 @@ class PageController extends Controller {
   }
 
   /**
-   * Ajoute un commentaire à une version
+   * Ajoute un commentaire à une page
    */
-  public function addVersionCommentAction(Request $request) {
+  public function addPageCommentaireAction(Request $request) {
     $status = true;
     $em = $this->getDoctrine()->getManager();
     $valeurs_recu = $request->request->all();
@@ -156,20 +169,20 @@ class PageController extends Controller {
     if (null === $page) {
       throw new NotFoundHttpException("La page ayant l'identifiant " . $valeurs_recu['version_id'] . " n'existe pas.");
     }
-    $contribution = new Contribution();
-    $contribution->setPage($page);
-    $contribution->setUser($this->getUser());
-    $contribution->setComment($valeurs_recu['version_comment']);
-    $em->persist($contribution);
+    $commentaire = new PageCommentaire();
+    $commentaire->setPage($page);
+    $commentaire->setUser($this->getUser());
+    $commentaire->setComment($valeurs_recu['version_comment']);
+    $em->persist($commentaire);
     $em->flush();
 
     $response = array(
       'success' => $status,
       'data' => array(
-        'id' => $contribution->getId(),
-        'user' => $contribution->getUser()->getUsername(),
-        'comment' => $contribution->getComment(),
-        'date' => date_format($contribution->getCreated(), "d/m/Y \à H:i:s"),
+        'id' => $commentaire->getId(),
+        'user' => $commentaire->getUser()->getUsername(),
+        'comment' => $commentaire->getComment(),
+        'date' => date_format($commentaire->getCreated(), "d/m/Y \à H:i:s"),
       )
     );
     return new JsonResponse($response);
@@ -178,29 +191,29 @@ class PageController extends Controller {
   /**
    * Récupère tous les commentaires d'une version
    */
-  public function getVersionCommentsAction(Request $request) {
+  public function getPageCommentairesAction(Request $request) {
     $status = true;
     $em = $this->getDoctrine()->getManager();
     $valeurs_recu = $request->request->all();
     $page = $em->getRepository('PlateformeCoreBundle:Page')->find($valeurs_recu['version_id']);
-    $contributions = $em->getRepository('PlateformeCoreBundle:Contribution')->findByPage($page);
-    $resultContributions = [];
-    foreach ($contributions as $contribution) {
-      $resultContributions[] = array(
-        'id' => $contribution->getId(),
-        'user' => $contribution->getUser()->getUsername(),
-        'comment' => $contribution->getComment(),
-        'date' => date_format($contribution->getCreated(), "d/m/Y \à H:i:s"),
+    $commentaires = $em->getRepository('PlateformeCoreBundle:PageCommentaire')->findByPage($page);
+    $resultPageCommentaires = [];
+    foreach ($commentaires as $commentaire) {
+      $resultPageCommentaires[] = array(
+        'id' => $commentaire->getId(),
+        'user' => $commentaire->getUser()->getUsername(),
+        'comment' => $commentaire->getComment(),
+        'date' => date_format($commentaire->getCreated(), "d/m/Y \à H:i:s"),
       );
     }
     // S'il n'y a eu aucun résultat
-    if (empty($resultContributions)) {
+    if (empty($resultPageCommentaires)) {
       $status = false;
     }
     $response = array(
       'success' => $status,
       'data' => array(
-        'contributions' => $resultContributions
+        'commentaires' => $resultPageCommentaires
       )
     );
     return new JsonResponse($response);

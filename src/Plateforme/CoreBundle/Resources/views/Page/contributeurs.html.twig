@@ -52,36 +52,32 @@
         <th>Actions</th>
       </tr>
     </thead>
-    {% for contribution in groupe_contributeurs %}
+    {% for contributeur in groupe_contributeurs %}
       <tr>
-        <td>{{ contribution.contributeur.prenom }} {{ contribution.contributeur.nom }}</td>
+        <td>{{ contributeur.contributeur.prenom }} {{ contributeur.contributeur.nom }}</td>
         <td>
-          {% if contribution.redacteur == 1%}
+          {% if contributeur.redacteur == 1%}
             <i class="fas fa-check"></i>
           {% else %}
             <i class="fas fa-times"></i>
           {% endif %}
         </td>
         <td>
-          {% if contribution.verificateur == 1%}
+          {% if contributeur.verificateur == 1%}
             <i class="fas fa-check"></i>
           {% else %}
             <i class="fas fa-times"></i>
           {% endif %}
         </td>
         <td>
-          {% if contribution.approbateur == 1%}
+          {% if contributeur.approbateur == 1%}
             <i class="fas fa-check"></i>
           {% else %}
             <i class="fas fa-times"></i>
           {% endif %}
         </td>
         <td>
-          <a href="#" data-toggle="tooltip" data-placement="top" title="Modifier">
-            <i class="fas fa-pencil-alt"></i>
-          </a>
-          &nbsp;|&nbsp;
-          <a href="#" data-toggle="tooltip" data-placement="top" title="Supprimer">
+          <a href="{{ path('plateforme_core_pages_contributeurs_delete', {'id': contributeur.id}) }}" data-toggle="tooltip" data-placement="top" title="Supprimer" onclick="return confirm('Êtes-vous sûr ?');">
             <i class="fa fa-trash" aria-hidden="true"></i>
           </a>
         </td>

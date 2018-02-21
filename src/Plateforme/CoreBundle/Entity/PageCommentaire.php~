@@ -1,0 +1,53 @@
+<?php
+
+namespace Plateforme\CoreBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * PageCommentaire
+ *
+ * @ORM\Table(name="core_contribution_message")
+ * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\PageCommentaireRepository")
+ */
+class PageCommentaire {
+
+  public function __construct() {
+    $this->created = new \Datetime();
+  }
+
+  /**
+   * @var int
+   *
+   * @ORM\Column(name="id", type="integer")
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="AUTO")
+   */
+  private $id;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Page")
+   */
+  private $page;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\UserBundle\Entity\User")
+   */
+  private $user;
+
+  /**
+   * @var \DateTime
+   *
+   * @ORM\Column(name="created", type="datetimetz")
+   */
+  private $created;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="comment", type="string", length=255)
+   */
+  private $comment;
+
+
+}

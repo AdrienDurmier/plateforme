@@ -29,6 +29,7 @@
         <tr>
           <th>ID</th>
           <th>Titre</th>
+          <th>Date</th>
           <th>Slug utilisé pour l'URL</th>
           <th>Actions</th>
         </tr>
@@ -37,7 +38,8 @@
           <tr>
             <td>{{ page.id }}</td>
             <td>{{ page.titre }}</td>
-            <td>{{ page.slug }}</td>
+            <td>{{ page.created|date('d/m/Y H:i:s') }}</td>
+            <td>{{ page.groupe.slug }}</td>
             <td>
               {% if page.isPublic %}
                 <a href="{{ path('plateforme_core_page_pages_view', {'slug': page.slug}) }}" data-toggle="tooltip" data-placement="top" title="Voir" target="_blank">

@@ -32,23 +32,29 @@ class Groupe {
   private $pages;
 
   /**
+   * @ORM\OneToOne(targetEntity="Plateforme\CoreBundle\Entity\Page", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=true)
+   */
+  private $pageActive;
+
+  /**
    * @var string
    *
-   * @ORM\Column(name="slug", type="string", length=255)
+   * @ORM\Column(name="slug", type="string", length=255, nullable=true)
    */
   private $slug;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="metatitle", type="string", length=255, nullable=true)
+   * @ORM\Column(name="metatitle", type="string", length=255)
    */
   private $metatitle;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="metadescription", type="string", length=255, nullable=true)
+   * @ORM\Column(name="metadescription", type="text")
    */
   private $metadescription;
 
@@ -116,7 +122,7 @@ class Groupe {
    */
   public function setSlug($slug) {
     if (empty($slug)) {
-      $this->slug = $this->slugify($this->titre);
+      $this->slug = $this->slugify($this->metatitle);
     }
     else {
       $this->slug = $this->slugify($slug);
@@ -153,12 +159,8 @@ class Groupe {
    * @return Page
    */
   public function setMetatitle($metatitle) {
-    if (empty($metatitle)) {
-      $this->metatitle = $this->titre;
-    }
-    else {
-      $this->metatitle = $metatitle;
-    }
+    $this->metatitle = $metatitle;
+    $this->setSlug($metatitle);
     return $this;
   }
 
@@ -240,6 +242,28 @@ class Groupe {
    */
   public function getXmlSitemapChangefreq() {
     return $this->xml_sitemap_changefreq;
+  }
+
+  /**
+   * Set pageActive
+   *
+   * @param \Plateforme\CoreBundle\Entity\Page $pageActive
+   *
+   * @return Groupe
+   */
+  public function setPageActive(\Plateforme\CoreBundle\Entity\Page $pageActive) {
+    $this->pageActive = $pageActive;
+
+    return $this;
+  }
+
+  /**
+   * Get pageActive
+   *
+   * @return \Plateforme\CoreBundle\Entity\Page
+   */
+  public function getPageActive() {
+    return $this->pageActive;
   }
 
 }

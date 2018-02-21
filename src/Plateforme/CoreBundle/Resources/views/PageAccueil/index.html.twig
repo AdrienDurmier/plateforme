@@ -1,7 +1,15 @@
 {% extends "PlateformeCoreBundle::frontoffice.html.twig" %}
 
-{% block title %}{{ page.metatitle }} | {{ parent() }}{% endblock %}
-{% block metadescription %}{{ page.metadescription }} | {{ parent() }}{% endblock %}
+{% block title %}
+  {% if page.groupe is not null %}
+    {{ page.groupe.metatitle }} | {{ parent() }}
+  {% endif %}
+{% endblock %}
+{% block metadescription %}
+  {% if page.groupe is not null %}
+    {{ page.groupe.metadescription }} | {{ parent() }}
+  {% endif %}
+{% endblock %}
 
 {% block body %}
   

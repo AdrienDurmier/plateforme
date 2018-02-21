@@ -279,39 +279,35 @@
         // Renvoie l'identifiant de la version sélectionnée au formulaire d'ajout de commentaire de version
         jQuery(".add_comment_link").click(function () {
           var version_id = jQuery(this).data('version-id');
-          getContributions(version_id);
+          getPageCommentaires(version_id);
         });
-        jQuery("#refreshContributions").click(function () {
+        jQuery("#addCommentaire").click(function () {
           var version_id = jQuery("#version_id").val();
-          getContributions(version_id);
+          addCommentaire(version_id);
         });
-        jQuery("#sendContribution").click(function () {
-          var version_id = jQuery("#version_id").val();
-          sendContribution(version_id);
-        });
-        function sendContribution(version_id) {
+        function addCommentaire(version_id) {
           var version_comment = jQuery('#version_comment').val();
           var parametres = {
             version_id: version_id,
             version_comment: version_comment
           };
           jQuery.ajax({
-            url: "{{ path('plateforme_core_pages_version_comment_add') }}",
+            url: "{{ path('plateforme_core_pages_commentaires_add') }}",
             type: 'post',
             dataType: 'json',
             success: function (data) {
-              getContributions(version_id);
+              getPageCommentaires(version_id);
             },
             data: parametres
           });
         }
-        function getContributions(version_id) {
+        function getPageCommentaires(version_id) {
           jQuery("#version_id").val(version_id);
           var parametres = {
             version_id: version_id
           };
           jQuery.ajax({
-            url: "{{ path('plateforme_core_pages_version_comment_get') }}",
+            url: "{{ path('plateforme_core_pages_commentaires_get') }}",
             type: 'post',
             dataType: 'json',
             beforeSend: function () {
@@ -319,15 +315,15 @@
             },
             success: function (data) {
               var results_html = '';
-              if (data.data.contributions.length > 0) {
-                jQuery.each(data.data.contributions, function (index, element) {
+              if (data.data.commentaires.length > 0) {
+                jQuery.each(data.data.commentaires, function (index, element) {
                   results_html = results_html + '<blockquote class="blockquote bg-light p-2">';
-                  results_html = results_html + '<p class="mb-0">';
-                  results_html = results_html + element.comment;
-                  results_html = results_html + '</p>';
-                  results_html = results_html + '<footer class="blockquote-footer">';
-                  results_html = results_html + 'de ' + element.user + ' le ' + element.date;
-                  results_html = results_html + '</footer>';
+                    results_html = results_html + '<p class="mb-0">';
+                      results_html = results_html + element.comment;
+                    results_html = results_html + '</p>';
+                    results_html = results_html + '<footer class="blockquote-footer">';
+                      results_html = results_html + 'de ' + element.user + ' le ' + element.date;
+                    results_html = results_html + '</footer>';
                   results_html = results_html + '</blockquote>';
                 });
               } else {
@@ -343,7 +339,7 @@
         // Permet de mettre à jour les commentaires directement si l'utilisateur fait Entrer
         $('#form_version_comments').submit(function (e) {
           var version_id = jQuery("#version_id").val();
-          sendContribution(version_id);
+          addCommentaire(version_id);
           e.preventDefault();
         });
         // Mets le focus sur la saisie de commentaire au chargement de la fenêtre

@@ -5,9 +5,9 @@ namespace Plateforme\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Sexe
+ * PageCommentaire
  *
- * @ORM\Table(name="page_commentaire")
+ * @ORM\Table(name="core_page_commentaire")
  * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\PageCommentaireRepository")
  */
 class PageCommentaire {
@@ -26,6 +26,16 @@ class PageCommentaire {
   private $id;
 
   /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Page")
+   */
+  private $page;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Plateforme\UserBundle\Entity\User")
+   */
+  private $user;
+
+  /**
    * @var \DateTime
    *
    * @ORM\Column(name="created", type="datetimetz")
@@ -33,22 +43,11 @@ class PageCommentaire {
   private $created;
 
   /**
-   * @ORM\OneToOne(targetEntity="Plateforme\UserBundle\Entity\User", cascade={"persist"})
-   */
-  private $user;
-
-  /**
-   * @ORM\ManyToOne(targetEntity="Plateforme\CoreBundle\Entity\Page", cascade={"persist"})
-   * @ORM\JoinColumn(nullable=false)
-   */
-  private $page;
-
-  /**
    * @var string
    *
-   * @ORM\Column(name="contenu", type="text")
+   * @ORM\Column(name="comment", type="string", length=255)
    */
-  private $contenu;
+  private $comment;
 
   /**
    * Get id
@@ -82,6 +81,50 @@ class PageCommentaire {
   }
 
   /**
+   * Set comment
+   *
+   * @param string $comment
+   *
+   * @return PageCommentaire
+   */
+  public function setComment($comment) {
+    $this->comment = $comment;
+
+    return $this;
+  }
+
+  /**
+   * Get comment
+   *
+   * @return string
+   */
+  public function getComment() {
+    return $this->comment;
+  }
+
+  /**
+   * Set page
+   *
+   * @param \Plateforme\CoreBundle\Entity\Page $page
+   *
+   * @return PageCommentaire
+   */
+  public function setPage(\Plateforme\CoreBundle\Entity\Page $page = null) {
+    $this->page = $page;
+
+    return $this;
+  }
+
+  /**
+   * Get page
+   *
+   * @return \Plateforme\CoreBundle\Entity\Page
+   */
+  public function getPage() {
+    return $this->page;
+  }
+
+  /**
    * Set user
    *
    * @param \Plateforme\UserBundle\Entity\User $user
@@ -103,50 +146,4 @@ class PageCommentaire {
     return $this->user;
   }
 
-  /**
-   * Set page
-   *
-   * @param \Plateforme\CoreBundle\Entity\Page $page
-   *
-   * @return PageCommentaire
-   */
-  public function setPage(\Plateforme\CoreBundle\Entity\Page $page) {
-    $this->page = $page;
-
-    return $this;
-  }
-
-  /**
-   * Get page
-   *
-   * @return \Plateforme\CoreBundle\Entity\Page
-   */
-  public function getPage() {
-    return $this->page;
-  }
-
-
-    /**
-     * Set contenu
-     *
-     * @param string $contenu
-     *
-     * @return PageCommentaire
-     */
-    public function setContenu($contenu)
-    {
-        $this->contenu = $contenu;
-
-        return $this;
-    }
-
-    /**
-     * Get contenu
-     *
-     * @return string
-     */
-    public function getContenu()
-    {
-        return $this->contenu;
-    }
 }

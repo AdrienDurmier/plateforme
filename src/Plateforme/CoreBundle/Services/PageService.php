@@ -27,6 +27,8 @@ class PageService {
       $em = $this->em;
       $groupe = new Groupe();
       $groupe->addPage($page_original);
+      $groupe->setMetatitle($page_original->getTitre());
+      $groupe->setMetaDescription(strip_tags($page_original->getContenu()));
       $em->persist($groupe);
       $page_original->setAuteur($this->currentUser);
     }
