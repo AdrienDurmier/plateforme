@@ -94,7 +94,7 @@
     </div>
 
     <div class="tab-pane fade" id="content-version" role="tabpanel" aria-labelledby="onglet-version">
-      {{ render(controller("PlateformeCoreBundle:Page:showVersions", {'id': first_version.id, 'route': 'plateforme_core_page_pages_edit' })) }}
+      {{ render(controller("PlateformeCoreBundle:Page:showVersions", {'id': first_version.id, 'route': 'plateforme_core_page_pages_edit', 'page': page })) }}
     </div>
 
     <div class="tab-pane fade" id="content-contributeurs" role="tabpanel" aria-labelledby="onglet-contributeurs">

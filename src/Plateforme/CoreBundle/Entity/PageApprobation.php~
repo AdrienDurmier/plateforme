@@ -5,12 +5,12 @@ namespace Plateforme\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Contribution
+ * PageApprobation
  *
  * @ORM\Table(name="core_contribution")
- * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\ContributionRepository")
+ * @ORM\Entity(repositoryClass="Plateforme\CoreBundle\Repository\PageApprobationRepository")
  */
-class Contribution {
+class PageApprobation {
 
   public function __construct() {
     $this->created = new \Datetime();
@@ -45,16 +45,9 @@ class Contribution {
   /**
    * @var int
    *
-   * @ORM\Column(name="etat_verification", type="integer", nullable=true)
+   * @ORM\Column(name="etat", type="integer", nullable=true)
    */
-  private $etatVerification;
-
-  /**
-   * @var int
-   *
-   * @ORM\Column(name="etat_approbation", type="integer", nullable=true)
-   */
-  private $etatApprobation;
+  private $etat;
 
   /**
    * Get id
@@ -70,7 +63,7 @@ class Contribution {
    *
    * @param \Plateforme\CoreBundle\Entity\Page $page
    *
-   * @return Contribution
+   * @return PageApprobation
    */
   public function setPage(\Plateforme\CoreBundle\Entity\Page $page = null) {
     $this->page = $page;
@@ -92,7 +85,7 @@ class Contribution {
    *
    * @param \DateTime $created
    *
-   * @return Contribution
+   * @return PageApprobation
    */
   public function setCreated($created) {
     $this->created = $created;
@@ -110,47 +103,25 @@ class Contribution {
   }
 
   /**
-   * Set etatVerification
+   * Set contributeur
    *
-   * @param integer $etatVerification
+   * @param \Plateforme\UserBundle\Entity\Employe $contributeur
    *
-   * @return Contribution
+   * @return PageApprobation
    */
-  public function setEtatVerification($etatVerification) {
-    $this->etatVerification = $etatVerification;
+  public function setContributeur(\Plateforme\UserBundle\Entity\Employe $contributeur = null) {
+    $this->contributeur = $contributeur;
 
     return $this;
   }
 
   /**
-   * Get etatVerification
+   * Get contributeur
    *
-   * @return integer
+   * @return \Plateforme\UserBundle\Entity\Employe
    */
-  public function getEtatVerification() {
-    return $this->etatVerification;
-  }
-
-  /**
-   * Set etatApprobation
-   *
-   * @param integer $etatApprobation
-   *
-   * @return Contribution
-   */
-  public function setEtatApprobation($etatApprobation) {
-    $this->etatApprobation = $etatApprobation;
-
-    return $this;
-  }
-
-  /**
-   * Get etatApprobation
-   *
-   * @return integer
-   */
-  public function getEtatApprobation() {
-    return $this->etatApprobation;
+  public function getContributeur() {
+    return $this->contributeur;
   }
 
 }

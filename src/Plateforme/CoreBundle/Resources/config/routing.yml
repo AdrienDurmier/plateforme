@@ -13,6 +13,14 @@ plateforme_core_pages_commentaires_add:
     path:  /admin/pages/commentaires/add
     defaults: { _controller: PlateformeCoreBundle:Page:addPageCommentaire }
     methods: [post]
+plateforme_core_pages_approbation_add:
+    path:  /admin/pages/approbation/add
+    defaults: { _controller: PlateformeCoreBundle:Page:addApprobation }
+    methods: [post]
+plateforme_core_pages_contributeurs_get:
+    path:  /admin/pages/contributeurs
+    defaults: { _controller: PlateformeCoreBundle:Page:getContributeurs }
+    methods: [post]
 plateforme_core_pages_contributeurs_add:
     path:  /admin/pages/contributeurs/add
     defaults: { _controller: PlateformeCoreBundle:Page:addContributeurs }

@@ -204,6 +204,39 @@
         /***********************************************************************
          * CONTRIBUTEURS
          **********************************************************************/
+        // Affiche les états de contributions d'une versions
+        jQuery(".get_contributeurs_link").click(function () {
+          var version_id = jQuery(this).data('version-id');
+          getContributeurs(version_id);
+        });
+        function getContributeurs(version_id) {
+          jQuery("#version_id").val(version_id);
+          var parametres = {
+            version_id: version_id
+          };
+          jQuery.ajax({
+            url: "{{ path('plateforme_core_pages_contributeurs_get') }}",
+            type: 'post',
+            dataType: 'json',
+            beforeSend: function () {
+              jQuery('#contributeurs_area').html('<i class="fa fa-spinner fa-pulse fa-fw"></i> Chargement des contributions');
+            },
+            success: function (data) {
+              var results_html = '';
+              if (data.data.contributeurs.length > 0) {
+                jQuery.each(data.data.contributeurs, function (index, element) {
+                  results_html = results_html + '<div>';
+                  results_html = results_html + element.id;
+                  results_html = results_html + '</div>';
+                });
+              } else {
+                results_html = results_html + 'Aucun contributeur';
+              }
+              jQuery('#contributeurs_area').html(results_html);
+            },
+            data: parametres
+          });
+        }
         // Lance la recherche si l'utilisateur n'a pas saisie depuis 500ms
         $('#search_engine').keyup(function () {
           clearTimeout($.data(this, 'timer'));
@@ -236,11 +269,11 @@
                 var results_html = '';
                 $.each(data.data.user, function (index, element) {
                   results_html = results_html + '<div class="autocomplete_result">';
-                  results_html = results_html + '<a class="autocomplete_contributeur_choice" href="#" data-contributeur-id="'+element.id+'" data-contributeur-nom="'+element.nom+'" data-contributeur-prenom="'+element.prenom+'">';
-                      results_html = results_html + element.nom  + ' ' + element.prenom ;
-                    results_html = results_html + ' <small class="text-muted">(';
-                      results_html = results_html + element.email ;
-                    results_html = results_html + ')</small>';
+                  results_html = results_html + '<a class="autocomplete_contributeur_choice" href="#" data-contributeur-id="' + element.id + '" data-contributeur-nom="' + element.nom + '" data-contributeur-prenom="' + element.prenom + '">';
+                  results_html = results_html + element.nom + ' ' + element.prenom;
+                  results_html = results_html + ' <small class="text-muted">(';
+                  results_html = results_html + element.email;
+                  results_html = results_html + ')</small>';
                   results_html = results_html + '</a>';
                   results_html = results_html + '</div>';
                 });
@@ -259,7 +292,7 @@
           jQuery('#search_engine').val(contributeur_prenom + ' ' + contributeur_nom);
           jQuery('#header_search_results').hide();
         });
-        
+
         /***********************************************************************
          * SEO
          **********************************************************************/
@@ -318,12 +351,12 @@
               if (data.data.commentaires.length > 0) {
                 jQuery.each(data.data.commentaires, function (index, element) {
                   results_html = results_html + '<blockquote class="blockquote bg-light p-2">';
-                    results_html = results_html + '<p class="mb-0">';
-                      results_html = results_html + element.comment;
-                    results_html = results_html + '</p>';
-                    results_html = results_html + '<footer class="blockquote-footer">';
-                      results_html = results_html + 'de ' + element.user + ' le ' + element.date;
-                    results_html = results_html + '</footer>';
+                  results_html = results_html + '<p class="mb-0">';
+                  results_html = results_html + element.comment;
+                  results_html = results_html + '</p>';
+                  results_html = results_html + '<footer class="blockquote-footer">';
+                  results_html = results_html + 'de ' + element.user + ' le ' + element.date;
+                  results_html = results_html + '</footer>';
                   results_html = results_html + '</blockquote>';
                 });
               } else {

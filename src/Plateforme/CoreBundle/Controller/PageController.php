@@ -5,7 +5,7 @@ namespace Plateforme\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Plateforme\CoreBundle\Entity\Contribution;
+use Plateforme\CoreBundle\Entity\PageApprobation;
 use Plateforme\CoreBundle\Entity\PageCommentaire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Plateforme\CoreBundle\Entity\GroupeContributeur;
@@ -137,7 +137,7 @@ class PageController extends Controller {
   /**
    * Affiche les versions d'une page
    */
-  public function showVersionsAction($id, $route, Request $request) {
+  public function showVersionsAction($id, $route, $page, Request $request) {
     $em = $this->getDoctrine()->getManager();
     $page_original = $em->getRepository('PlateformeCoreBundle:Page')->find($id);
     if (null === $page_original) {
@@ -149,12 +149,17 @@ class PageController extends Controller {
     $versions_groupe = $em->getRepository('PlateformeCoreBundle:Page')->getAllVersions($page_original->getGroupe());
     $service_versionner = $this->container->get('core_page');
     $html_versions = $service_versionner->afficherArborescence($first_version->getId(), 0, $versions_groupe, 'plateforme_core_page_pages_edit');
+    $groupe_contributeurs = $em->getRepository('PlateformeCoreBundle:GroupeContributeur')->findByGroupe($page_original->getGroupe());
+    $approbations = $em->getRepository('PlateformeCoreBundle:PageApprobation')->findByPage($page);
 
     return $this->render('PlateformeCoreBundle:Page:versions.html.twig', array(
+          'page' => $page,
           'html_versions' => $html_versions,
           'first_version' => $first_version,
           'route' => $route,
           'versions' => $versions,
+          'groupe_contributeurs' => $groupe_contributeurs,
+          'approbations' => $approbations,
     ));
   }
 
@@ -189,6 +194,24 @@ class PageController extends Controller {
   }
 
   /**
+   * Mise à jour de l'état d'approbation d'une page
+   */
+  public function addApprobationAction(Request $request) {
+    $em = $this->getDoctrine()->getManager();
+    $valeurs_recu = $request->request->all();
+    $user = $this->get('security.token_storage')->getToken()->getUser();
+    $approbation = new PageApprobation();
+    $page = $em->getRepository('PlateformeCoreBundle:Page')->find($valeurs_recu['approbation_page_id']);
+    $approbation->setPage($page);
+    $approbation->setContributeur($user);
+    $approbation->setEtat($valeurs_recu['approbation_choice']);
+    $em->persist($approbation);
+    $em->flush();
+    $request->getSession()->getFlashBag()->add('success', "Votre approbation a bien été prise en compte.");
+    return $this->redirect($request->server->get('HTTP_REFERER'));
+  }
+
+  /**
    * Récupère tous les commentaires d'une version
    */
   public function getPageCommentairesAction(Request $request) {
@@ -214,6 +237,35 @@ class PageController extends Controller {
       'success' => $status,
       'data' => array(
         'commentaires' => $resultPageCommentaires
+      )
+    );
+    return new JsonResponse($response);
+  }
+
+  /**
+   * Récupère toutes les contributeurs d'une page
+   * FIXME OR REMOVE
+   */
+  public function getContributeursAction(Request $request) {
+    $status = true;
+    $em = $this->getDoctrine()->getManager();
+    $valeurs_recu = $request->request->all();
+    $contributeurs = $em->getRepository('PlateformeCoreBundle:GroupeContributeur')->findByGroupe($valeurs_recu['version_id']);
+    $resultPageContributeurs = [];
+    foreach ($contributeurs as $contributeur) {
+      $resultPageContributeurs[] = array(
+        'id' => $contributeur->getId(),
+        'nom' => $contributeur->getNom(),
+      );
+    }
+    // S'il n'y a eu aucun résultat
+    if (empty($resultPageContributeurs)) {
+      $status = false;
+    }
+    $response = array(
+      'success' => $status,
+      'data' => array(
+        'contributeurs' => $resultPageContributeurs
       )
     );
     return new JsonResponse($response);
