@@ -64,7 +64,7 @@ class PageService {
         $html .= '<span class="btn-group m-1" role="group" aria-label="First group">';
           $html .= '<a class="btn btn-light btn-sm text-left border" href="' . $url . '">';
           $html .= "<small>";
-            $html .= '<b>' . $noeud['commentaireVersion'] . '</b>';
+            $html .= '<b><span class="text-muted">#' . $noeud['id'] . '</span> ' . $noeud['commentaireVersion'] . '</b>';
             $html .= '<br>par ' . $noeud['username'];
             $html .= '<br>le ' . date_format($noeud['created'], 'd/m/Y H:i:s');
           $html .= "</small>";

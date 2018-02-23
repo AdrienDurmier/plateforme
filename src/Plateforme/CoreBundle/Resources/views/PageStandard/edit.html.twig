@@ -5,7 +5,7 @@
 
 {% block body %}
 
-  <h1>Édition d'une page</h1>
+  <h1>Édition de la page <span class="text-muted">#{{ page.id}}</span></h1>
 
   <div class="row">
     <div class="col-9">
@@ -28,10 +28,6 @@
             {% endif %}
           </button>
         </form>
-        &nbsp;
-        {#<a href="{{ path('plateforme_core_page_pages_view', {'slug': page.groupe.slug}) }}" class="btn btn-light btn-sm">
-          <i class="fas fa-external-link-alt"></i> Voir cette page
-        </a>#}
       </div>
     </div>
   </div>

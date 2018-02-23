@@ -5,7 +5,7 @@
         <span class="btn-group m-1" role="group" aria-label="First group">
           <a class="btn btn-light btn-sm text-left border" href="{{ path(route, {'id': first_version.id}) }}">
             <small>
-              <b>Version originale</b>
+              <b><span class="text-muted">#{{first_version.id}}</span> Version originale</b>
               <br>par {{first_version.auteur}}
               <br>le {{first_version.created|date('d/m/Y H:i:s')}}
             </small>
